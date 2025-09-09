@@ -1,6 +1,7 @@
 import {useState, useRef} from 'react'
-
-const Registro = () =>{
+import {useNavigate} from 'react-router-dom'
+const Registro = ({onLogin}) =>{
+    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [nombre, setNombre] = useState("");
@@ -11,6 +12,7 @@ const Registro = () =>{
         nombre: "",
         telefono: "",
     });
+    const navigate = useNavigate();
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
     const nombreRef = useRef(null);
@@ -91,6 +93,8 @@ const Registro = () =>{
         }
 
         alert("Te registraste exitosamente");
+        onLogin();
+        navigate("/dashboard");
         console.log("Credenciales: ", {
             email: currentEmail,
             password: currentPassword,

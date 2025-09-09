@@ -1,6 +1,8 @@
 import  { useState, useRef } from 'react'
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
+import {useNavigate} from 'react-router-dom'    
 const Login = ({ onLogin }) => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errores, setErrores] = useState({
@@ -60,6 +62,8 @@ const Login = ({ onLogin }) => {
 
 
         alert("Iniciaste sesión exitosamente!");
+        onLogin();
+        navigate("/dashboard");
         console.log('Credenciales:', { email: currentEmail, password: currentPassword });
         
         setErrores({ email: "", password: "" });
@@ -68,7 +72,7 @@ const Login = ({ onLogin }) => {
     }
     return (
     <>
-      <Card className="mt-5 mx-3 p-3 px-5 shadow">
+    <Card className="mt-5 mx-3 p-3 px-5 shadow">
         <Card.Body>
         <Row className="mb-2">
             <h5>Iniciar Sesion</h5>
