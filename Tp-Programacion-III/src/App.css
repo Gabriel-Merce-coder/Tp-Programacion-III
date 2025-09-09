@@ -1,10 +1,13 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  min-height: 100vh;
 }
-
+.error-text {
+  display: block;         
+  color: #dc3545;         
+  font-size: 0.85rem;    
+  margin-top: 4px;       
+  text-align: left;       
+}
 .logo {
   height: 6em;
   padding: 1.5em;
