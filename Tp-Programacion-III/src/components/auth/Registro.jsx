@@ -1,5 +1,7 @@
 import {useState, useRef} from 'react'
 import {useNavigate} from 'react-router-dom'
+
+
 const Registro = ({onLogin}) =>{
     
     const [email, setEmail] = useState("");
@@ -80,6 +82,7 @@ const Registro = ({onLogin}) =>{
 
         if (Errores.email || Errores.password || Errores.nombre || Errores.telefono) {
             setErrores(Errores);
+            alert("Error, revise los campos")
             if (Errores.email) {
                 emailRef.current.focus();
             } else if (Errores.password) {
@@ -94,7 +97,7 @@ const Registro = ({onLogin}) =>{
 
         alert("Te registraste exitosamente");
         onLogin();
-        navigate("/dashboard");
+        navigate("/login");
         console.log("Credenciales: ", {
             email: currentEmail,
             password: currentPassword,
