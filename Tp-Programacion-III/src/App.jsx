@@ -5,6 +5,7 @@ import Dashboard from './components/dashboard/Dashboard'
 import Protected from './components/protected/Protected'
 import { useState } from 'react'
 import TextNotFound from './components/textNotFound/TextNotFound'
+
 function App() {
   const [logIn, setLogIn] = useState(false)
 
@@ -25,6 +26,7 @@ function App() {
           <Route path = "*" element = {<TextNotFound/>}></Route>
         </Routes>
       </BrowserRouter>
+      
       </div>
     </>
   )
