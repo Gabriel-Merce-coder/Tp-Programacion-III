@@ -1,6 +1,8 @@
 import  { useState, useRef } from 'react'
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
-import {useNavigate} from 'react-router-dom'    
+import {useNavigate} from 'react-router-dom'   
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 const Login = ({ onLogin }) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
@@ -29,8 +31,7 @@ const Login = ({ onLogin }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const currentEmail = emailRef.current.value;
-        const currentPassword = passwordRef.current.value;
+        
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         
         let Errores = {
@@ -38,20 +39,21 @@ const Login = ({ onLogin }) => {
             password: ""
         }
 
-        if (currentEmail === "") {
+        if (email === "") {
             Errores.email = "El email no puede estar vacío";
-        } else if (!regexEmail.test(currentEmail)) {
+        } else if (!regexEmail.test(email)) {
             Errores.email = "El email no es válido";
         }
 
-        if (currentPassword === "") {
+        if (password === "") {
             Errores.password = "La contraseña no puede estar vacía";
-        } else if (currentPassword.length < 6) {
+        } else if (password.length < 6) {
             Errores.password = "La contraseña debe tener al menos 6 caracteres";
         }
 
         if (Errores.email || Errores.password) {
             setErrores(Errores);
+            toast.error("Error, revise los campos")
             if (Errores.email) {
                 emailRef.current.focus();
             } else {
@@ -61,11 +63,10 @@ const Login = ({ onLogin }) => {
         }
 
 
-        alert("Iniciaste sesión exitosamente!");
+        toast.success("Iniciaste sesión exitosamente!");
         onLogin();
-        navigate("/dashboard");
-        console.log('Credenciales:', { email: currentEmail, password: currentPassword });
-        
+        navigate("/home");
+
         setErrores({ email: "", password: "" });
         setEmail("");
         setPassword("");

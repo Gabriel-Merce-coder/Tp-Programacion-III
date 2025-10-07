@@ -1,6 +1,7 @@
 import {useState, useRef} from 'react'
 import {useNavigate} from 'react-router-dom'
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 
 const Registro = ({onLogin}) =>{
     
@@ -48,10 +49,7 @@ const Registro = ({onLogin}) =>{
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const currentEmail = emailRef.current.value;
-        const currentPassword = passwordRef.current.value;
-        const currentNombre = nombreRef.current.value;
-        const currentTelefono = telefonoRef.current.value;
+        
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         let Errores = {
             email: "",
@@ -60,29 +58,29 @@ const Registro = ({onLogin}) =>{
             telefono: "",
         }
 
-        if(currentEmail === "") {
+        if(email === "") {
             Errores.email = "El correo electronico no puede estar vacio"
-        } else if(!regexEmail.test(currentEmail)) {
+        } else if(!regexEmail.test(email)) {
             Errores.email = "El correo electronico no es valido"
         }
 
-        if (currentPassword === "") {
+        if (password === "") {
             Errores.password = "La contraseña no puede estar vacia"
-        } else if (currentPassword.length < 6) {
+        } else if (password.length < 6) {
             Errores.password = "La contraseña debe tener al menos 6 caracteres"
         }
 
-        if (currentNombre === "") {
+        if (nombre === "") {
             Errores.nombre = "El nombre no puede estar vacio"
         }
 
-        if (currentTelefono === "") {
+        if (telefono === "") {
             Errores.telefono = "El telefono no puede estar vacio"
-        }
+        } 
 
         if (Errores.email || Errores.password || Errores.nombre || Errores.telefono) {
             setErrores(Errores);
-            alert("Error, revise los campos")
+            toast.error("Error, revise los campos")
             if (Errores.email) {
                 emailRef.current.focus();
             } else if (Errores.password) {
@@ -95,15 +93,9 @@ const Registro = ({onLogin}) =>{
             return;
         }
 
-        alert("Te registraste exitosamente");
+        toast.success("Te registraste exitosamente");
         onLogin();
         navigate("/login");
-        console.log("Credenciales: ", {
-            email: currentEmail,
-            password: currentPassword,
-            nombre: currentNombre,
-            telefono: currentTelefono
-        });
         setErrores({
             email: "",
             password: "",
