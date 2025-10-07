@@ -1,35 +1,47 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Registro from './components/auth/Registro'
-import Login from './components/auth/Login'
-import Dashboard from './components/dashboard/Dashboard'
-import Protected from './components/protected/Protected'
-import { useState } from 'react'
-import TextNotFound from './components/textNotFound/TextNotFound'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import Registro from "./components/auth/Registro";
+import Login from "./components/auth/Login";
+import Dashboard from "./components/dashboard/Dashboard";
+import NewFilm from "./components/newFilm/NewFilm";
+import Protected from "./components/protected/Protected";
+import TextNotFound from "./components/textNotFound/TextNotFound";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  const [logIn, setLogIn] = useState(false)
+  const [logIn, setLogIn] = useState(false);
 
-  const handleLogIn = () =>{
-    setLogIn(true);
-  }
-  const handleLogOut = () =>{
-    setLogIn(false);
-  }
+  const handleLogIn = () => setLogIn(true);
+  const handleLogOut = () => setLogIn(false);
+
   return (
-    <>
-    <div className="d-flex flex-column align-items-center">
+    <div className="min-vh-100 bg-dark"> {/* Cambio importante aquí */}
       <BrowserRouter>
         <Routes>
-          <Route path= "/registro" element ={<Registro onLogin = {handleLogIn}/>}/>
-          <Route path= "/login" element ={<Login onLogin = {handleLogIn}/>}/>
-          <Route path = "/dashboard" element = {<Protected isSingedIn={logIn}><Dashboard onLogOut={handleLogOut}/></Protected>}/>
-          <Route path = "*" element = {<TextNotFound/>}></Route>
+          {/* Registro y Login */}
+          <Route path="/registro" element={<Registro onLogin={handleLogIn} />} />
+          <Route path="/login" element={<Login onLogin={handleLogIn} />} />
+
+          {/* Dashboard protegido */}
+          <Route
+            path="/home/*"
+            element={
+              <Protected isSingedIn={logIn}>
+                <Dashboard onLogOut={handleLogOut} />
+              </Protected>
+            }
+          />
+
+          <Route path="*" element={<TextNotFound />} />
         </Routes>
       </BrowserRouter>
-      
-      </div>
-    </>
-  )
+      <ToastContainer 
+        autoClose={1000}
+        hideProgressBar={true} />
+    </div>
+  );
 }
 
-export default App
+export default App;
