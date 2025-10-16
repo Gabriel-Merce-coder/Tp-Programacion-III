@@ -17,7 +17,7 @@ function App() {
   const handleLogOut = () => setLogIn(false);
 
   return (
-    <div className="min-vh-100 bg-dark"> {/* Cambio importante aquí */}
+    <div className="min-vh-100 bg-dark"> 
       <BrowserRouter>
         <Routes>
           {/* Registro y Login */}

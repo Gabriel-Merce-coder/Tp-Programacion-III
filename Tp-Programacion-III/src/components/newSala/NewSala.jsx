@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
-import useSalaForm from "../hooks/useSalaForm";
+import useSalaForm from "../../hooks/useSalaForm";
 
 const NewSala = ({ onSalaAdd }) => {
   const navigate = useNavigate();
