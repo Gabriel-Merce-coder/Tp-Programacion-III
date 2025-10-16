@@ -2,11 +2,14 @@ import { useState } from "react";
 import { Row, Col, Button, Container } from "react-bootstrap";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import MovieCard from "../movieItem/Movie.Item";
+import FuncionCard from "../funcionItem/FuncionItem";
+import SalaCard from "../salaItem/SalaItem"; 
 import NewFilm from "../newFilm/NewFilm";
 import NewFuncion from "../newFuncion/NewFuncion";
-import NewSala from "../newSala/NewSala" 
+import NewSala from "../newSala/NewSala";
 import Navbar from "../navbar/Navbar";
-
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const Dashboard = ({ onLogOut }) => {
   const [peliculas, setPeliculas] = useState([
     {
@@ -24,38 +27,53 @@ const Dashboard = ({ onLogOut }) => {
   ]);
 
   const [funciones, setFunciones] = useState([]);
-  const [salas, setSalas] = useState([]); 
+  const [salas, setSalas] = useState([]);
 
   const navigate = useNavigate();
 
+  // Agregar Película
   const handleAddFilm = (newFilm) => {
     setPeliculas((prev) => [...prev, { id: prev.length + 1, ...newFilm }]);
     navigate("/home");
   };
 
+  // Agregar Función
   const handleAddFunction = (newFuncion) => {
     setFunciones((prev) => [...prev, { id: prev.length + 1, ...newFuncion }]);
+
     navigate("/home");
   };
 
+  // Agregar Sala
   const handleAddSala = (newSala) => {
     setSalas((prev) => [...prev, { id: prev.length + 1, ...newSala }]);
     navigate("/home");
   };
 
+  // Eliminar Función
+  const handleDeleteFunction = (id) => {
+    setFunciones((prev) => prev.filter((f) => f.id !== id));
+    toast.success("Función eliminada correctamente");
+  };
+
+  // Eliminar Sala
+  const handleDeleteSala = (id) => {
+    setSalas((prev) => prev.filter((s) => s.id !== id));
+    toast.success("Sala eliminada correctamente");
+  };
+
   return (
     <div className="min-vh-100 bg-dark text-white">
-      {/* Navbar */}
       <Navbar onLogOut={onLogOut} />
 
-      {/* Contenido principal */}
       <Container fluid className="py-4 bg-dark min-vh-100">
         <Routes>
-          {/* Cartelera de películas */}
+          {/* Dashboard principal */}
           <Route
             index
             element={
               <div>
+                {/* Películas */}
                 <h2 className="text-white mb-4">🎬 Cartelera de Películas</h2>
                 <Row>
                   {peliculas.map((peli) => (
@@ -72,11 +90,60 @@ const Dashboard = ({ onLogOut }) => {
                     </Col>
                   ))}
                 </Row>
+
+                {/* Funciones */}
+                <h2 className="text-white mt-5 mb-4">🎟️ Funciones Disponibles</h2>
+                <Row>
+                  {funciones.length > 0 ? (
+                    funciones.map((funcion) => (
+                      <Col
+                        key={funcion.id}
+                        xs={12}
+                        sm={6}
+                        md={4}
+                        lg={3}
+                        className="mb-4"
+                      >
+                        <FuncionCard
+                          funcion={funcion}
+                          peliculas={peliculas}
+                          onDelete={() => handleDeleteFunction(funcion.id)}
+                        />
+                      </Col>
+                    ))
+                  ) : (
+                    <p className="text-white">No hay funciones agregadas todavía.</p>
+                  )}
+                </Row>
+
+                {/* Salas */}
+                <h2 className="text-white mt-5 mb-4">🏛️ Salas Disponibles</h2>
+                <Row>
+                  {salas.length > 0 ? (
+                    salas.map((sala) => (
+                      <Col
+                        key={sala.id}
+                        xs={12}
+                        sm={6}
+                        md={4}
+                        lg={3}
+                        className="mb-4"
+                      >
+                        <SalaCard
+                          sala={sala}
+                          onDelete={() => handleDeleteSala(sala.id)}
+                        />
+                      </Col>
+                    ))
+                  ) : (
+                    <p className="text-white">No hay salas agregadas todavía.</p>
+                  )}
+                </Row>
               </div>
             }
           />
 
-          {/* ➕ Agregar Película */}
+          {/* Agregar Película */}
           <Route
             path="add-movie"
             element={
@@ -96,7 +163,7 @@ const Dashboard = ({ onLogOut }) => {
             }
           />
 
-          {/* 🎬 Agregar Función */}
+          {/* Agregar Función */}
           <Route
             path="add-function"
             element={
@@ -116,7 +183,7 @@ const Dashboard = ({ onLogOut }) => {
             }
           />
 
-          {/* 🏛️ Agregar Sala */}
+          {/* Agregar Sala */}
           <Route
             path="add-sala"
             element={

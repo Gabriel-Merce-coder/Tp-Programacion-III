@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
-import useFuncionForm from "../hooks/useFuncionForm";
+import useFuncionForm from "../../hooks/useFuncionForm"
 
 const NewFuncion = ({ onFuncionAdd }) => {
     const navigate = useNavigate();
