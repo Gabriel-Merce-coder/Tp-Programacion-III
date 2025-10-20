@@ -1,8 +1,8 @@
 // /////////////////////////////////////////////////////////
-// CAMBIO JULIAN: formulario actualizado con cantidad y precio
+// CAMBIO JULIAN: formulario de reserva con filtrado de funciones por película
 // /////////////////////////////////////////////////////////
 
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, Form, Button, Col, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -26,29 +26,59 @@ const NewReserva = ({ peliculas, funciones, onAddReserva }) => {
     cantidad: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setReserva((prev) => ({
-      ...prev,
-      [name]: value,
-      // CAMBIO JULIAN: actualizar el precio total en tiempo real si cambia cantidad o función
-      precioTotal:
-        name === "cantidad" || name === "funcionId"
-          ? calcularPrecio(name === "cantidad" ? value : prev.cantidad, name === "funcionId" ? value : prev.funcionId)
-          : prev.precioTotal,
-    }));
-    setErrores({ ...errores, [name]: "" });
-  };
+  // /////////////////////////////////////////////////////////
+  // CAMBIO JULIAN: filtrar funciones por película seleccionada
+  // /////////////////////////////////////////////////////////
+  const funcionesFiltradas = useMemo(() => {
+    const pid = parseInt(reserva.peliculaId);
+    if (!pid) return [];
+    return funciones.filter((f) => f.peliculaId === pid);
+  }, [funciones, reserva.peliculaId]);
+  // FIN CAMBIO JULIAN
 
   // /////////////////////////////////////////////////////////
-  // CAMBIO JULIAN: función para calcular el precio total según función y cantidad
+  // CAMBIO JULIAN: si cambia la película, limpiar función y precio
+  // /////////////////////////////////////////////////////////
+  useEffect(() => {
+    setReserva((prev) => ({
+      ...prev,
+      funcionId: "",
+      precioTotal: "",
+    }));
+    // también limpiamos el error de funcionId
+    setErrores((prev) => ({ ...prev, funcionId: "" }));
+  }, [reserva.peliculaId]);
+  // FIN CAMBIO JULIAN
+
+  // /////////////////////////////////////////////////////////
+  // CAMBIO JULIAN: calcular precio total (función * cantidad)
   // /////////////////////////////////////////////////////////
   const calcularPrecio = (cantidad, funcionId) => {
-    const funcionSeleccionada = funciones.find((f) => f.id === parseInt(funcionId));
-    if (!funcionSeleccionada || !cantidad) return "";
-    return (funcionSeleccionada.precio * parseInt(cantidad)).toFixed(2);
+    const funcSel = funciones.find((f) => f.id === parseInt(funcionId));
+    if (!funcSel || !cantidad) return "";
+    return (Number(funcSel.precio) * Number(cantidad)).toFixed(2);
   };
   // FIN CAMBIO JULIAN
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setReserva((prev) => {
+      const next = { ...prev, [name]: value };
+
+      // actualizar precioTotal en tiempo real si cambian cantidad o funcionId
+      if (name === "cantidad" || name === "funcionId") {
+        next.precioTotal = calcularPrecio(
+          name === "cantidad" ? value : prev.cantidad,
+          name === "funcionId" ? value : prev.funcionId
+        );
+      }
+
+      return next;
+    });
+
+    setErrores((prev) => ({ ...prev, [name]: "" }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,7 +89,7 @@ const NewReserva = ({ peliculas, funciones, onAddReserva }) => {
       nuevosErrores.peliculaId = "Debe seleccionar una película";
     if (!reserva.funcionId)
       nuevosErrores.funcionId = "Debe seleccionar una función";
-    if (!reserva.cantidad || reserva.cantidad <= 0)
+    if (!reserva.cantidad || Number(reserva.cantidad) <= 0)
       nuevosErrores.cantidad = "Debe ingresar una cantidad válida";
 
     if (Object.keys(nuevosErrores).length > 0) {
@@ -74,11 +104,10 @@ const NewReserva = ({ peliculas, funciones, onAddReserva }) => {
       peliculaId: parseInt(reserva.peliculaId),
       funcionId: parseInt(reserva.funcionId),
       cantidad: parseInt(reserva.cantidad),
-      precioTotal: parseFloat(reserva.precioTotal),
+      precioTotal: reserva.precioTotal ? parseFloat(reserva.precioTotal) : 0,
     };
 
-    onAddReserva(nuevaReserva);
-    
+    onAddReserva(nuevaReserva); // el toast de éxito se muestra en Dashboard
     navigate("/home");
   };
 
@@ -128,9 +157,14 @@ const NewReserva = ({ peliculas, funciones, onAddReserva }) => {
               value={reserva.funcionId}
               onChange={handleChange}
               isInvalid={!!errores.funcionId}
+              disabled={!reserva.peliculaId} // deshabilitar hasta elegir película
             >
-              <option value="">Seleccione una función</option>
-              {funciones.map((funcion) => (
+              <option value="">
+                {reserva.peliculaId
+                  ? "Seleccione una función"
+                  : "Seleccione primero una película"}
+              </option>
+              {funcionesFiltradas.map((funcion) => (
                 <option key={funcion.id} value={funcion.id}>
                   {`Sala ${funcion.salaId} - ${funcion.fecha} ${funcion.hora} ($${funcion.precio})`}
                 </option>
@@ -141,9 +175,6 @@ const NewReserva = ({ peliculas, funciones, onAddReserva }) => {
             </Form.Control.Feedback>
           </Form.Group>
 
-          {/* /////////////////////////////////////////////////////////
-              CAMBIO JULIAN: nuevo campo cantidad de entradas
-              ///////////////////////////////////////////////////////// */}
           <Form.Group className="mb-3">
             <Form.Label>Cantidad de Entradas</Form.Label>
             <Form.Control
@@ -158,11 +189,7 @@ const NewReserva = ({ peliculas, funciones, onAddReserva }) => {
               {errores.cantidad}
             </Form.Control.Feedback>
           </Form.Group>
-          {/* FIN CAMBIO JULIAN */}
 
-          {/* /////////////////////////////////////////////////////////
-              CAMBIO JULIAN: campo de precio total (solo lectura)
-              ///////////////////////////////////////////////////////// */}
           <Form.Group className="mb-3">
             <Form.Label>Precio Total</Form.Label>
             <Form.Control
@@ -172,7 +199,6 @@ const NewReserva = ({ peliculas, funciones, onAddReserva }) => {
               readOnly
             />
           </Form.Group>
-          {/* FIN CAMBIO JULIAN */}
 
           <Row className="justify-content-between mt-4">
             <Col md={4}>
@@ -199,5 +225,6 @@ const NewReserva = ({ peliculas, funciones, onAddReserva }) => {
 export default NewReserva;
 
 // FIN CAMBIO JULIAN
+
 
 
