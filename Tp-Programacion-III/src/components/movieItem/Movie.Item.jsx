@@ -47,9 +47,9 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
           </Badge>
 
           <div className="d-flex flex-wrap gap-2 mt-2">
-            <Button variant="outline-light" size="sm">
-              ▶ Ver Película
-            </Button>
+            {/* /////////////////////////////////////////////////////////
+                CAMBIO JULIAN: solo dejamos los botones de detalles, editar, eliminar y reservar
+                ///////////////////////////////////////////////////////// */}
             <Button
               variant={showDetails ? "outline-info" : "outline-secondary"}
               size="sm"
@@ -58,15 +58,14 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
               {showDetails ? "▲ Ocultar Detalles" : "▼ Ver Detalles"}
             </Button>
 
-            {/* /////////////////////////////////////////////////////////
-                CAMBIO JULIAN: botones de editar, eliminar y reservar
-                ///////////////////////////////////////////////////////// */}
             <Button variant="warning" size="sm" onClick={() => onEdit(movie)}>
               ✏️ Editar
             </Button>
+
             <Button variant="danger" size="sm" onClick={() => onDelete(movie.id)}>
               🗑️ Eliminar
             </Button>
+
             <Button
               variant="outline-success"
               size="sm"
@@ -111,18 +110,10 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
           >
             <div>
               <h2>{titulo}</h2>
-              <p>
-                <strong>Género:</strong> {genero}
-              </p>
-              <p>
-                <strong>Duración:</strong> {duracion} min
-              </p>
-              <p>
-                <strong>Reparto:</strong> {reparto}
-              </p>
-              <p>
-                <strong>Descripción:</strong> {descripcion}
-              </p>
+              <p><strong>Género:</strong> {genero}</p>
+              <p><strong>Duración:</strong> {duracion} min</p>
+              <p><strong>Reparto:</strong> {reparto}</p>
+              <p><strong>Descripción:</strong> {descripcion}</p>
             </div>
             <div className="text-end mt-3">
               <Button variant="outline-light" onClick={toggleDetails}>
@@ -147,5 +138,6 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
 };
 
 export default MovieCard;
+
 
 
