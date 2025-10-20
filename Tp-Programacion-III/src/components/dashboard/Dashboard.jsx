@@ -11,6 +11,11 @@ import Navbar from "../navbar/Navbar";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+// CAMBIO JULIAN: nuevos imports para reservas
+import NewReserva from "../reservas/NewReserva";
+import ReservaItem from "../reservaItem/ReservaItem";
+// FIN CAMBIO JULIAN
+
 const Dashboard = ({ onLogOut }) => {
   const [peliculas, setPeliculas] = useState([
     {
@@ -29,6 +34,15 @@ const Dashboard = ({ onLogOut }) => {
 
   const [funciones, setFunciones] = useState([]);
   const [salas, setSalas] = useState([]);
+
+  // CAMBIO JULIAN: nuevas reservas
+  const [reservas, setReservas] = useState([]);
+
+  const handleAddReserva = (nuevaReserva) => {
+    setReservas((prev) => [...prev, nuevaReserva]);
+    toast.success("Reserva agregada correctamente");
+  };
+  // FIN CAMBIO JULIAN
 
   // CAMBIO JULIAN: estados para modo edición
   const [editFilm, setEditFilm] = useState(null);
@@ -58,7 +72,9 @@ const Dashboard = ({ onLogOut }) => {
   const handleAddFunction = (newFuncion) => {
     if (editFuncion) {
       setFunciones((prev) =>
-        prev.map((f) => (f.id === editFuncion.id ? { ...editFuncion, ...newFuncion } : f))
+        prev.map((f) =>
+          f.id === editFuncion.id ? { ...editFuncion, ...newFuncion } : f
+        )
       );
       setEditFuncion(null);
       toast.success("Función editada correctamente");
@@ -156,7 +172,9 @@ const Dashboard = ({ onLogOut }) => {
                 </Row>
 
                 {/* Funciones */}
-                <h2 className="text-white mt-5 mb-4">🎟️ Funciones Disponibles</h2>
+                <h2 className="text-white mt-5 mb-4">
+                  🎟️ Funciones Disponibles
+                </h2>
                 <Row>
                   {funciones.length > 0 ? (
                     funciones.map((funcion) => (
@@ -204,9 +222,54 @@ const Dashboard = ({ onLogOut }) => {
                       </Col>
                     ))
                   ) : (
-                    <p className="text-white">No hay salas agregadas todavía.</p>
+                    <p className="text-white">
+                      No hay salas agregadas todavía.
+                    </p>
                   )}
                 </Row>
+
+                {/* /////////////////////////////////////////////////////////
+                CAMBIO JULIAN: mostrar reservas actuales
+                ///////////////////////////////////////////////////////// */}
+                <h2 className="text-white mt-5 mb-4">📋 Reservas actuales</h2>
+                <Row>
+                  {reservas.length > 0 ? (
+                    reservas.map((reserva) => {
+                      const peli = peliculas.find(
+                        (p) => p.id === reserva.peliculaId
+                      );
+                      const funcion = funciones.find(
+                        (f) => f.id === reserva.funcionId
+                      );
+
+                      return (
+                        <Col
+                          key={reserva.id}
+                          xs={12}
+                          sm={6}
+                          md={4}
+                          lg={3}
+                          className="mb-4"
+                        >
+                          <ReservaItem
+                            reserva={reserva}
+                            pelicula={peli}
+                            funcion={funcion}
+                            onCancel={() => {
+                              setReservas((prev) => prev.filter((r) => r.id !== reserva.id));
+                              toast.success("Reserva cancelada correctamente"); //CAMBIO JULIAN: notificación al cancelar
+                            }}
+                          />
+                        </Col>
+                      );
+                    })
+                  ) : (
+                    <p className="text-white">
+                      No hay reservas registradas todavía.
+                    </p>
+                  )}
+                </Row>
+                {/* FIN CAMBIO JULIAN */}
               </div>
             }
           />
@@ -219,12 +282,29 @@ const Dashboard = ({ onLogOut }) => {
 
           <Route
             path="add-function"
-            element={<NewFuncion onFuncionAdd={handleAddFunction} editFuncion={editFuncion} />}
+            element={
+              <NewFuncion
+                onFuncionAdd={handleAddFunction}
+                editFuncion={editFuncion}
+              />
+            }
           />
 
           <Route
             path="add-sala"
             element={<NewSala onSalaAdd={handleAddSala} editSala={editSala} />}
+          />
+
+          {/* CAMBIO JULIAN: nueva ruta para reservas */}
+          <Route
+            path="add-reserva"
+            element={
+              <NewReserva
+                peliculas={peliculas}
+                funciones={funciones}
+                onAddReserva={handleAddReserva}
+              />
+            }
           />
           {/* FIN CAMBIO JULIAN */}
         </Routes>
@@ -234,5 +314,3 @@ const Dashboard = ({ onLogOut }) => {
 };
 
 export default Dashboard;
-
-
