@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import useSalaForm from "../../hooks/useSalaForm";
+import { useEffect } from "react";
 
-const NewSala = ({ onSalaAdd }) => {
+const NewSala = ({ onSalaAdd, editSala }) => {
   const navigate = useNavigate();
 
   const {
@@ -25,6 +26,21 @@ const NewSala = ({ onSalaAdd }) => {
     setEstado,
     setErrores,
   } = useSalaForm();
+
+ // /////////////////////////////////////////////////////////
+// CAMBIO JULIAN: precargar datos si se edita una sala (sin romper el render)
+// /////////////////////////////////////////////////////////
+
+
+useEffect(() => {
+  if (editSala) {
+    setTipo_Sala(editSala.tipo_sala || "");
+    setCapacidad(editSala.capacidad || "");
+    setEstado(editSala.estado ?? true);
+  }
+}, [editSala]);
+// FIN CAMBIO JULIAN
+
 
   const handleAddSala = (e) => {
     e.preventDefault();
@@ -54,7 +70,8 @@ const NewSala = ({ onSalaAdd }) => {
       estado: estado,
     };
 
-    toast.success("Sala agregada correctamente");
+   
+
     onSalaAdd(nuevaSala);
 
     // Reset de campos
@@ -67,8 +84,6 @@ const NewSala = ({ onSalaAdd }) => {
 
   return (
     <div>
-    
-
       <Card className="m-4 w-50" bg="info">
         <Card.Body>
           <Form className="text-white" onSubmit={handleAddSala}>
@@ -130,9 +145,14 @@ const NewSala = ({ onSalaAdd }) => {
             </Row>
 
             <Row className="justify-content-end">
-              <Col md={3} className="d-flex flex-column justify-content-end align-items-end">
+              <Col
+                md={3}
+                className="d-flex flex-column justify-content-end align-items-end"
+              >
                 <Button variant="primary" type="submit">
-                  Agregar Sala
+                  {/* CAMBIO JULIAN: botón dinámico */}
+                  {editSala ? "Guardar Cambios" : "Agregar Sala"}
+                  {/* FIN CAMBIO JULIAN */}
                 </Button>
               </Col>
             </Row>

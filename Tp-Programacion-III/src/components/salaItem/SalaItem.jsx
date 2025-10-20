@@ -1,6 +1,6 @@
 import { Card, Button } from "react-bootstrap";
 
-const SalaItem = ({ sala, onDelete }) => {
+const SalaItem = ({ sala, onDelete, onEdit }) => {
   return (
     <Card className="mb-3">
       <Card.Body>
@@ -11,12 +11,24 @@ const SalaItem = ({ sala, onDelete }) => {
         </Card.Text>
 
         <div className="d-flex gap-2 mt-2">
-          <Button variant="warning" size="sm">
+          {/* /////////////////////////////////////////////////////////
+              CAMBIO JULIAN: botones editar y eliminar funcionales
+              ///////////////////////////////////////////////////////// */}
+          <Button
+            variant="warning"
+            size="sm"
+            onClick={() => onEdit(sala)} // Editar sala
+          >
             ✏️ Editar
           </Button>
-          <Button variant="danger" size="sm" onClick={onDelete}>
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={onDelete} // Eliminar sala
+          >
             🗑️ Eliminar
           </Button>
+          {/* FIN CAMBIO JULIAN */}
         </div>
       </Card.Body>
     </Card>
@@ -24,3 +36,4 @@ const SalaItem = ({ sala, onDelete }) => {
 };
 
 export default SalaItem;
+
