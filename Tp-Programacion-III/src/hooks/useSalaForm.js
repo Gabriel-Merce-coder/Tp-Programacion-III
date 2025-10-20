@@ -37,6 +37,7 @@ const useSalaForm = () =>{
         errores,
         setTipo_Sala,
         setCapacidad,
+        setEstado,     // CAMBIO JULIAN: se agrega para permitir edición de estado
         setErrores,
         tipo_salaRef,
         capacidadRef,

@@ -3,13 +3,14 @@ import { Row, Col, Button, Container } from "react-bootstrap";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import MovieCard from "../movieItem/Movie.Item";
 import FuncionCard from "../funcionItem/FuncionItem";
-import SalaCard from "../salaItem/SalaItem"; 
+import SalaCard from "../salaItem/SalaItem";
 import NewFilm from "../newFilm/NewFilm";
 import NewFuncion from "../newFuncion/NewFuncion";
 import NewSala from "../newSala/NewSala";
 import Navbar from "../navbar/Navbar";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+
 const Dashboard = ({ onLogOut }) => {
   const [peliculas, setPeliculas] = useState([
     {
@@ -29,26 +30,61 @@ const Dashboard = ({ onLogOut }) => {
   const [funciones, setFunciones] = useState([]);
   const [salas, setSalas] = useState([]);
 
+  // CAMBIO JULIAN: estados para modo edición
+  const [editFilm, setEditFilm] = useState(null);
+  const [editFuncion, setEditFuncion] = useState(null);
+  const [editSala, setEditSala] = useState(null);
+  // FIN CAMBIO JULIAN
+
   const navigate = useNavigate();
 
-  // Agregar Película
+  // CAMBIO JULIAN: agregar o editar película
   const handleAddFilm = (newFilm) => {
-    setPeliculas((prev) => [...prev, { id: prev.length + 1, ...newFilm }]);
+    if (editFilm) {
+      setPeliculas((prev) =>
+        prev.map((p) => (p.id === editFilm.id ? { ...editFilm, ...newFilm } : p))
+      );
+      setEditFilm(null);
+      toast.success("Película editada correctamente");
+    } else {
+      setPeliculas((prev) => [...prev, { id: prev.length + 1, ...newFilm }]);
+      toast.success("Película agregada correctamente");
+    }
     navigate("/home");
   };
+  // FIN CAMBIO JULIAN
 
-  // Agregar Función
+  // CAMBIO JULIAN: agregar o editar función
   const handleAddFunction = (newFuncion) => {
-    setFunciones((prev) => [...prev, { id: prev.length + 1, ...newFuncion }]);
-
+    if (editFuncion) {
+      setFunciones((prev) =>
+        prev.map((f) => (f.id === editFuncion.id ? { ...editFuncion, ...newFuncion } : f))
+      );
+      setEditFuncion(null);
+      toast.success("Función editada correctamente");
+    } else {
+      setFunciones((prev) => [...prev, { id: prev.length + 1, ...newFuncion }]);
+      toast.success("Función agregada correctamente");
+    }
     navigate("/home");
   };
+  // FIN CAMBIO JULIAN
 
-  // Agregar Sala
+  // CAMBIO JULIAN: agregar o editar sala
   const handleAddSala = (newSala) => {
-    setSalas((prev) => [...prev, { id: prev.length + 1, ...newSala }]);
+    if (editSala) {
+      setSalas((prev) =>
+        prev.map((s) => (s.id === editSala.id ? { ...editSala, ...newSala } : s))
+      );
+      setEditSala(null);
+      toast.success("Sala editada correctamente");
+    } else {
+      setSalas((prev) => [...prev, { id: prev.length + 1, ...newSala }]);
+      toast.success("Sala agregada correctamente");
+    }
     navigate("/home");
   };
+  // FIN CAMBIO JULIAN
 
   // Eliminar Función
   const handleDeleteFunction = (id) => {
@@ -61,6 +97,30 @@ const Dashboard = ({ onLogOut }) => {
     setSalas((prev) => prev.filter((s) => s.id !== id));
     toast.success("Sala eliminada correctamente");
   };
+
+  // CAMBIO JULIAN: eliminar película
+  const handleDeleteFilm = (id) => {
+    setPeliculas((prev) => prev.filter((p) => p.id !== id));
+    toast.success("Película eliminada correctamente");
+  };
+  // FIN CAMBIO JULIAN
+
+  // CAMBIO JULIAN: activar modo edición
+  const handleEditFilm = (film) => {
+    setEditFilm(film);
+    navigate("/home/add-movie");
+  };
+
+  const handleEditFunction = (funcion) => {
+    setEditFuncion(funcion);
+    navigate("/home/add-function");
+  };
+
+  const handleEditSala = (sala) => {
+    setEditSala(sala);
+    navigate("/home/add-sala");
+  };
+  // FIN CAMBIO JULIAN
 
   return (
     <div className="min-vh-100 bg-dark text-white">
@@ -86,7 +146,11 @@ const Dashboard = ({ onLogOut }) => {
                       xl={2}
                       className="mb-4"
                     >
-                      <MovieCard movie={peli} />
+                      <MovieCard
+                        movie={peli}
+                        onDelete={() => handleDeleteFilm(peli.id)} // CAMBIO JULIAN
+                        onEdit={() => handleEditFilm(peli)} // CAMBIO JULIAN
+                      />
                     </Col>
                   ))}
                 </Row>
@@ -108,11 +172,14 @@ const Dashboard = ({ onLogOut }) => {
                           funcion={funcion}
                           peliculas={peliculas}
                           onDelete={() => handleDeleteFunction(funcion.id)}
+                          onEdit={() => handleEditFunction(funcion)} // CAMBIO JULIAN
                         />
                       </Col>
                     ))
                   ) : (
-                    <p className="text-white">No hay funciones agregadas todavía.</p>
+                    <p className="text-white">
+                      No hay funciones agregadas todavía.
+                    </p>
                   )}
                 </Row>
 
@@ -132,6 +199,7 @@ const Dashboard = ({ onLogOut }) => {
                         <SalaCard
                           sala={sala}
                           onDelete={() => handleDeleteSala(sala.id)}
+                          onEdit={() => handleEditSala(sala)} // editar sala
                         />
                       </Col>
                     ))
@@ -143,65 +211,22 @@ const Dashboard = ({ onLogOut }) => {
             }
           />
 
-          {/* Agregar Película */}
+          {/* CAMBIO JULIAN: rutas para edición */}
           <Route
             path="add-movie"
-            element={
-              <div className="d-flex flex-column gap-3">
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h2 className="text-white">➕ Agregar Película</h2>
-                  <Button
-                    variant="outline-primary"
-                    size="sm"
-                    onClick={() => navigate("/home")}
-                  >
-                    🔙 Volver al Catálogo
-                  </Button>
-                </div>
-                <NewFilm onFilmAdd={handleAddFilm} />
-              </div>
-            }
+            element={<NewFilm onFilmAdd={handleAddFilm} editFilm={editFilm} />}
           />
 
-          {/* Agregar Función */}
           <Route
             path="add-function"
-            element={
-              <div className="d-flex flex-column gap-3">
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h2 className="text-white">🎬 Agregar Función</h2>
-                  <Button
-                    variant="outline-primary"
-                    size="sm"
-                    onClick={() => navigate("/home")}
-                  >
-                    🔙 Volver al Catálogo
-                  </Button>
-                </div>
-                <NewFuncion onFuncionAdd={handleAddFunction} />
-              </div>
-            }
+            element={<NewFuncion onFuncionAdd={handleAddFunction} editFuncion={editFuncion} />}
           />
 
-          {/* Agregar Sala */}
           <Route
             path="add-sala"
-            element={
-              <div className="d-flex flex-column gap-3">
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h2 className="text-white">🏛️ Agregar Sala</h2>
-                  <Button
-                    variant="outline-primary"
-                    size="sm"
-                    onClick={() => navigate("/home")}
-                  >
-                    🔙 Volver al Catálogo
-                  </Button>
-                </div>
-                <NewSala onSalaAdd={handleAddSala} />
-              </div>
-            }
+            element={<NewSala onSalaAdd={handleAddSala} editSala={editSala} />}
           />
+          {/* FIN CAMBIO JULIAN */}
         </Routes>
       </Container>
     </div>
@@ -209,3 +234,5 @@ const Dashboard = ({ onLogOut }) => {
 };
 
 export default Dashboard;
+
+

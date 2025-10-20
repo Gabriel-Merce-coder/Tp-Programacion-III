@@ -1,12 +1,14 @@
 import { Card, Button } from "react-bootstrap";
 
-const FuncionItem = ({ funcion, peliculas, onDelete }) => {
-  const pelicula = peliculas.find(p => p.id === funcion.peliculaId);
+const FuncionItem = ({ funcion, peliculas, onDelete, onEdit }) => {
+  const pelicula = peliculas.find((p) => p.id === funcion.peliculaId);
 
   return (
     <Card className="mb-3">
       <Card.Body>
-        <Card.Title>🎬 {pelicula ? pelicula.titulo : "Película Desconocida"}</Card.Title>
+        <Card.Title>
+          🎬 {pelicula ? pelicula.titulo : "Película Desconocida"}
+        </Card.Title>
         <Card.Text>
           Sala: {funcion.salaId} <br />
           Fecha: {funcion.fecha} <br />
@@ -15,19 +17,32 @@ const FuncionItem = ({ funcion, peliculas, onDelete }) => {
           Estado: {funcion.estado ? "Activa" : "Inactiva"}
         </Card.Text>
 
-        {/* Botones  */}
+        {/* Botones */}
         <div className="d-flex gap-2 mt-2">
-          <Button variant="warning" size="sm">
+          {/* /////////////////////////////////////////////////////////
+              CAMBIO JULIAN: botones editar y eliminar funcionales
+              ///////////////////////////////////////////////////////// */}
+          <Button
+            variant="warning"
+            size="sm"
+            onClick={() => onEdit(funcion)} // Editar función
+          >
             ✏️ Editar
           </Button>
-          <Button variant="danger" size="sm" onClick={onDelete}>
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={onDelete} // Eliminar función
+          >
             🗑️ Eliminar
           </Button>
+          {/* FIN CAMBIO JULIAN */}
         </div>
       </Card.Body>
     </Card>
   );
 };
 
-export default FuncionItem; 
+export default FuncionItem;
+
 

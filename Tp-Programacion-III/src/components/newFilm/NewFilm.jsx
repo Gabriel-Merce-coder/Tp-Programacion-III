@@ -1,14 +1,14 @@
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import useFilmForm from "../../hooks/useFilmForm"
+import "react-toastify/dist/ReactToastify.css";
+import useFilmForm from "../../hooks/useFilmForm";
 
-const NewFilm = ({ onFilmAdd }) => {
-    const navigate = useNavigate();
+const NewFilm = ({ onFilmAdd, editFilm }) => {
+  const navigate = useNavigate();
 
-    // nos traemos todo de useFilmForm
-    const {
+  // nos traemos todo de useFilmForm
+  const {
     titulo,
     duracion,
     genero,
@@ -38,11 +38,25 @@ const NewFilm = ({ onFilmAdd }) => {
     setDescripcion,
     setCalificacion,
     setImageUrl,
-    setErrores
-} = useFilmForm();
+    setErrores,
+  } = useFilmForm();
+
+  // /////////////////////////////////////////////////////////
+  // CAMBIO JULIAN: precargar datos si se edita una película
+  // /////////////////////////////////////////////////////////
+  if (editFilm && titulo === "" && duracion === "") {
+    setTitulo(editFilm.titulo);
+    setDuracion(editFilm.duracion);
+    setGenero(editFilm.genero);
+    setReparto(editFilm.reparto);
+    setDescripcion(editFilm.descripcion);
+    setCalificacion(editFilm.calificacion);
+    setImageUrl(editFilm.imageUrl);
+  }
+  // FIN CAMBIO JULIAN
 
   const handleAddFilm = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     let errorPelicula = {
       titulo: "",
@@ -51,32 +65,41 @@ const NewFilm = ({ onFilmAdd }) => {
       reparto: "",
       descripcion: "",
       calificacion: "",
-      imageUrl: ""
+      imageUrl: "",
+    };
+
+    if (titulo === "") {
+      errorPelicula.titulo = "El titulo no puede estar vacio";
+    }
+    if (duracion === "" || duracion <= 0) {
+      errorPelicula.duracion = "La duracion no puede estar vacia o ser menor a 1";
+    }
+    if (genero === "") {
+      errorPelicula.genero = "El genero no puede estar vacio";
+    }
+    if (reparto === "") {
+      errorPelicula.reparto = "El reparto no puede estar vacio";
+    }
+    if (descripcion === "") {
+      errorPelicula.descripcion = "La descripcion no puede estar vacia";
+    }
+    if (calificacion === "" || calificacion < 1 || calificacion > 10) {
+      errorPelicula.calificacion =
+        "La calificacion no puede estar vacia y  debe estar entre 1 y 10";
+    }
+    if (imageUrl === "") {
+      errorPelicula.imageUrl = "La url no puede estar vacia";
     }
 
-    if(titulo === ""){
-      errorPelicula.titulo = "El titulo no puede estar vacio"
-    }
-    if(duracion === "" || duracion <= 0){
-      errorPelicula.duracion = "La duracion no puede estar vacia o ser menor a 1"
-    }
-    if(genero === ""){
-      errorPelicula.genero = "El genero no puede estar vacio"
-    }
-    if(reparto === ""){
-      errorPelicula.reparto = "El reparto no puede estar vacio"
-    }
-    if(descripcion === "" ){
-      errorPelicula.descripcion = "La descripcion no puede estar vacia"
-    }
-    if(calificacion === "" || calificacion < 1 || calificacion > 10){
-      errorPelicula.calificacion = "La calificacion no puede estar vacia y  debe estar entre 1 y 10"
-    }
-    if(imageUrl === ""){
-      errorPelicula.imageUrl = "La url no puede estar vacia"
-    }
-
-    if (errorPelicula.titulo || errorPelicula.duracion || errorPelicula.genero || errorPelicula.reparto || errorPelicula.descripcion || errorPelicula.calificacion || errorPelicula.imageUrl) {
+    if (
+      errorPelicula.titulo ||
+      errorPelicula.duracion ||
+      errorPelicula.genero ||
+      errorPelicula.reparto ||
+      errorPelicula.descripcion ||
+      errorPelicula.calificacion ||
+      errorPelicula.imageUrl
+    ) {
       setErrores(errorPelicula);
       toast.error("Error, revise los campos");
 
@@ -99,26 +122,24 @@ const NewFilm = ({ onFilmAdd }) => {
       reparto,
       descripcion,
       calificacion,
-      imageUrl
-    }
+      imageUrl,
+    };
 
-    toast.success("Pelicula agregada")
-    onFilmAdd(filmData)
-    setTitulo("")
-    setDuracion("")
-    setGenero("")
-    setReparto("")
-    setDescripcion("")
-    setCalificacion("")
-    setImageUrl("")
-    navigate("/home")
-  }
+    
 
-  return(
+    onFilmAdd(filmData);
+    setTitulo("");
+    setDuracion("");
+    setGenero("");
+    setReparto("");
+    setDescripcion("");
+    setCalificacion("");
+    setImageUrl("");
+    navigate("/home");
+  };
+
+  return (
     <div>
-      
-
-
       <Card className="m-4 w-50" bg="success">
         <Card.Body>
           <Form className="text-white" onSubmit={handleAddFilm}>
@@ -244,9 +265,14 @@ const NewFilm = ({ onFilmAdd }) => {
             </Row>
 
             <Row className="justify-content-end">
-              <Col md={3} className="d-flex flex-column justify-content-end align-items-end">
+              <Col
+                md={3}
+                className="d-flex flex-column justify-content-end align-items-end"
+              >
                 <Button variant="primary" type="submit">
-                  Agregar película
+                  {/* CAMBIO JULIAN: botón dinámico */}
+                  {editFilm ? "Guardar Cambios" : "Agregar Película"}
+                  {/* FIN CAMBIO JULIAN */}
                 </Button>
               </Col>
             </Row>
