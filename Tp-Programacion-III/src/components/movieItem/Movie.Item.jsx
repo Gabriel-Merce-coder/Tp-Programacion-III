@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import { BsStarFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom"; // CAMBIO JULIAN: navegación para reservar
 
 const MovieCard = ({ movie, onDelete, onEdit }) => {
   const { titulo, genero, descripcion, reparto, calificacion, imageUrl, duracion } = movie;
   const [showDetails, setShowDetails] = useState(false);
+  const navigate = useNavigate(); // CAMBIO JULIAN: hook para redirigir al formulario de reserva
 
   const toggleDetails = () => setShowDetails(!showDetails);
 
@@ -44,7 +46,7 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
             {genero.split(",")[0].trim()}
           </Badge>
 
-          <div className="d-flex gap-2 mt-2">
+          <div className="d-flex flex-wrap gap-2 mt-2">
             <Button variant="outline-light" size="sm">
               ▶ Ver Película
             </Button>
@@ -57,13 +59,20 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
             </Button>
 
             {/* /////////////////////////////////////////////////////////
-                CAMBIO JULIAN: botones de editar y eliminar
+                CAMBIO JULIAN: botones de editar, eliminar y reservar
                 ///////////////////////////////////////////////////////// */}
             <Button variant="warning" size="sm" onClick={() => onEdit(movie)}>
               ✏️ Editar
             </Button>
             <Button variant="danger" size="sm" onClick={() => onDelete(movie.id)}>
               🗑️ Eliminar
+            </Button>
+            <Button
+              variant="outline-success"
+              size="sm"
+              onClick={() => navigate("/home/add-reserva")}
+            >
+              🎟️ Reservar
             </Button>
             {/* FIN CAMBIO JULIAN */}
           </div>
@@ -138,4 +147,5 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
 };
 
 export default MovieCard;
+
 
