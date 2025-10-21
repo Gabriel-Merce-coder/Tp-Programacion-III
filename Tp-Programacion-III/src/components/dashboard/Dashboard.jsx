@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Row, Col, Button, Container } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import MovieCard from "../movieItem/Movie.Item";
 import FuncionCard from "../funcionItem/FuncionItem";
@@ -11,9 +11,10 @@ import Navbar from "../navbar/Navbar";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// CAMBIO JULIAN: nuevos imports para reservas
+// CAMBIO JULIAN: nuevos imports para reservas e historial
 import NewReserva from "../reservas/NewReserva";
 import ReservaItem from "../reservaItem/ReservaItem";
+import HistorialReservas from "../historialReservas/HistorialReservas";
 // FIN CAMBIO JULIAN
 
 const Dashboard = ({ onLogOut }) => {
@@ -164,8 +165,8 @@ const Dashboard = ({ onLogOut }) => {
                     >
                       <MovieCard
                         movie={peli}
-                        onDelete={() => handleDeleteFilm(peli.id)} // CAMBIO JULIAN
-                        onEdit={() => handleEditFilm(peli)} // CAMBIO JULIAN
+                        onDelete={() => handleDeleteFilm(peli.id)}
+                        onEdit={() => handleEditFilm(peli)}
                       />
                     </Col>
                   ))}
@@ -190,7 +191,7 @@ const Dashboard = ({ onLogOut }) => {
                           funcion={funcion}
                           peliculas={peliculas}
                           onDelete={() => handleDeleteFunction(funcion.id)}
-                          onEdit={() => handleEditFunction(funcion)} // CAMBIO JULIAN
+                          onEdit={() => handleEditFunction(funcion)}
                         />
                       </Col>
                     ))
@@ -217,7 +218,7 @@ const Dashboard = ({ onLogOut }) => {
                         <SalaCard
                           sala={sala}
                           onDelete={() => handleDeleteSala(sala.id)}
-                          onEdit={() => handleEditSala(sala)} // editar sala
+                          onEdit={() => handleEditSala(sala)}
                         />
                       </Col>
                     ))
@@ -228,9 +229,7 @@ const Dashboard = ({ onLogOut }) => {
                   )}
                 </Row>
 
-                {/* /////////////////////////////////////////////////////////
-                CAMBIO JULIAN: mostrar reservas actuales
-                ///////////////////////////////////////////////////////// */}
+                {/* Reservas actuales */}
                 <h2 className="text-white mt-5 mb-4">📋 Reservas actuales</h2>
                 <Row>
                   {reservas.length > 0 ? (
@@ -256,8 +255,10 @@ const Dashboard = ({ onLogOut }) => {
                             pelicula={peli}
                             funcion={funcion}
                             onCancel={() => {
-                              setReservas((prev) => prev.filter((r) => r.id !== reserva.id));
-                              toast.success("Reserva cancelada correctamente"); //CAMBIO JULIAN: notificación al cancelar
+                              setReservas((prev) =>
+                                prev.filter((r) => r.id !== reserva.id)
+                              );
+                              toast.info("Reserva cancelada correctamente");
                             }}
                           />
                         </Col>
@@ -269,7 +270,6 @@ const Dashboard = ({ onLogOut }) => {
                     </p>
                   )}
                 </Row>
-                {/* FIN CAMBIO JULIAN */}
               </div>
             }
           />
@@ -306,6 +306,18 @@ const Dashboard = ({ onLogOut }) => {
               />
             }
           />
+
+          {/* CAMBIO JULIAN: ruta para historial de reservas */}
+          <Route
+            path="historial-reservas"
+            element={
+              <HistorialReservas
+                reservas={reservas}
+                peliculas={peliculas}
+                funciones={funciones}
+              />
+            }
+          />
           {/* FIN CAMBIO JULIAN */}
         </Routes>
       </Container>
@@ -314,3 +326,4 @@ const Dashboard = ({ onLogOut }) => {
 };
 
 export default Dashboard;
+
