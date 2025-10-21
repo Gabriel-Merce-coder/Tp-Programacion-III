@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import ProfileMenu from "../profileMenu/ProfileMenu";
 import DeleteModal from "../ui/Mymodal";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = ({ onLogOut }) => {
   const navigate = useNavigate();
@@ -49,19 +49,19 @@ const Navbar = ({ onLogOut }) => {
         <div className="container-fluid d-flex justify-content-between align-items-center">
           <h1 className="text-danger fw-bold mb-0">Cine App</h1>
           <div className="d-flex align-items-center gap-2">
-            {/* Rutas relativas */}
+            {/* Botones de navegación */}
             <Button
               variant="outline-primary"
               size="sm"
-              onClick={() => navigate("add-movie")}  // Relativa
+              onClick={() => navigate("add-movie")}
             >
               ➕ Agregar Película
             </Button>
-            
+
             <Button
               variant="outline-primary"
               size="sm"
-              onClick={() => navigate("add-function")}  // Relativa
+              onClick={() => navigate("add-function")}
             >
               🎬 Agregar Función
             </Button>
@@ -69,13 +69,24 @@ const Navbar = ({ onLogOut }) => {
             <Button
               variant="outline-primary"
               size="sm"
-              onClick={() => navigate("add-sala")}  // Relativa
+              onClick={() => navigate("add-sala")}
             >
-              🎬 Agregar Sala
+              🏛️ Agregar Sala
             </Button>
 
+            {/* /////////////////////////////////////////////////////////
+                CAMBIO JULIAN: nuevo botón para ver el historial de reservas
+                ///////////////////////////////////////////////////////// */}
+            <Button
+              variant="outline-info"
+              size="sm"
+              onClick={() => navigate("/home/historial-reservas")}
+            >
+              📜 Historial
+            </Button>
+            {/* FIN CAMBIO JULIAN */}
+
             <ProfileMenu
-              // onViewProfile={() => alert("Ver perfil")} 
               onDeleteAccount={handleShowDelete}
               onLogOut={handleLogOut}
             />

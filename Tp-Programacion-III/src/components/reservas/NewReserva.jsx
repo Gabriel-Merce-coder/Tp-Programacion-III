@@ -107,7 +107,7 @@ const NewReserva = ({ peliculas, funciones, onAddReserva }) => {
       precioTotal: reserva.precioTotal ? parseFloat(reserva.precioTotal) : 0,
     };
 
-    onAddReserva(nuevaReserva); // el toast de éxito se muestra en Dashboard
+    onAddReserva(nuevaReserva);
     navigate("/home");
   };
 
@@ -225,6 +225,7 @@ const NewReserva = ({ peliculas, funciones, onAddReserva }) => {
 export default NewReserva;
 
 // FIN CAMBIO JULIAN
+
 
 
 
