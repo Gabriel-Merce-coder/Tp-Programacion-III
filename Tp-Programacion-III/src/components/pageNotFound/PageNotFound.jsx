@@ -1,18 +1,17 @@
-
 import {Button} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
-const TextNotFound = () =>{
+const PageNotFound = () =>{
     const navigate = useNavigate();
     
     const handleGoBack = () =>{
-        navigate("/login")
+        navigate("/home")
     }
     return(
         <div className="d-flex flex-column justify-content-center align-items-center"> 
             <h2>Pagina no encontrada </h2>
-            <Button onClick={handleGoBack}>Volver al login</Button>
+            <Button onClick={handleGoBack}>Volver</Button>
         </div>
     )
 }
-export default TextNotFound
+export default PageNotFound

@@ -234,7 +234,16 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
               </Form.Group>
             </Row>
 
-            <Row className="justify-content-end">
+            <Row className="justify-content-between">
+              <Col md={4}>
+              <Button
+                variant="outline-light"
+                onClick={() => navigate("/home")}
+                type="button"
+              >
+                Volver al inicio
+              </Button>
+            </Col>
               <Col
                 md={3}
                 className="d-flex flex-column justify-content-end align-items-end"

@@ -5,7 +5,6 @@ import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import Protected from "./components/protected/Protected";
 import TextNotFound from "./components/textNotFound/TextNotFound";
-import EditProfile from "./components/profile/EditProfile"; // CAMBIO JULIAN
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -33,17 +32,6 @@ function App() {
               </Protected>
             }
           />
-
-          {/* CAMBIO JULIAN: nueva ruta para edición de perfil */}
-          <Route
-            path="/perfil"
-            element={
-              <Protected isSingedIn={logIn}>
-                <EditProfile />
-              </Protected>
-            }
-          />
-          {/* FIN CAMBIO JULIAN */}
 
           {/* Ruta por defecto */}
           <Route path="*" element={<TextNotFound />} />

@@ -88,7 +88,10 @@ const Login = ({ onLogin }) => {
                 ref={emailRef}
                 
             />
-                {errores.email && <span className="error-text">{errores.email}</span>}
+            <Form.Control.Feedback type="invalid">
+                {errores.email}
+            </Form.Control.Feedback>
+
             </FormGroup>
             <FormGroup className="mb-4">
             <Form.Control
@@ -99,7 +102,9 @@ const Login = ({ onLogin }) => {
                 ref={passwordRef}
                 
             />
-            {errores.password && <span className="error-text">{errores.password}</span>}
+            <Form.Control.Feedback type="invalid">
+                {errores.password}
+            </Form.Control.Feedback>
             </FormGroup>
             <Row>
             <Col />

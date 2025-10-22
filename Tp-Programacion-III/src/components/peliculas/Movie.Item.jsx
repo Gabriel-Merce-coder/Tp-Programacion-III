@@ -55,15 +55,15 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
               size="sm"
               onClick={toggleDetails}
             >
-              {showDetails ? "▲ Ocultar Detalles" : "▼ Ver Detalles"}
+              {showDetails ? " Ocultar Pelicula" : " Ver Pelicula"}
             </Button>
 
             <Button variant="warning" size="sm" onClick={() => onEdit(movie)}>
-              ✏️ Editar
+               Editar
             </Button>
 
             <Button variant="danger" size="sm" onClick={() => onDelete(movie.id)}>
-              🗑️ Eliminar
+               Eliminar
             </Button>
 
             <Button
@@ -71,7 +71,7 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
               size="sm"
               onClick={() => navigate("/home/add-reserva")}
             >
-              🎟️ Reservar
+              Reservar Pelicula
             </Button>
             {/* FIN CAMBIO JULIAN */}
           </div>

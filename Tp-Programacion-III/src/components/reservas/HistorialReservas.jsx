@@ -1,11 +1,12 @@
 // /////////////////////////////////////////////////////////
-// CAMBIO JULIAN: nuevo componente para mostrar el historial de reservas
+// CAMBIO JULIAN: Historial de reservas usando callback para cancelar
 // /////////////////////////////////////////////////////////
 
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import ReservaItem from "./ReservaItem";
 
-const HistorialReservas = ({ reservas, peliculas, funciones }) => {
+const HistorialReservas = ({ reservas, peliculas, funciones, onCancelReserva }) => {
   const navigate = useNavigate();
 
   return (
@@ -22,19 +23,12 @@ const HistorialReservas = ({ reservas, peliculas, funciones }) => {
 
             return (
               <Col key={reserva.id} xs={12} md={6} lg={4} className="mb-3">
-                <Card bg="secondary" text="white" className="shadow-sm">
-                  <Card.Body>
-                    <Card.Title>🎟️ {reserva.nombre}</Card.Title>
-                    <Card.Text>
-                      <strong>Película:</strong>{" "}
-                      {pelicula ? pelicula.titulo : "No encontrada"} <br />
-                      <strong>Función:</strong>{" "}
-                      {funcion
-                        ? `Sala ${funcion.salaId} - ${funcion.fecha} ${funcion.hora}`
-                        : "No encontrada"}
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
+                <ReservaItem
+                  reserva={reserva}
+                  pelicula={pelicula}
+                  funcion={funcion}
+                  onCancel={() => onCancelReserva(reserva.id)}
+                />
               </Col>
             );
           })}
