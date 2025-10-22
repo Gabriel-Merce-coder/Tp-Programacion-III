@@ -1,7 +1,10 @@
 import { useState, useRef } from 'react'
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom'
-const Login = () => {
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const Login = ({ onLogin }) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -29,8 +32,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const currentEmail = emailRef.current.value;
-        const currentPassword = passwordRef.current.value;
+
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         let Errores = {
@@ -38,20 +40,21 @@ const Login = () => {
             password: ""
         }
 
-        if (currentEmail === "") {
+        if (email === "") {
             Errores.email = "El email no puede estar vacío";
-        } else if (!regexEmail.test(currentEmail)) {
+        } else if (!regexEmail.test(email)) {
             Errores.email = "El email no es válido";
         }
 
-        if (currentPassword === "") {
+        if (password === "") {
             Errores.password = "La contraseña no puede estar vacía";
-        } else if (currentPassword.length < 6) {
+        } else if (password.length < 6) {
             Errores.password = "La contraseña debe tener al menos 6 caracteres";
         }
 
         if (Errores.email || Errores.password) {
             setErrores(Errores);
+            toast.error("Error, revise los campos")
             if (Errores.email) {
                 emailRef.current.focus();
             } else {
@@ -65,21 +68,21 @@ const Login = () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ email: currentEmail, password: currentPassword })
+            body: JSON.stringify({ email: email, password: password })
         })
             .then(response => response.json())
             .then(data => {
-
                 if (data.error) {
-                    alert(data.error);
+                    toast.error(data.error);
                     return;
                 }
 
                 const token = data.token;
                 localStorage.setItem("token", token);
 
-                alert(data.message);
-                navigate("/dashboard");
+                toast.success("Iniciaste sesión exitosamente!");
+                onLogin();
+                navigate("/home");
 
                 setErrores({ email: "", password: "" });
                 setEmail("");
@@ -87,7 +90,7 @@ const Login = () => {
             })
             .catch(error => {
                 console.error("Error de conexión:", error);
-                alert("Error de conexión. Verifica que el servidor esté funcionando.");
+                toast.error("Error de conexión. Verifica que el servidor esté funcionando.");
             });
     }
 
@@ -106,9 +109,8 @@ const Login = () => {
                                 onChange={handleEmailChange}
                                 value={email}
                                 ref={emailRef}
-
                             />
-                            {errores.email && <span className="error-text">{errores.email}</span>}
+                            {errores.email && <span className="text-danger">{errores.email}</span>}
                         </FormGroup>
                         <FormGroup className="mb-4">
                             <Form.Control
@@ -117,9 +119,8 @@ const Login = () => {
                                 onChange={handlePasswordChange}
                                 value={password}
                                 ref={passwordRef}
-
                             />
-                            {errores.password && <span className="error-text">{errores.password}</span>}
+                            {errores.password && <span className="text-danger">{errores.password}</span>}
                         </FormGroup>
                         <Row>
                             <Col />
@@ -132,7 +133,6 @@ const Login = () => {
                     </Form>
                 </Card.Body>
             </Card>
-
         </>
     );
 };
