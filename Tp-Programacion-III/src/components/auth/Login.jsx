@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom'
-const Login = ({ onLogin }) => {
+const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -79,7 +79,6 @@ const Login = ({ onLogin }) => {
                 localStorage.setItem("token", token);
 
                 alert(data.message);
-                onLogin();
                 navigate("/dashboard");
 
                 setErrores({ email: "", password: "" });

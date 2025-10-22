@@ -1,9 +1,9 @@
-import {useState, useRef} from 'react'
-import {useNavigate} from 'react-router-dom'
+import { useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 
-const Registro = ({onLogin}) =>{
-    
+const Registro = () => {
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [nombre, setNombre] = useState("");
@@ -23,25 +23,25 @@ const Registro = ({onLogin}) =>{
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
         if (errores.email) {
-            setErrores({...errores, email: ""});
+            setErrores({ ...errores, email: "" });
         }
     }
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
         if (errores.password) {
-            setErrores({...errores, password: ""});
+            setErrores({ ...errores, password: "" });
         }
     }
     const handleNombreChange = (e) => {
         setNombre(e.target.value);
         if (errores.nombre) {
-            setErrores({...errores, nombre: ""});
+            setErrores({ ...errores, nombre: "" });
         }
     }
     const handleTelefonoChange = (e) => {
         setTelefono(e.target.value);
         if (errores.telefono) {
-            setErrores({...errores, telefono: ""});
+            setErrores({ ...errores, telefono: "" });
         }
     }
 
@@ -60,9 +60,9 @@ const Registro = ({onLogin}) =>{
             telefono: "",
         }
 
-        if(currentEmail === "") {
+        if (currentEmail === "") {
             Errores.email = "El correo electronico no puede estar vacio"
-        } else if(!regexEmail.test(currentEmail)) {
+        } else if (!regexEmail.test(currentEmail)) {
             Errores.email = "El correo electronico no es valido"
         }
 
@@ -96,7 +96,6 @@ const Registro = ({onLogin}) =>{
         }
 
         alert("Te registraste exitosamente");
-        onLogin();
         navigate("/login");
         console.log("Credenciales: ", {
             email: currentEmail,
@@ -115,12 +114,12 @@ const Registro = ({onLogin}) =>{
         setNombre("");
         setTelefono("");
     }
-    return(
+    return (
         <div className="register-container">
             <form onSubmit={handleSubmit}>
                 <h3>Registrarse</h3>
-                <div className = "email-group">
-                    <input 
+                <div className="email-group">
+                    <input
                         type="email"
                         placeholder="Correo electrónico"
                         value={email}
@@ -129,8 +128,8 @@ const Registro = ({onLogin}) =>{
                     />
                     {errores.email && <span className="error">{errores.email}</span>}
                 </div>
-                <div className = "password-group">
-                    <input 
+                <div className="password-group">
+                    <input
                         type="password"
                         placeholder="Contraseña"
                         value={password}
@@ -139,8 +138,8 @@ const Registro = ({onLogin}) =>{
                     />
                     {errores.password && <span className="error">{errores.password}</span>}
                 </div>
-                <div className = "nombre-group">
-                    <input 
+                <div className="nombre-group">
+                    <input
                         type="text"
                         placeholder="Nombre"
                         value={nombre}
@@ -149,8 +148,8 @@ const Registro = ({onLogin}) =>{
                     />
                     {errores.nombre && <span className="error">{errores.nombre}</span>}
                 </div>
-                <div className = "telefono-group">
-                    <input 
+                <div className="telefono-group">
+                    <input
                         type="tel"
                         placeholder="Teléfono"
                         value={telefono}

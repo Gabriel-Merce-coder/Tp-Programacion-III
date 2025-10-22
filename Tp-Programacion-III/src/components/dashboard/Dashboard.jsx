@@ -86,14 +86,14 @@ const Dashboard = ({ onLogOut }) => {
   console.log(peliculas);
   return (
     <div className="bg-dark min-vh-100 text-white">
-      
+
       <Row className="bg-black py-3 px-4 align-items-center mx-0">
         <Col xs={6}>
           <h1 className="text-danger fw-bold mb-0">Cine App</h1>
         </Col>
         <Col xs={6} className="text-end">
-          <Button 
-            variant="outline-danger" 
+          <Button
+            variant="outline-danger"
             onClick={handleLogOut}
             size="sm"
           >
@@ -102,9 +102,9 @@ const Dashboard = ({ onLogOut }) => {
         </Col>
       </Row>
 
-      
+
       <div className="p-4">
-        
+
         <Row className="mb-4">
           <Col>
             <h2 className="text-white fw-bold border-bottom border-secondary pb-2">

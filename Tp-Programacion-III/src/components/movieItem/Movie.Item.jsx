@@ -10,9 +10,9 @@ const MovieCard = ({ movie }) => {
 
   return (
     <>
-      
-      <Card 
-        className="bg-dark text-white border-0 shadow-lg movie-card" 
+
+      <Card
+        className="bg-dark text-white border-0 shadow-lg movie-card"
         style={{ transition: 'transform 0.2s ease-in-out', cursor: 'pointer' }}
       >
         <div className="position-relative" style={{ overflow: 'hidden' }}>
@@ -22,9 +22,9 @@ const MovieCard = ({ movie }) => {
             alt={titulo}
             style={{ height: "300px", objectFit: "cover", transition: 'transform 0.3s ease-in-out' }}
           />
-          <Badge 
-            bg="warning" 
-            text="dark" 
+          <Badge
+            bg="warning"
+            text="dark"
             className="position-absolute top-0 end-0 m-2 d-flex align-items-center"
           >
             <BsStarFill className="me-1" />
@@ -43,9 +43,9 @@ const MovieCard = ({ movie }) => {
 
           <div className="d-flex gap-2 mt-2">
             <Button variant="outline-light" size="sm">▶ Ver Pelicula</Button>
-            <Button 
-              variant={showDetails ? "outline-info" : "outline-secondary"} 
-              size="sm" 
+            <Button
+              variant={showDetails ? "outline-info" : "outline-secondary"}
+              size="sm"
               onClick={toggleDetails}
             >
               {showDetails ? "▲ Ocultar Detalles" : "▼ Ver Detalles"}
@@ -54,7 +54,7 @@ const MovieCard = ({ movie }) => {
         </Card.Body>
       </Card>
 
-      
+
       {showDetails && (
         <div style={{
           position: 'fixed',
@@ -71,12 +71,12 @@ const MovieCard = ({ movie }) => {
           gap: '20px',
           transition: 'transform 0.3s ease',
         }}>
-          
+
           <div style={{ flex: '1 1 40%' }}>
             <img src={imageUrl} alt={titulo} style={{ width: '100%', borderRadius: '5px' }} />
           </div>
 
-          
+
           <div style={{ flex: '1 1 60%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
               <h2>{titulo}</h2>
@@ -94,7 +94,7 @@ const MovieCard = ({ movie }) => {
         </div>
       )}
 
-      
+
       <style>{`
         .movie-card:hover {
           transform: scale(1.05);
