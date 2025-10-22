@@ -15,7 +15,7 @@ const ProfileMenu = ({ onDeleteAccount, onLogOut }) => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu variant="dark">
-        <Dropdown.Item onClick={() => navigate("/perfil")}>
+        <Dropdown.Item onClick={() => navigate("/home/perfil")}>
           Ver Perfil {/* CAMBIO JULIAN */}
         </Dropdown.Item>
         <Dropdown.Item onClick={onDeleteAccount}>Eliminar Cuenta</Dropdown.Item>

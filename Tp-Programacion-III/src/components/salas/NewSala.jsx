@@ -9,72 +9,70 @@ const NewSala = ({ onSalaAdd, editSala }) => {
   const navigate = useNavigate();
 
   const {
+    numero,
     tipo_sala,
     capacidad,
     estado,
     errores,
-
+    numeroRef,
     tipo_salaRef,
     capacidadRef,
-
+    handleChangeNumero,
     handleChangeTipo_Sala,
     handleChangeCapacidad,
     handleChangeEstado,
-
+    setNumero,
     setTipo_Sala,
     setCapacidad,
     setEstado,
     setErrores,
   } = useSalaForm();
 
- // /////////////////////////////////////////////////////////
-// CAMBIO JULIAN: precargar datos si se edita una sala (sin romper el render)
-// /////////////////////////////////////////////////////////
-
-
-useEffect(() => {
-  if (editSala) {
-    setTipo_Sala(editSala.tipo_sala || "");
-    setCapacidad(editSala.capacidad || "");
-    setEstado(editSala.estado ?? true);
-  }
-}, [editSala]);
-// FIN CAMBIO JULIAN
-
+  // Precargar datos si se edita una sala
+  useEffect(() => {
+    if (editSala) {
+      setNumero(editSala.numero || "");
+      setTipo_Sala(editSala.tipo_sala || "");
+      setCapacidad(editSala.capacidad || "");
+      setEstado(editSala.estado ?? true);
+    }
+  }, [editSala]);
 
   const handleAddSala = (e) => {
     e.preventDefault();
 
-    let errorSala = { tipo_sala: "", capacidad: "" };
+    let errorSala = { numero: "", tipo_sala: "", capacidad: "" };
 
+    if (!numero || numero <= 0) {
+      errorSala.numero = "El número de sala debe ser mayor a 0";
+    }
     if (!tipo_sala) {
       errorSala.tipo_sala = "El tipo de sala no puede estar vacío";
     }
     if (!capacidad || capacidad <= 0) {
-      errorSala.capacidad = "La capacidad debe ser un número mayor a 0";
+      errorSala.capacidad = "La capacidad debe ser mayor a 0";
     }
 
-    if (errorSala.tipo_sala || errorSala.capacidad) {
+    if (errorSala.numero || errorSala.tipo_sala || errorSala.capacidad) {
       setErrores(errorSala);
       toast.error("Por favor, revise los campos");
-
-      if (errorSala.tipo_sala) tipo_salaRef.current.focus();
+      if (errorSala.numero) numeroRef.current.focus();
+      else if (errorSala.tipo_sala) tipo_salaRef.current.focus();
       else if (errorSala.capacidad) capacidadRef.current.focus();
-
       return;
     }
 
     const nuevaSala = {
-      tipo_sala: tipo_sala,
+      numero: parseInt(numero),
+      tipo_sala,
       capacidad: parseInt(capacidad),
-      estado: estado,
+      estado,
     };
-
-   
 
     onSalaAdd(nuevaSala);
 
     // Reset de campos
+    setNumero("");
     setTipo_Sala("");
     setCapacidad("");
     setEstado(true);
@@ -88,6 +86,24 @@ useEffect(() => {
         <Card.Body>
           <Form className="text-white" onSubmit={handleAddSala}>
             <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="numero">
+                  <Form.Label>Número de Sala</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Ingrese número"
+                    min="1"
+                    value={numero}
+                    onChange={handleChangeNumero}
+                    ref={numeroRef}
+                    isInvalid={!!errores.numero}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errores.numero}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="tipo_sala">
                   <Form.Label>Tipo de Sala</Form.Label>
@@ -107,7 +123,9 @@ useEffect(() => {
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
+            </Row>
 
+            <Row>
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="capacidad">
                   <Form.Label>Capacidad</Form.Label>
@@ -125,9 +143,7 @@ useEffect(() => {
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
-            </Row>
 
-            <Row>
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="estado">
                   <Form.Label>Estado</Form.Label>
@@ -144,15 +160,19 @@ useEffect(() => {
               </Col>
             </Row>
 
-            <Row className="justify-content-end">
-              <Col
-                md={3}
-                className="d-flex flex-column justify-content-end align-items-end"
+            <Row className="justify-content-between">
+              <Col md={4}>
+              <Button
+                variant="outline-light"
+                onClick={() => navigate("/home")}
+                type="button"
               >
+                Volver al inicio
+              </Button>
+            </Col>
+              <Col md={3} className="d-flex justify-content-end">
                 <Button variant="primary" type="submit">
-                  {/* CAMBIO JULIAN: botón dinámico */}
                   {editSala ? "Guardar Cambios" : "Agregar Sala"}
-                  {/* FIN CAMBIO JULIAN */}
                 </Button>
               </Col>
             </Row>

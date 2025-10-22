@@ -119,7 +119,9 @@ const Registro = ({onLogin}) =>{
                         onChange={handleEmailChange}
                         ref={emailRef}
                     />
-                    {errores.email && <span className="error">{errores.email}</span>}
+                <Form.Control.Feedback type="invalid">
+                    {errores.email}
+                </Form.Control.Feedback>
                 </div>
                 <div className = "password-group">
                     <input 
@@ -129,7 +131,9 @@ const Registro = ({onLogin}) =>{
                         onChange={handlePasswordChange}
                         ref={passwordRef}
                     />
-                    {errores.password && <span className="error">{errores.password}</span>}
+                    <Form.Control.Feedback type="invalid">
+                        {errores.password}
+                    </Form.Control.Feedback>
                 </div>
                 <div className = "nombre-group">
                     <input 
@@ -139,7 +143,9 @@ const Registro = ({onLogin}) =>{
                         onChange={handleNombreChange}
                         ref={nombreRef}
                     />
-                    {errores.nombre && <span className="error">{errores.nombre}</span>}
+                <Form.Control.Feedback type="invalid">
+                    {errores.nombre}
+                </Form.Control.Feedback>
                 </div>
                 <div className = "telefono-group">
                     <input 
@@ -149,7 +155,9 @@ const Registro = ({onLogin}) =>{
                         onChange={handleTelefonoChange}
                         ref={telefonoRef}
                     />
-                    {errores.telefono && <span className="error">{errores.telefono}</span>}
+                <Form.Control.Feedback type="invalid">
+                    {errores.telefono}
+                </Form.Control.Feedback>
                 </div>
                 <button type="submit">Registrarse</button>
             </form>
