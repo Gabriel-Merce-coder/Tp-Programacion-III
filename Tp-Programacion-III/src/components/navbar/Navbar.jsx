@@ -41,7 +41,9 @@ const Navbar = ({ onLogOut }) => {
               <>
                 <Button variant="outline-primary" size="sm" onClick={() => navigate("add-movie")}> Agregar Película</Button>
 
+
                 <Button variant="outline-primary" size="sm" onClick={() => navigate("add-function")}> Agregar Función</Button>
+
 
                 <Button variant="outline-primary" size="sm" onClick={() => navigate("add-sala")}> Agregar Sala</Button>
               </>
@@ -49,7 +51,7 @@ const Navbar = ({ onLogOut }) => {
             {/* /////////////////////////////////////////////////////////
                 CAMBIO JULIAN: nuevo botón para ver el historial de reservas
                 ///////////////////////////////////////////////////////// */}
-            <Button variant="outline-info"size="sm" onClick={() => navigate("historial-reservas")}> Historial</Button>
+            <Button variant="outline-info" size="sm" onClick={() => navigate("historial-reservas")}> Historial</Button>
 
             <ProfileMenu onDeleteAccount={handleShowDelete} onLogOut={handleLogOut} />
           </div>

@@ -2,8 +2,10 @@ import { useState, useRef } from 'react'
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
+import PublicNavbar from '../navbar/PublicNavbar';
 import 'react-toastify/dist/ReactToastify.css';
 import { jwtDecode } from "jwt-decode";
+
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
@@ -83,7 +85,7 @@ const Login = () => {
                 const role = decode.role; // y me traigo el rol del objeto
                 localStorage.setItem("role", role);
 
-                if (role ==='user'){
+                if (role === 'user') {
                     navigate("/home")
                 } else {
                     navigate("/dashboard")
@@ -102,6 +104,7 @@ const Login = () => {
 
     return (
         <>
+            <PublicNavbar />
             <Card className="mt-5 mx-3 p-3 px-5 shadow">
                 <Card.Body>
                     <Row className="mb-2">
