@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import { BsStarFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom"; // CAMBIO JULIAN: navegación para reservar
+import { useNavigate } from "react-router-dom";
+import DeleteModal from "../ui/Mymodal";
 
 const MovieCard = ({ movie, onDelete, onEdit }) => {
   const { titulo, genero, descripcion, reparto, calificacion, imageUrl, duracion } = movie;
   const [showDetails, setShowDetails] = useState(false);
-  const navigate = useNavigate(); // CAMBIO JULIAN: hook para redirigir al formulario de reserva
+  const [showConfirm, setShowConfirm] = useState(false); 
+  const navigate = useNavigate();
 
   const toggleDetails = () => setShowDetails(!showDetails);
+
+  const handleConfirmDelete = () => {
+    setShowConfirm(false);
+    onDelete(movie.id);
+  };
 
   return (
     <>
@@ -47,9 +54,6 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
           </Badge>
 
           <div className="d-flex flex-wrap gap-2 mt-2">
-            {/* /////////////////////////////////////////////////////////
-                CAMBIO JULIAN: solo dejamos los botones de detalles, editar, eliminar y reservar
-                ///////////////////////////////////////////////////////// */}
             <Button
               variant={showDetails ? "outline-info" : "outline-secondary"}
               size="sm"
@@ -59,11 +63,11 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
             </Button>
 
             <Button variant="warning" size="sm" onClick={() => onEdit(movie)}>
-               Editar
+              Editar
             </Button>
 
-            <Button variant="danger" size="sm" onClick={() => onDelete(movie.id)}>
-               Eliminar
+            <Button variant="danger" size="sm" onClick={() => setShowConfirm(true)}>
+              Eliminar
             </Button>
 
             <Button
@@ -73,7 +77,6 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
             >
               Reservar Pelicula
             </Button>
-            {/* FIN CAMBIO JULIAN */}
           </div>
         </Card.Body>
       </Card>
@@ -99,7 +102,6 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
           <div style={{ flex: "1 1 40%" }}>
             <img src={imageUrl} alt={titulo} style={{ width: "100%", borderRadius: "5px" }} />
           </div>
-
           <div
             style={{
               flex: "1 1 60%",
@@ -124,6 +126,16 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
         </div>
       )}
 
+      <DeleteModal
+        show={showConfirm}
+        onHide={() => setShowConfirm(false)}
+        onConfirm={handleConfirmDelete}
+        title="Confirmar eliminación"
+        message={`¿Deseás eliminar la película "${titulo}"?`}
+        confirmText="Sí, eliminar"
+        cancelText="No, cancelar"
+      />
+
       <style>{`
         .movie-card:hover {
           transform: scale(1.05);
@@ -138,6 +150,3 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
 };
 
 export default MovieCard;
-
-
-

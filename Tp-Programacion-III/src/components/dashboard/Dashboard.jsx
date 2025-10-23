@@ -1,7 +1,7 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //componentes
 import NewFilm from "../peliculas/NewFilm";
@@ -33,7 +33,7 @@ const Dashboard = ({ onLogOut }) => {
     handleDeleteFilm,
     handleEditFilm,
     editFilm,
-    setEditFilm,
+    // setEditFilm,
   } = usePeliculas();
 
   const {
@@ -42,7 +42,7 @@ const Dashboard = ({ onLogOut }) => {
     handleDeleteFunction,
     handleEditFunction,
     editFuncion,
-    setEditFuncion,
+    // setEditFuncion,
   } = useFuncion();
 
   const {
@@ -51,12 +51,12 @@ const Dashboard = ({ onLogOut }) => {
     handleDeleteSala,
     handleEditSala,
     editSala,
-    setEditSala,
+    // setEditSala,
   } = useSala();
 
   const {
     reservas,
-    handleAddReserva,
+    // handleAddReserva,
     handleCancelReserva,
   } = useReservas();
 
@@ -76,13 +76,14 @@ const Dashboard = ({ onLogOut }) => {
     <div className="min-vh-100 bg-dark text-white">
       <Navbar onLogOut={onLogOut} />
 
+
       <Container fluid className="py-4 bg-dark min-vh-100">
         <Routes>
 
-          {/* PERFIL */}
+          {/* Perfil */}
           <Route path="perfil" element={<EditProfile />} />
 
-          {/* DASHBOARD PRINCIPAL */}
+          {/* Rutas Relativas a Dashboard */}
           <Route
             index
             element={
@@ -109,7 +110,7 @@ const Dashboard = ({ onLogOut }) => {
             }
           />
 
-          {/* FORMULARIOS */}
+          {/* Formularios */}
           <Route
             path="add-movie"
             element={<NewFilm onFilmAdd={handleAddFilm} editFilm={editFilm} />}
@@ -120,6 +121,7 @@ const Dashboard = ({ onLogOut }) => {
               <NewFuncion
                 onFuncionAdd={handleAddFunction}
                 editFuncion={editFuncion}
+
               />
             }
           />
@@ -127,18 +129,8 @@ const Dashboard = ({ onLogOut }) => {
             path="add-sala"
             element={<NewSala onSalaAdd={handleAddSala} editSala={editSala} />}
           />
-          <Route
-            path="add-reserva"
-            element={
-              <NewReserva
-                peliculas={peliculas}
-                funciones={funciones}
-                onAddReserva={handleAddReserva}
-              />
-            }
-          />
 
-          {/* HISTORIAL */}
+          {/* Historial */}
           <Route
             path="historial-reservas"
             element={
@@ -151,7 +143,7 @@ const Dashboard = ({ onLogOut }) => {
             }
           />
 
-          {/* EDICIÓN */}
+          {/* Editar */}
           <Route
             path="edit-movie/:id"
             element={<NewFilm onFilmAdd={handleAddFilm} editFilm={editFilm} />}
@@ -170,8 +162,9 @@ const Dashboard = ({ onLogOut }) => {
             element={<NewSala onSalaAdd={handleAddSala} editSala={editSala} />}
           />
 
-          {/* 404 */}
+          {/* Pagina no encontrada */}
           <Route path="*" element={<PageNotFound />} />
+
         </Routes>
       </Container>
     </div>
