@@ -1,12 +1,9 @@
-// /////////////////////////////////////////////////////////
-// CAMBIO JULIAN: Nuevo formulario de edición de perfil con botón "Volver al inicio"
-// /////////////////////////////////////////////////////////
-
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Card, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DeleteModal from "../ui/Mymodal"; // Ahora lo usamos como ConfirmModal
 
 const EditProfile = () => {
   const [usuario, setUsuario] = useState({
@@ -23,6 +20,8 @@ const EditProfile = () => {
     password: "",
   });
 
+  const [showConfirm, setShowConfirm] = useState(false); // modal de confirmación
+
   const navigate = useNavigate();
 
   const nombreRef = useRef(null);
@@ -35,6 +34,7 @@ const EditProfile = () => {
     setErrores({ ...errores, [e.target.name]: "" });
   };
 
+  // Validación del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -63,18 +63,21 @@ const EditProfile = () => {
       return;
     }
 
-    toast.success("Perfil actualizado correctamente");
-    console.log("Datos guardados:", usuario);
-    setTimeout(() => navigate("/home"), 1000);
+    setShowConfirm(true);
   };
 
-  // /////////////////////////////////////////////////////////
-  // CAMBIO JULIAN: botón para volver al inicio
-  // /////////////////////////////////////////////////////////
+  const handleProfileUpdate = () => {
+    setShowConfirm(false);
+
+    toast.success("Perfil actualizado correctamente");
+    console.log("Datos guardados:", usuario);
+
+    setTimeout(() => navigate("/home"));
+  };
+
   const handleVolverInicio = () => {
     navigate("/home");
   };
-  // FIN CAMBIO JULIAN
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100 bg-dark">
@@ -109,7 +112,7 @@ const EditProfile = () => {
                     placeholder="Ingrese su correo electrónico"
                     name="email"
                     value={usuario.email}
-                    onChange={handleChange}
+                    readOnly //  bloqueamos edición del email
                     isInvalid={!!errores.email}
                     ref={emailRef}
                   />
@@ -159,11 +162,9 @@ const EditProfile = () => {
             </Row>
 
             <div className="d-flex justify-content-between mt-4">
-              {/* CAMBIO JULIAN: botón para volver al inicio */}
               <Button variant="outline-light" onClick={handleVolverInicio}>
                 Volver al inicio
               </Button>
-              {/* FIN CAMBIO JULIAN */}
 
               <Button variant="light" type="submit">
                 Guardar Cambios
@@ -172,10 +173,19 @@ const EditProfile = () => {
           </Form>
         </Card.Body>
       </Card>
+
+      {/* 🔹 Modal de confirmación */}
+      <DeleteModal
+        show={showConfirm}
+        onHide={() => setShowConfirm(false)}
+        onConfirm={handleProfileUpdate}
+        title="Confirmar cambios"
+        message="¿Deseás guardar los cambios en tu perfil?"
+        confirmText="Sí, guardar cambios"
+        cancelText="No, cancelar"
+      />
     </div>
   );
 };
 
 export default EditProfile;
-
-// FIN CAMBIO JULIAN

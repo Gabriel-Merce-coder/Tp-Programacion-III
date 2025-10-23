@@ -5,6 +5,7 @@ import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import Protected from "./components/protected/Protected";
 import TextNotFound from "./components/textNotFound/TextNotFound";
+import LandingPage from "./components/landing/LandingPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -18,7 +19,9 @@ function App() {
   return (
     <div className="min-vh-100 bg-dark">
       <BrowserRouter>
+
         <Routes>
+          <Route path="/" element={<LandingPage />} />
           {/* Registro y Login */}
           <Route path="/registro" element={<Registro onLogin={handleLogIn} />} />
           <Route path="/login" element={<Login onLogin={handleLogIn} />} />

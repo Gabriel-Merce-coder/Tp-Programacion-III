@@ -2,6 +2,7 @@ import {useState, useRef} from 'react'
 import {useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
+import { Form, Button } from "react-bootstrap";
 
 const Registro = ({onLogin}) =>{
     
