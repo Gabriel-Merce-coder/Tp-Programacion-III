@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
 import Registro from "./components/auth/Registro";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
@@ -12,10 +11,10 @@ import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-  const [logIn, setLogIn] = useState(false);
-
-  const handleLogIn = () => setLogIn(true);
-  const handleLogOut = () => setLogIn(false);
+  const handleLogOut = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
 
   return (
     <div className="min-vh-100 bg-dark">
@@ -23,14 +22,16 @@ function App() {
 
         <Routes>
           <Route path="/" element={<LandingPage />} />
+
           {/* Registro y Login */}
-          <Route path="/registro" element={<Registro onLogin={handleLogIn} />} />
-          <Route path="/login" element={<Login onLogin={handleLogIn} />} />
-          {/*Home Protegido*/}
+          <Route path="/registro" element={<Registro />} />
+          <Route path="/login" element={<Login />} />
+
+          {/* Home protegido */}
           <Route
             path="/home/*"
             element={
-              <Protected isSingedIn={logIn}>
+              <Protected>
                 <Home onLogOut={handleLogOut} />
               </Protected>
             }
@@ -40,7 +41,7 @@ function App() {
           <Route
             path="/dashboard/*"
             element={
-              <Protected isSingedIn={logIn}>
+              <Protected>
                 <Dashboard onLogOut={handleLogOut} />
               </Protected>
             }

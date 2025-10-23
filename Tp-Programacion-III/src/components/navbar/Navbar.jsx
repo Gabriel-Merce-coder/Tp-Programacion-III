@@ -6,7 +6,7 @@ import DeleteModal from "../ui/Mymodal";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Navbar = ({ onLogOut }) => { 
+const Navbar = ({ onLogOut }) => {
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState(false);
 
@@ -35,19 +35,39 @@ const Navbar = ({ onLogOut }) => {
           </h1>
 
           <div className="d-flex align-items-center gap-2">
-            <Button variant="outline-primary" size="sm" onClick={() => navigate("add-movie")}>
+            {/* Botones de navegación */}
+            <Button
+              variant="outline-primary"
+              size="sm"
+              onClick={() => navigate("add-movie")}
+            >
               Agregar Película
             </Button>
 
-            <Button variant="outline-primary" size="sm" onClick={() => navigate("add-function")}>
+            <Button
+              variant="outline-primary"
+              size="sm"
+              onClick={() => navigate("add-function")}
+            >
               Agregar Función
             </Button>
 
-            <Button variant="outline-primary" size="sm" onClick={() => navigate("add-sala")}>
+            <Button
+              variant="outline-primary"
+              size="sm"
+              onClick={() => navigate("add-sala")}
+            >
               Agregar Sala
             </Button>
 
-            <Button variant="outline-info" size="sm" onClick={() => navigate("historial-reservas")}>
+            {/* /////////////////////////////////////////////////////////
+                CAMBIO JULIAN: nuevo botón para ver el historial de reservas
+                ///////////////////////////////////////////////////////// */}
+            <Button
+              variant="outline-info"
+              size="sm"
+              onClick={() => navigate("historial-reservas")}
+            >
               Historial
             </Button>
 

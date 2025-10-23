@@ -1,7 +1,7 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //componentes
 import NewFilm from "../peliculas/NewFilm";
@@ -10,14 +10,14 @@ import NewSala from "../salas/NewSala";
 import Navbar from "../navbar/Navbar";
 import NewReserva from "../reservas/NewReserva";
 import HistorialReservas from "../reservas/HistorialReservas"
-import EditProfile from "../profile/EditProfile"; 
+import EditProfile from "../profile/EditProfile";
 import PageNotFound from "../pageNotFound/PageNotFound";
 
 //secciones
 import PeliculaSection from "../dashboard/sections/PeliculaSection";
 import FunctionSection from "../dashboard/sections/FunctionSection";
 import SalaSection from "../dashboard/sections/SalaSection";
-import ReservaSection from "../dashboard/sections/ReservaSection";  
+import ReservaSection from "../dashboard/sections/ReservaSection";
 
 //hooks
 import usePeliculas from "../../hooks/usePeliculas"
@@ -33,7 +33,7 @@ const Dashboard = ({ onLogOut }) => {
     handleDeleteFilm,
     handleEditFilm,
     editFilm,
-    setEditFilm,
+    // setEditFilm,
   } = usePeliculas();
 
   const {
@@ -42,21 +42,21 @@ const Dashboard = ({ onLogOut }) => {
     handleDeleteFunction,
     handleEditFunction,
     editFuncion,
-    setEditFuncion,
+    // setEditFuncion,
   } = useFuncion();
 
-  const{
+  const {
     salas,
     handleAddSala,
     handleDeleteSala,
     handleEditSala,
     editSala,
-    setEditSala,
+    // setEditSala,
   } = useSala();
 
   const {
     reservas,
-    handleAddReserva,
+    // handleAddReserva,
     handleCancelReserva,
   } = useReservas();
 
@@ -163,7 +163,8 @@ const Dashboard = ({ onLogOut }) => {
           />
 
           {/* Pagina no encontrada */}
-          <Route path="*" element={<PageNotFound  />} />
+          <Route path="*" element={<PageNotFound />} />
+
         </Routes>
       </Container>
     </div>

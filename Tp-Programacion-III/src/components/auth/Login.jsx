@@ -1,9 +1,10 @@
-import  { useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
-import {useNavigate} from 'react-router-dom'   
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
-const Login = ({ onLogin }) => {
+import 'react-toastify/dist/ReactToastify.css';
+
+const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,23 +18,23 @@ const Login = ({ onLogin }) => {
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
         if (errores.email) {
-            setErrores({...errores, email: ""});
+            setErrores({ ...errores, email: "" });
         }
     }
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
         if (errores.password) {
-            setErrores({...errores, password: ""});
+            setErrores({ ...errores, password: "" });
         }
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        
+
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        
+
         let Errores = {
             email: "",
             password: ""
@@ -59,67 +60,94 @@ const Login = ({ onLogin }) => {
             } else {
                 passwordRef.current.focus();
             }
-            return; 
+            return;
         }
 
+        fetch("http://localhost:3000/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email: email, password: password })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    toast.error(data.error);
+                    return;
+                }
 
-        toast.success("Iniciaste sesión exitosamente!");
-        onLogin();
-        navigate("/home");
+                const token = data.token;
+                localStorage.setItem("token", token);
 
-        setErrores({ email: "", password: "" });
-        setEmail("");
-        setPassword("");
+                toast.success("Iniciaste sesión exitosamente!");
+                navigate("/home");
+
+                setErrores({ email: "", password: "" });
+                setEmail("");
+                setPassword("");
+            })
+            .catch(error => {
+                console.error("Error de conexión:", error);
+                toast.error("Error de conexión. Verifica que el servidor esté funcionando.");
+            });
     }
-    return (
-    <>
-    <Card className="mt-5 mx-3 p-3 px-5 shadow">
-        <Card.Body>
-        <Row className="mb-2">
-            <h5>Iniciar Sesion</h5>
-        </Row>
-        <Form onSubmit={handleSubmit}>
-            <FormGroup className="mb-4">
-            <Form.Control
-                type="email"
-                placeholder="Ingresar email"
-                onChange={handleEmailChange}
-                value={email}
-                ref={emailRef}
-                
-            />
-            <Form.Control.Feedback type="invalid">
-                {errores.email}
-            </Form.Control.Feedback>
 
-            </FormGroup>
-            <FormGroup className="mb-4">
-            <Form.Control
-                type="password"
-                placeholder="Ingresar contraseña"
-                onChange={handlePasswordChange}
-                value={password}
-                ref={passwordRef}
-                
-            />
-            <Form.Control.Feedback type="invalid">
-                {errores.password}
-            </Form.Control.Feedback>
-            </FormGroup>
-            <Row>
-            <Col />
-            <Col md={6} className="d-flex justify-content-end">
-                <Button variant="secondary" type="submit">
-                Iniciar sesión
-                </Button>
-            </Col>
-            </Row>
-        </Form>
-        </Card.Body>
-    </Card>
-    
-    </>
-);
+    return (
+        <>
+            <Card className="mt-5 mx-3 p-3 px-5 shadow">
+                <Card.Body>
+                    <Row className="mb-2">
+                        <h5>Iniciar Sesion</h5>
+                    </Row>
+                    <Form onSubmit={handleSubmit}>
+                        <FormGroup className="mb-4">
+                            <Form.Control
+                                type="email"
+                                placeholder="Ingresar email"
+                                onChange={handleEmailChange}
+                                value={email}
+                                ref={emailRef}
+                            />
+                            {errores.email && <span className="text-danger">{errores.email}</span>}
+                        </FormGroup>
+                        <FormGroup className="mb-4">
+                            <Form.Control
+                                type="password"
+                                placeholder="Ingresar contraseña"
+                                onChange={handlePasswordChange}
+                                value={password}
+                                ref={passwordRef}
+                            />
+                            {errores.password && <span className="text-danger">{errores.password}</span>}
+                        </FormGroup>
+                        <Row>
+                            <Col />
+                            <Col md={6} className="d-flex justify-content-end">
+                                <Button variant="secondary" type="submit">
+                                    Iniciar sesión
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Form>
+
+                    {/* Botón para ir al registro */}
+                    <Row className="mt-3">
+                        <Col className="text-center">
+                            <p className="text-muted mb-2">¿No tienes una cuenta?</p>
+                            <Button
+                                variant="outline-primary"
+                                size="sm"
+                                onClick={() => navigate("/registro")}
+                            >
+                                Crear cuenta
+                            </Button>
+                        </Col>
+                    </Row>
+                </Card.Body>
+            </Card>
+        </>
+    );
 };
-    
+
 export default Login; 
