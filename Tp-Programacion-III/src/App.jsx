@@ -13,6 +13,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   const handleLogOut = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     window.location.href = "/login";
   };
 
@@ -27,21 +28,21 @@ function App() {
           <Route path="/registro" element={<Registro />} />
           <Route path="/login" element={<Login />} />
 
-          {/* Home protegido */}
+          {/* Home protegido - Solo para usuarios normales */}
           <Route
             path="/home/*"
             element={
-              <Protected>
+              <Protected allowedRoles={['user']}>
                 <Home onLogOut={handleLogOut} />
               </Protected>
             }
           />
 
-          {/* Dashboard protegido */}
+          {/* Dashboard protegido - Solo para administradores */}
           <Route
             path="/dashboard/*"
             element={
-              <Protected>
+              <Protected allowedRoles={['admin', 'superadmin']}>
                 <Dashboard onLogOut={handleLogOut} />
               </Protected>
             }

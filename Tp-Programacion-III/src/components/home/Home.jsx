@@ -49,14 +49,12 @@ const Home = ({onLogOut}) => {
                     />
                 }
             />
-
                 {/*Perfil*/}
 
                     <Route 
                         path='perfil'
                         element={<EditProfile />}
                     />
-
                 {/*Historial de Reservas*/}
                     <Route 
                         path="historial-reservas"
@@ -68,7 +66,6 @@ const Home = ({onLogOut}) => {
                             />
                         }
                     />
-
                     <Route
                             path="add-reserva"
                             element={

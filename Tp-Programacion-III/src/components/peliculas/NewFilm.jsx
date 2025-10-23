@@ -135,7 +135,7 @@ const NewFilm = ({ onFilmAdd, editFilm }) => {
     setDescripcion("");
     setCalificacion("");
     setImageUrl("");
-    navigate("/home");
+    navigate("/dashboard");
   };
 
   return (
@@ -268,7 +268,7 @@ const NewFilm = ({ onFilmAdd, editFilm }) => {
               <Col md={4}>
               <Button
                 variant="outline-light"
-                onClick={() => navigate("/home")}
+                onClick={() => navigate("/dashboard")}
                 type="button"
               >
                 Volver al inicio

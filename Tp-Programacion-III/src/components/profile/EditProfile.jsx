@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DeleteModal from "../ui/Mymodal"; // Ahora lo usamos como ConfirmModal
 
 const EditProfile = () => {
+  const role =localStorage.getItem("role"); // me traigo el rol 
   const [usuario, setUsuario] = useState({
     nombre: "Juan Pérez",
     email: "juanperez@gmail.com",
@@ -20,7 +21,7 @@ const EditProfile = () => {
     password: "",
   });
 
-  const [showConfirm, setShowConfirm] = useState(false); // modal de confirmación
+  const [showConfirm, setShowConfirm] = useState(false); 
 
   const navigate = useNavigate();
 
@@ -71,12 +72,19 @@ const EditProfile = () => {
 
     toast.success("Perfil actualizado correctamente");
     console.log("Datos guardados:", usuario);
-
-    setTimeout(() => navigate("/home"));
+    if (role ==='user'){
+      navigate("/home")
+    } else {
+      navigate("/dashboard")
+    }
   };
 
   const handleVolverInicio = () => {
-    navigate("/home");
+    if (role ==='user'){
+      navigate("/home")
+    } else {
+      navigate("/dashboard")
+    }
   };
 
   return (
@@ -112,7 +120,7 @@ const EditProfile = () => {
                     placeholder="Ingrese su correo electrónico"
                     name="email"
                     value={usuario.email}
-                    readOnly //  bloqueamos edición del email
+                    readOnly //  bloqueo edición del email
                     isInvalid={!!errores.email}
                     ref={emailRef}
                   />

@@ -125,7 +125,7 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
     setSalaId("");
     setEstado(true);
 
-    navigate("/home");
+    navigate("/dashboard");
   };
 
   return (
@@ -238,7 +238,7 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
               <Col md={4}>
               <Button
                 variant="outline-light"
-                onClick={() => navigate("/home")}
+                onClick={() => navigate("/dashboard")}
                 type="button"
               >
                 Volver al inicio
