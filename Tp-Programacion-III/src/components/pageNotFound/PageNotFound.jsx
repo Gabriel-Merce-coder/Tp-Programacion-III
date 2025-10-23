@@ -5,7 +5,7 @@ const PageNotFound = () =>{
     const navigate = useNavigate();
     
     const handleGoBack = () =>{
-        navigate("/home")
+        navigate("/dashboard")
     }
     return(
         <div className="d-flex flex-column justify-content-center align-items-center"> 

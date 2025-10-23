@@ -80,10 +80,10 @@ const Dashboard = ({ onLogOut }) => {
       <Container fluid className="py-4 bg-dark min-vh-100">
         <Routes>
 
-          {/* PERFIL */}
+          {/* Perfil */}
           <Route path="perfil" element={<EditProfile />} />
 
-          {/* DASHBOARD PRINCIPAL */}
+          {/* Rutas Relativas a Dashboard */}
           <Route
             index
             element={
@@ -110,7 +110,7 @@ const Dashboard = ({ onLogOut }) => {
             }
           />
 
-          {/* FORMULARIOS */}
+          {/* Formularios */}
           <Route
             path="add-movie"
             element={<NewFilm onFilmAdd={handleAddFilm} editFilm={editFilm} />}
@@ -129,18 +129,8 @@ const Dashboard = ({ onLogOut }) => {
             path="add-sala"
             element={<NewSala onSalaAdd={handleAddSala} editSala={editSala} />}
           />
-          <Route
-            path="add-reserva"
-            element={
-              <NewReserva
-                peliculas={peliculas}
-                funciones={funciones}
-                onAddReserva={handleAddReserva}
-              />
-            }
-          />
 
-          {/* HISTORIAL */}
+          {/* Historial */}
           <Route
             path="historial-reservas"
             element={
@@ -153,7 +143,7 @@ const Dashboard = ({ onLogOut }) => {
             }
           />
 
-          {/* EDICIÓN */}
+          {/* Editar */}
           <Route
             path="edit-movie/:id"
             element={<NewFilm onFilmAdd={handleAddFilm} editFilm={editFilm} />}
@@ -172,7 +162,7 @@ const Dashboard = ({ onLogOut }) => {
             element={<NewSala onSalaAdd={handleAddSala} editSala={editSala} />}
           />
 
-          {/* 404 */}
+          {/* Pagina no encontrada */}
           <Route path="*" element={<PageNotFound  />} />
         </Routes>
       </Container>
