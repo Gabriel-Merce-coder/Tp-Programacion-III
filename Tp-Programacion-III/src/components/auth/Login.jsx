@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Login = ({ onLogin }) => {
+const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -81,7 +81,6 @@ const Login = ({ onLogin }) => {
                 localStorage.setItem("token", token);
 
                 toast.success("Iniciaste sesión exitosamente!");
-                onLogin();
                 navigate("/home");
 
                 setErrores({ email: "", password: "" });
@@ -131,6 +130,20 @@ const Login = ({ onLogin }) => {
                             </Col>
                         </Row>
                     </Form>
+
+                    {/* Botón para ir al registro */}
+                    <Row className="mt-3">
+                        <Col className="text-center">
+                            <p className="text-muted mb-2">¿No tienes una cuenta?</p>
+                            <Button
+                                variant="outline-primary"
+                                size="sm"
+                                onClick={() => navigate("/registro")}
+                            >
+                                Crear cuenta
+                            </Button>
+                        </Col>
+                    </Row>
                 </Card.Body>
             </Card>
         </>

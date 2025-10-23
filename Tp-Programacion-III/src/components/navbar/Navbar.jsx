@@ -47,7 +47,7 @@ const Navbar = ({ onLogOut }) => {
     <>
       <nav className="navbar bg-black py-3 px-4">
         <div className="container-fluid d-flex justify-content-between align-items-center">
-          <h1 className="text-danger fw-bold mb-0 " style={{ cursor: "pointer" }}  onClick={() => navigate("/home")}>Cine App</h1>
+          <h1 className="text-danger fw-bold mb-0 " style={{ cursor: "pointer" }} onClick={() => navigate("/home")}>Cine App</h1>
           <div className="d-flex align-items-center gap-2">
             {/* Botones de navegación */}
             <Button
@@ -55,7 +55,7 @@ const Navbar = ({ onLogOut }) => {
               size="sm"
               onClick={() => navigate("add-movie")}
             >
-               Agregar Película
+              Agregar Película
             </Button>
 
             <Button
@@ -63,7 +63,7 @@ const Navbar = ({ onLogOut }) => {
               size="sm"
               onClick={() => navigate("add-function")}
             >
-               Agregar Función
+              Agregar Función
             </Button>
 
             <Button
@@ -71,7 +71,7 @@ const Navbar = ({ onLogOut }) => {
               size="sm"
               onClick={() => navigate("add-sala")}
             >
-               Agregar Sala
+              Agregar Sala
             </Button>
 
             {/* /////////////////////////////////////////////////////////
@@ -82,7 +82,7 @@ const Navbar = ({ onLogOut }) => {
               size="sm"
               onClick={() => navigate("historial-reservas")}
             >
-               Historial
+              Historial
             </Button>
             {/* FIN CAMBIO JULIAN */}
 
@@ -98,7 +98,7 @@ const Navbar = ({ onLogOut }) => {
         show={showDelete}
         onHide={handleCloseDelete}
         onConfirm={handleDeleteAccount}
-        
+
       />
     </>
   );

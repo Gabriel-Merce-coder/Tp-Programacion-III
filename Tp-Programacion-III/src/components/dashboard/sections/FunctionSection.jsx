@@ -1,10 +1,10 @@
 import { Row, Col, Container } from "react-bootstrap";
 import FuncionCard from "../../funciones/FuncionItem"
 
-const FunctionSection = ({funciones,peliculas, onDeleteFunction, onEditFunction}) => {
-    return(
-        <div>
-            <h2 className="text-white mt-5 mb-4">🎟️ Funciones Disponibles</h2>
+const FunctionSection = ({ funciones, peliculas, onDeleteFunction, onEditFunction }) => {
+  return (
+    <div>
+      <h2 className="text-white mt-5 mb-4">🎟️ Funciones Disponibles</h2>
       <Row>
         {funciones.length > 0 ? (
           funciones.map((funcion) => (
@@ -22,8 +22,8 @@ const FunctionSection = ({funciones,peliculas, onDeleteFunction, onEditFunction}
           <p className="text-white">No hay funciones agregadas todavía.</p>
         )}
       </Row>
-        </div>
-    )
+    </div>
+  )
 }
 
 export default FunctionSection;

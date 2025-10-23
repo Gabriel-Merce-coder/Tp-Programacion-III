@@ -1,8 +1,8 @@
 import { Row, Col, Container } from "react-bootstrap";
 import MovieCard from "../../peliculas/Movie.Item";
-const PeliculaSection = ({peliculas, onDeleteFilm, onEditFilm}) => {
-    return (
-        <div>
+const PeliculaSection = ({ peliculas, onDeleteFilm, onEditFilm }) => {
+  return (
+    <div>
       <h2 className="text-white mb-4">🎬 Cartelera de Películas</h2>
       <Row>
         {peliculas.map((peli) => (
@@ -16,7 +16,7 @@ const PeliculaSection = ({peliculas, onDeleteFilm, onEditFilm}) => {
         ))}
       </Row>
     </div>
-    )
+  )
 }
 
 export default PeliculaSection;

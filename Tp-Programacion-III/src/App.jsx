@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
 import Registro from "./components/auth/Registro";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
@@ -10,12 +9,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-  const [logIn, setLogIn] = useState(false);
-
-  const handleLogIn = () => setLogIn(true);
   const handleLogOut = () => {
-    setLogIn(false);
-    localStorage.removeItem("token"); // Tu lógica de logout
+    localStorage.removeItem("token");
+    window.location.href = "/login";
   };
 
   return (
@@ -23,14 +19,14 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* Registro y Login */}
-          <Route path="/registro" element={<Registro onLogin={handleLogIn} />} />
-          <Route path="/login" element={<Login onLogin={handleLogIn} />} />
+          <Route path="/registro" element={<Registro />} />
+          <Route path="/login" element={<Login />} />
 
           {/* Dashboard protegido */}
           <Route
             path="/home/*"
             element={
-              <Protected isSingedIn={logIn}>
+              <Protected>
                 <Dashboard onLogOut={handleLogOut} />
               </Protected>
             }
