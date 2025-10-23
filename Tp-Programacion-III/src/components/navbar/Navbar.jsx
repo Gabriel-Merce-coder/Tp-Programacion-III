@@ -35,7 +35,6 @@ const Navbar = ({ onLogOut }) => {
           </h1>
 
           <div className="d-flex align-items-center gap-2">
-            {/* Botones de navegación */}
             <Button
               variant="outline-primary"
               size="sm"
@@ -60,9 +59,6 @@ const Navbar = ({ onLogOut }) => {
               Agregar Sala
             </Button>
 
-            {/* /////////////////////////////////////////////////////////
-                CAMBIO JULIAN: nuevo botón para ver el historial de reservas
-                ///////////////////////////////////////////////////////// */}
             <Button
               variant="outline-info"
               size="sm"
