@@ -10,6 +10,7 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
   const [showConfirm, setShowConfirm] = useState(false); 
   const navigate = useNavigate();
 
+  const role = localStorage.getItem("role");
   const toggleDetails = () => setShowDetails(!showDetails);
 
   const handleConfirmDelete = () => {
@@ -49,34 +50,24 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
             {titulo}
           </Card.Title>
 
-          <Badge bg="secondary" className="mb-2 align-self-start">
+          <Badge bg="secondary" className="mb-2 align-self-start"> 
             {genero.split(",")[0].trim()}
           </Badge>
 
           <div className="d-flex flex-wrap gap-2 mt-2">
-            <Button
-              variant={showDetails ? "outline-info" : "outline-secondary"}
-              size="sm"
-              onClick={toggleDetails}
-            >
-              {showDetails ? " Ocultar Pelicula" : " Ver Pelicula"}
-            </Button>
-
-            <Button variant="warning" size="sm" onClick={() => onEdit(movie)}>
-              Editar
-            </Button>
-
-            <Button variant="danger" size="sm" onClick={() => setShowConfirm(true)}>
-              Eliminar
-            </Button>
-
-            <Button
-              variant="outline-success"
-              size="sm"
-              onClick={() => navigate("/home/add-reserva")}
-            >
-              Reservar Pelicula
-            </Button>
+            {(role ==="user") &&(
+              <>
+                <Button variant={showDetails ? "outline-info" : "outline-secondary"} size="sm" onClick={toggleDetails}> {showDetails ? " Ocultar Pelicula" : " Ver Pelicula"}</Button>
+                <Button variant="outline-success" size="sm" onClick={() => navigate("/home/add-reserva")}>Reservar Pelicula</Button>
+              </>
+            )}
+            {(role === "admin" || role === "superadmin") && (
+              <>
+                <Button variant="warning" size="sm" onClick={() => onEdit(movie)}>Editar</Button>
+                <Button variant="danger" size="sm" onClick={() => setShowConfirm(true)}>Eliminar</Button> 
+              </>
+            
+            )}
           </div>
         </Card.Body>
       </Card>
@@ -118,9 +109,7 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
               <p><strong>Descripción:</strong> {descripcion}</p>
             </div>
             <div className="text-end mt-3">
-              <Button variant="outline-light" onClick={toggleDetails}>
-                Cerrar
-              </Button>
+              <Button variant="outline-light" onClick={toggleDetails}> Cerrar </Button>
             </div>
           </div>
         </div>

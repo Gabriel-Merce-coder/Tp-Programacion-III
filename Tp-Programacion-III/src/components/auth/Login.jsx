@@ -3,7 +3,7 @@ import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { jwtDecode } from "jwt-decode";
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
@@ -62,7 +62,6 @@ const Login = () => {
             }
             return;
         }
-
         fetch("http://localhost:3000/api/auth/login", {
             method: "POST",
             headers: {
@@ -80,8 +79,16 @@ const Login = () => {
                 const token = data.token;
                 localStorage.setItem("token", token);
 
+                const decode = jwtDecode(token) // decodifico el token en un objeto
+                const role = decode.role; // y me traigo el rol del objeto
+                localStorage.setItem("role", role);
+
+                if (role ==='user'){
+                    navigate("/home")
+                } else {
+                    navigate("/dashboard")
+                }
                 toast.success("Iniciaste sesión exitosamente!");
-                navigate("/home");
 
                 setErrores({ email: "", password: "" });
                 setEmail("");

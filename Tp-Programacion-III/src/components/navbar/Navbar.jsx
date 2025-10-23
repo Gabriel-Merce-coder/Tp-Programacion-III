@@ -10,6 +10,8 @@ const Navbar = ({ onLogOut }) => {
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState(false);
 
+  const role = localStorage.getItem("role");
+
   const handleShowDelete = () => setShowDelete(true);
   const handleCloseDelete = () => setShowDelete(false);
 
@@ -30,46 +32,24 @@ const Navbar = ({ onLogOut }) => {
     <>
       <nav className="navbar bg-black py-3 px-4">
         <div className="container-fluid d-flex justify-content-between align-items-center">
-          <h1 className="text-danger fw-bold mb-0" style={{ cursor: "pointer" }} onClick={() => navigate("/home")}>
+          <h1 className="text-danger fw-bold mb-0" >
             Cine App
           </h1>
 
           <div className="d-flex align-items-center gap-2">
-            {/* Botones de navegación */}
-            <Button
-              variant="outline-primary"
-              size="sm"
-              onClick={() => navigate("add-movie")}
-            >
-              Agregar Película
-            </Button>
+            {(role === "admin" || role === "superadmin") && (
+              <>
+                <Button variant="outline-primary" size="sm" onClick={() => navigate("add-movie")}> Agregar Película</Button>
 
-            <Button
-              variant="outline-primary"
-              size="sm"
-              onClick={() => navigate("add-function")}
-            >
-              Agregar Función
-            </Button>
+                <Button variant="outline-primary" size="sm" onClick={() => navigate("add-function")}> Agregar Función</Button>
 
-            <Button
-              variant="outline-primary"
-              size="sm"
-              onClick={() => navigate("add-sala")}
-            >
-              Agregar Sala
-            </Button>
-
+                <Button variant="outline-primary" size="sm" onClick={() => navigate("add-sala")}> Agregar Sala</Button>
+              </>
+            )}
             {/* /////////////////////////////////////////////////////////
                 CAMBIO JULIAN: nuevo botón para ver el historial de reservas
                 ///////////////////////////////////////////////////////// */}
-            <Button
-              variant="outline-info"
-              size="sm"
-              onClick={() => navigate("historial-reservas")}
-            >
-              Historial
-            </Button>
+            <Button variant="outline-info"size="sm" onClick={() => navigate("historial-reservas")}> Historial</Button>
 
             <ProfileMenu onDeleteAccount={handleShowDelete} onLogOut={handleLogOut} />
           </div>

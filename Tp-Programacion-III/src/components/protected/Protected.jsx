@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
+import { jwtDecode } from "jwt-decode";
 
 const Protected = ({ children }) => {
     const [isValid, setIsValid] = useState(null);
@@ -11,7 +12,7 @@ const Protected = ({ children }) => {
             setIsValid(false);
             return;
         }
-
+        
         fetch('http://localhost:3000/api/auth/verify-token', {
             headers: { 'x-token': token }
         })
