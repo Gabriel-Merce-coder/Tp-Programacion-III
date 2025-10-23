@@ -6,6 +6,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Protected from "./components/protected/Protected";
 import TextNotFound from "./components/textNotFound/TextNotFound";
 import LandingPage from "./components/landing/LandingPage";
+import Home from "./components/home/Home"
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -25,10 +26,19 @@ function App() {
           {/* Registro y Login */}
           <Route path="/registro" element={<Registro onLogin={handleLogIn} />} />
           <Route path="/login" element={<Login onLogin={handleLogIn} />} />
+          {/*Home Protegido*/}
+          <Route
+            path="/home/*"
+            element={
+              <Protected isSingedIn={logIn}>
+                <Home onLogOut={handleLogOut} />
+              </Protected>
+            }
+          />
 
           {/* Dashboard protegido */}
           <Route
-            path="/home/*"
+            path="/dashboard/*"
             element={
               <Protected isSingedIn={logIn}>
                 <Dashboard onLogOut={handleLogOut} />

@@ -12,7 +12,7 @@ const LandingPage = () => {
         backgroundPosition: "center",
       }}
     >
-      {/* 🔹 Navbar arriba */}
+      {/*Navbar */}
       <Navbar bg="dark" variant="dark" expand="lg" className="w-100 position-absolute top-0">
         <Container className="justify-content-between">
           <Navbar.Brand onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
