@@ -161,7 +161,12 @@ const Dashboard = ({ onLogOut }) => {
             path="edit-sala/:id"
             element={<NewSala onSalaAdd={handleAddSala} editSala={editSala} />}
           />
-
+          {/*Perfil*/}
+          
+              <Route 
+                path='perfil'
+                element={<EditProfile />}
+              />
           {/* Pagina no encontrada */}
           <Route path="*" element={<PageNotFound />} />
 

@@ -77,7 +77,7 @@ const NewSala = ({ onSalaAdd, editSala }) => {
     setCapacidad("");
     setEstado(true);
 
-    navigate("/home");
+    navigate("/dashboard");
   };
 
   return (
@@ -164,7 +164,7 @@ const NewSala = ({ onSalaAdd, editSala }) => {
               <Col md={4}>
               <Button
                 variant="outline-light"
-                onClick={() => navigate("/home")}
+                onClick={() => navigate("/dashboard")}
                 type="button"
               >
                 Volver al inicio
