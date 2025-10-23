@@ -76,6 +76,7 @@ const Dashboard = ({ onLogOut }) => {
     <div className="min-vh-100 bg-dark text-white">
       <Navbar onLogOut={onLogOut} />
 
+
       <Container fluid className="py-4 bg-dark min-vh-100">
         <Routes>
 
@@ -120,6 +121,7 @@ const Dashboard = ({ onLogOut }) => {
               <NewFuncion
                 onFuncionAdd={handleAddFunction}
                 editFuncion={editFuncion}
+
               />
             }
           />
