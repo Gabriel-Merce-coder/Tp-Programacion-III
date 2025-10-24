@@ -2,9 +2,9 @@ import { useState, useRef } from 'react'
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
-import PublicNavbar from '../navbar/PublicNavbar';
 import 'react-toastify/dist/ReactToastify.css';
 import { useUser } from '../../context/UserContext';
+import PublicNavbar from '../navbar/PublicNavbar';
 
 const Login = () => {
     const navigate = useNavigate();

@@ -7,6 +7,7 @@ import { useUser } from "../../context/UserContext";
 
 const Navbar = ({ onLogOut }) => {
   const navigate = useNavigate();
+
   const { user } = useUser();
   const role = user?.role;
 
@@ -23,7 +24,6 @@ const Navbar = ({ onLogOut }) => {
       navigate('/dashboard');
     }
   };
-
   return (
     <>
       <nav className="navbar bg-black py-3 px-4">
@@ -35,21 +35,27 @@ const Navbar = ({ onLogOut }) => {
           >
             Cine App
           </h1>
-
           <div className="d-flex align-items-center gap-2">
             {(role === "admin" || role === "superadmin") && (
               <>
                 <Button variant="outline-primary" size="sm" onClick={() => navigate("/dashboard/add-movie")}> Agregar Película</Button>
-
-
                 <Button variant="outline-primary" size="sm" onClick={() => navigate("/dashboard/add-function")}> Agregar Función</Button>
-
-
                 <Button variant="outline-primary" size="sm" onClick={() => navigate("/dashboard/add-sala")}> Agregar Sala</Button>
               </>
             )}
-            <Button variant="outline-info" size="sm" onClick={() => navigate("/dashboard/historial-reservas")}> Historial</Button>
-
+            <Button
+              variant="outline-info"
+              size="sm"
+              onClick={() => {
+                if (role === 'user') {
+                  navigate("/home/historial-reservas");
+                } else {
+                  navigate("/dashboard/historial-reservas");
+                }
+              }}
+            >
+              Historial
+            </Button>
             <ProfileMenu onLogOut={handleLogOut} />
           </div>
         </div>
@@ -57,5 +63,4 @@ const Navbar = ({ onLogOut }) => {
     </>
   );
 };
-
 export default Navbar;

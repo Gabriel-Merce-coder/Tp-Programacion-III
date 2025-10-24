@@ -10,8 +10,8 @@ const PublicNavbar = () => {
                 <Navbar.Brand onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
                     🎬 CineApp
                 </Navbar.Brand>
-                <div>
-                    <Button variant="outline-light" className="me-2" onClick={() => navigate("/login")}>
+                <div className="d-flex align-items-center gap-2">
+                    <Button variant="outline-light" onClick={() => navigate("/login")}>
                         Iniciar sesión
                     </Button>
                     <Button variant="primary" onClick={() => navigate("/registro")}>
