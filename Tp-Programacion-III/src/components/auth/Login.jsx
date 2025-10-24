@@ -3,7 +3,8 @@ import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { jwtDecode } from "jwt-decode";
+import { useUser } from '../../context/UserContext';
+import PublicNavbar from '../navbar/PublicNavbar';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -15,6 +16,9 @@ const Login = () => {
     });
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
+
+    const { user } = useUser();
+    const role = user?.role;
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -80,9 +84,6 @@ const Login = () => {
                 const token = data.token;
                 localStorage.setItem("token", token);
 
-                const decode = jwtDecode(token) // decodifico el token en un objeto
-                const role = decode.role; // y me traigo el rol del objeto
-                localStorage.setItem("role", role);
 
                 if (role === 'user') {
                     navigate("/home")
@@ -103,6 +104,7 @@ const Login = () => {
 
     return (
         <>
+            <PublicNavbar />
             <Card className="mt-5 mx-3 p-3 px-5 shadow">
                 <Card.Body>
                     <Row className="mb-2">

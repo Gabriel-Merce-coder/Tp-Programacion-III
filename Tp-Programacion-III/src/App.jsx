@@ -5,16 +5,21 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Protected from "./components/protected/Protected";
 import TextNotFound from "./components/ui/TextNotFound";
 import LandingPage from "./components/landing/LandingPage";
-import Home from "./components/home/Home"
+import Home from "./components/home/Home";
+import EditProfile from "./components/profile/EditProfile";
+import { UserProvider, useUser } from "./context/UserContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function App() {
+
+const AppContent = () => { // Componente interno que puede usar el contexto
+  const { clearUser } = useUser();
+
   const handleLogOut = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    window.location.href = "/";
+    clearUser();
+    window.location.href = "/login";
   };
   return (
     <div className="min-vh-100 bg-dark">
@@ -25,15 +30,40 @@ function App() {
           <Route path="/registro" element={<Registro />} />
           <Route path="/login" element={<Login />} />
           {/* Home protegido - Solo para usuarios normales */}
-          <Route path="/home/*" element={<Protected allowedRoles={['user']}> <Home onLogOut={handleLogOut} /> </Protected> } />
+          <Route path="/home/*" element={<Protected allowedRoles={['user']}> <Home onLogOut={handleLogOut} /> </Protected>} />
           {/* Dashboard protegido - Solo para administradores */}
-          <Route path="/dashboard/*" element={<Protected allowedRoles={['admin', 'superadmin']}> <Dashboard onLogOut={handleLogOut} /> </Protected> } />
+          <Route
+            path="/dashboard/*"
+            element={
+              <Protected allowedRoles={['admin', 'superadmin']}>
+                <Dashboard onLogOut={handleLogOut} />
+              </Protected>
+            }
+          />
+
+          {/* Perfil - Accesible para todos los usuarios autenticados */}
+          <Route
+            path="/perfil"
+            element={
+              <Protected allowedRoles={['user', 'admin', 'superadmin']}>
+                <EditProfile onLogOut={handleLogOut} />
+              </Protected>
+            }
+          />
           {/* Ruta por defecto */}
           <Route path="*" element={<TextNotFound />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer autoClose={1000} hideProgressBar={true} />
     </div>
+  );
+};
+
+function App() {
+  return (
+    <UserProvider>
+      <AppContent />
+    </UserProvider>
   );
 }
 

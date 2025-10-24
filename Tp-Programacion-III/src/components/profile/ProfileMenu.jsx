@@ -1,12 +1,9 @@
-// /////////////////////////////////////////////////////////
-// CAMBIO JULIAN: Navegación al perfil del usuario
-// /////////////////////////////////////////////////////////
 import { Dropdown } from "react-bootstrap";
 import { PersonCircle } from "react-bootstrap-icons";
-import { useNavigate } from "react-router-dom"; // CAMBIO JULIAN
+import { useNavigate } from "react-router-dom";
 
-const ProfileMenu = ({ onDeleteAccount, onLogOut }) => {
-  const navigate = useNavigate(); // CAMBIO JULIAN
+const ProfileMenu = ({ onLogOut }) => {
+  const navigate = useNavigate();
 
   return (
     <Dropdown align="end">
@@ -15,10 +12,9 @@ const ProfileMenu = ({ onDeleteAccount, onLogOut }) => {
       </Dropdown.Toggle>
 
       <Dropdown.Menu variant="dark">
-        <Dropdown.Item onClick={() => navigate("/home/perfil")}>
-          Ver Perfil {/* CAMBIO JULIAN */}
+        <Dropdown.Item onClick={() => navigate("/perfil")}>
+          Ver Perfil
         </Dropdown.Item>
-        <Dropdown.Item onClick={onDeleteAccount}>Eliminar Cuenta</Dropdown.Item>
         <Dropdown.Divider />
         <Dropdown.Item onClick={onLogOut}>Cerrar Sesión</Dropdown.Item>
       </Dropdown.Menu>
@@ -27,5 +23,4 @@ const ProfileMenu = ({ onDeleteAccount, onLogOut }) => {
 };
 
 export default ProfileMenu;
-// FIN CAMBIO JULIAN
 
