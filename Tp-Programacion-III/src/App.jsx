@@ -3,7 +3,7 @@ import Registro from "./components/auth/Registro";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import Protected from "./components/protected/Protected";
-import TextNotFound from "./components/textNotFound/TextNotFound";
+import TextNotFound from "./components/ui/TextNotFound";
 import LandingPage from "./components/landing/LandingPage";
 import Home from "./components/home/Home"
 import { ToastContainer } from "react-toastify";
@@ -14,45 +14,24 @@ function App() {
   const handleLogOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    window.location.href = "/login";
+    window.location.href = "/";
   };
-
   return (
     <div className="min-vh-100 bg-dark">
       <BrowserRouter>
-
         <Routes>
           <Route path="/" element={<LandingPage />} />
-
           {/* Registro y Login */}
           <Route path="/registro" element={<Registro />} />
           <Route path="/login" element={<Login />} />
-
           {/* Home protegido - Solo para usuarios normales */}
-          <Route
-            path="/home/*"
-            element={
-              <Protected allowedRoles={['user']}>
-                <Home onLogOut={handleLogOut} />
-              </Protected>
-            }
-          />
-
+          <Route path="/home/*" element={<Protected allowedRoles={['user']}> <Home onLogOut={handleLogOut} /> </Protected> } />
           {/* Dashboard protegido - Solo para administradores */}
-          <Route
-            path="/dashboard/*"
-            element={
-              <Protected allowedRoles={['admin', 'superadmin']}>
-                <Dashboard onLogOut={handleLogOut} />
-              </Protected>
-            }
-          />
-
+          <Route path="/dashboard/*" element={<Protected allowedRoles={['admin', 'superadmin']}> <Dashboard onLogOut={handleLogOut} /> </Protected> } />
           {/* Ruta por defecto */}
           <Route path="*" element={<TextNotFound />} />
         </Routes>
       </BrowserRouter>
-
       <ToastContainer autoClose={1000} hideProgressBar={true} />
     </div>
   );

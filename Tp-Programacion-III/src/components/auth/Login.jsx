@@ -2,7 +2,6 @@ import { useState, useRef } from 'react'
 import { Button, Card, Col, Form, FormGroup, Row } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
-import PublicNavbar from '../navbar/PublicNavbar';
 import 'react-toastify/dist/ReactToastify.css';
 import { jwtDecode } from "jwt-decode";
 
@@ -104,7 +103,6 @@ const Login = () => {
 
     return (
         <>
-            <PublicNavbar />
             <Card className="mt-5 mx-3 p-3 px-5 shadow">
                 <Card.Body>
                     <Row className="mb-2">

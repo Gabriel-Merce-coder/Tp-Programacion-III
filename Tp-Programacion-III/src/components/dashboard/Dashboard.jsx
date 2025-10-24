@@ -11,7 +11,7 @@ import Navbar from "../navbar/Navbar";
 import NewReserva from "../reservas/NewReserva";
 import HistorialReservas from "../reservas/HistorialReservas"
 import EditProfile from "../profile/EditProfile";
-import PageNotFound from "../pageNotFound/PageNotFound";
+import PageNotFound from "../ui/PageNotFound";
 
 //secciones
 import PeliculaSection from "../dashboard/sections/PeliculaSection";
@@ -28,36 +28,19 @@ const Dashboard = ({ onLogOut }) => {
   const navigate = useNavigate();
   // usamos los hooks personalizados
   const {
-    peliculas,
-    handleAddFilm,
-    handleDeleteFilm,
-    handleEditFilm,
-    editFilm,
-    // setEditFilm,
+    peliculas, handleAddFilm, handleDeleteFilm, handleEditFilm, editFilm, // setEditFilm,
   } = usePeliculas();
 
   const {
-    funciones,
-    handleAddFunction,
-    handleDeleteFunction,
-    handleEditFunction,
-    editFuncion,
-    // setEditFuncion,
+    funciones, handleAddFunction, handleDeleteFunction, handleEditFunction, editFuncion, // setEditFuncion,
   } = useFuncion();
 
   const {
-    salas,
-    handleAddSala,
-    handleDeleteSala,
-    handleEditSala,
-    editSala,
-    // setEditSala,
+    salas, handleAddSala, handleDeleteSala, handleEditSala, editSala, // setEditSala,
   } = useSala();
 
   const {
-    reservas,
-    // handleAddReserva,
-    handleCancelReserva,
+    reservas, handleCancelReserva, // handleAddReserva,
   } = useReservas();
 
   const handleNavigateToFilmEdit = (film) => {
@@ -75,101 +58,35 @@ const Dashboard = ({ onLogOut }) => {
   return (
     <div className="min-vh-100 bg-dark text-white">
       <Navbar onLogOut={onLogOut} />
-
-
       <Container fluid className="py-4 bg-dark min-vh-100">
         <Routes>
-
           {/* Perfil */}
           <Route path="perfil" element={<EditProfile />} />
-
           {/* Rutas Relativas a Dashboard */}
           <Route
             index
             element={
               <>
-                <PeliculaSection
-                  peliculas={peliculas}
-                  onDeleteFilm={handleDeleteFilm}
-                  onEditFilm={handleNavigateToFilmEdit}
-                />
-
-                <FunctionSection
-                  funciones={funciones}
-                  peliculas={peliculas}
-                  onDeleteFunction={handleDeleteFunction}
-                  onEditFunction={handleNavigateToFuncionEdit}
-                />
-
-                <SalaSection
-                  salas={salas}
-                  onDeleteSala={handleDeleteSala}
-                  onEditSala={handleNavigateToSalaEdit}
-                />
+                <PeliculaSection peliculas={peliculas} onDeleteFilm={handleDeleteFilm} onEditFilm={handleNavigateToFilmEdit} />
+                <FunctionSection funciones={funciones} peliculas={peliculas} onDeleteFunction={handleDeleteFunction} onEditFunction={handleNavigateToFuncionEdit} />
+                <SalaSection salas={salas} onDeleteSala={handleDeleteSala} onEditSala={handleNavigateToSalaEdit}/>
               </>
             }
           />
-
           {/* Formularios */}
-          <Route
-            path="add-movie"
-            element={<NewFilm onFilmAdd={handleAddFilm} editFilm={editFilm} />}
-          />
-          <Route
-            path="add-function"
-            element={
-              <NewFuncion
-                onFuncionAdd={handleAddFunction}
-                editFuncion={editFuncion}
-
-              />
-            }
-          />
-          <Route
-            path="add-sala"
-            element={<NewSala onSalaAdd={handleAddSala} editSala={editSala} />}
-          />
-
+          <Route path="add-movie" element={<NewFilm onFilmAdd={handleAddFilm} editFilm={editFilm} />} />
+          <Route path="add-function" element={ <NewFuncion onFuncionAdd={handleAddFunction} editFuncion={editFuncion} /> } />
+          <Route path="add-sala" element={<NewSala onSalaAdd={handleAddSala} editSala={editSala} />} />
           {/* Historial */}
-          <Route
-            path="historial-reservas"
-            element={
-              <HistorialReservas
-                reservas={reservas}
-                peliculas={peliculas}
-                funciones={funciones}
-                onCancelReserva={handleCancelReserva}
-              />
-            }
-          />
-
+          <Route path="historial-reservas" element={<HistorialReservas reservas={reservas} peliculas={peliculas} funciones={funciones} onCancelReserva={handleCancelReserva} /> } />
           {/* Editar */}
-          <Route
-            path="edit-movie/:id"
-            element={<NewFilm onFilmAdd={handleAddFilm} editFilm={editFilm} />}
-          />
-          <Route
-            path="edit-function/:id"
-            element={
-              <NewFuncion
-                onFuncionAdd={handleAddFunction}
-                editFuncion={editFuncion}
-              />
-            }
-          />
-          <Route
-            path="edit-sala/:id"
-            element={<NewSala onSalaAdd={handleAddSala} editSala={editSala} />}
-          />
+          <Route path="edit-movie/:id" element={<NewFilm onFilmAdd={handleAddFilm} editFilm={editFilm} />} />
+          <Route path="edit-function/:id" element={<NewFuncion onFuncionAdd={handleAddFunction} editFuncion={editFuncion} /> } />
+          <Route path="edit-sala/:id" element={<NewSala onSalaAdd={handleAddSala} editSala={editSala} />} />
           {/*Perfil*/}
-          
-              <Route 
-                path='perfil'
-                element={<EditProfile />}
-              />
+            <Route path='perfil' element={<EditProfile />} />
           {/* Pagina no encontrada */}
           <Route path="*" element={<PageNotFound />} />
-
         </Routes>
       </Container>
     </div>
