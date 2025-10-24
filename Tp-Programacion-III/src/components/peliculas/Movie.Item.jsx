@@ -3,14 +3,16 @@ import { Card, Button, Badge } from "react-bootstrap";
 import { BsStarFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import DeleteModal from "../ui/Mymodal";
+import { useUser } from "../../context/UserContext";
 
 const MovieCard = ({ movie, onDelete, onEdit }) => {
   const { titulo, genero, descripcion, reparto, calificacion, imageUrl, duracion } = movie;
   const [showDetails, setShowDetails] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false); 
+  const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
 
-  const role = localStorage.getItem("role");
+  const { user } = useUser();
+  const role = user?.role;
   const toggleDetails = () => setShowDetails(!showDetails);
 
   const handleConfirmDelete = () => {
@@ -50,12 +52,12 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
             {titulo}
           </Card.Title>
 
-          <Badge bg="secondary" className="mb-2 align-self-start"> 
+          <Badge bg="secondary" className="mb-2 align-self-start">
             {genero.split(",")[0].trim()}
           </Badge>
 
           <div className="d-flex flex-wrap gap-2 mt-2">
-            {(role ==="user") &&(
+            {(role === "user") && (
               <>
                 <Button variant={showDetails ? "outline-info" : "outline-secondary"} size="sm" onClick={toggleDetails}> {showDetails ? " Ocultar Pelicula" : " Ver Pelicula"}</Button>
                 <Button variant="outline-success" size="sm" onClick={() => navigate("/home/add-reserva")}>Reservar Pelicula</Button>
@@ -64,9 +66,9 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
             {(role === "admin" || role === "superadmin") && (
               <>
                 <Button variant="warning" size="sm" onClick={() => onEdit(movie)}>Editar</Button>
-                <Button variant="danger" size="sm" onClick={() => setShowConfirm(true)}>Eliminar</Button> 
+                <Button variant="danger" size="sm" onClick={() => setShowConfirm(true)}>Eliminar</Button>
               </>
-            
+
             )}
           </div>
         </Card.Body>

@@ -5,15 +5,20 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Protected from "./components/protected/Protected";
 import TextNotFound from "./components/textNotFound/TextNotFound";
 import LandingPage from "./components/landing/LandingPage";
-import Home from "./components/home/Home"
+import Home from "./components/home/Home";
+import EditProfile from "./components/profile/EditProfile";
+import { UserProvider, useUser } from "./context/UserContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function App() {
+
+const AppContent = () => { // Componente interno que puede usar el contexto
+  const { clearUser } = useUser();
+
   const handleLogOut = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("role");
+    clearUser();
     window.location.href = "/login";
   };
 
@@ -48,6 +53,16 @@ function App() {
             }
           />
 
+          {/* Perfil - Accesible para todos los usuarios autenticados */}
+          <Route
+            path="/perfil"
+            element={
+              <Protected allowedRoles={['user', 'admin', 'superadmin']}>
+                <EditProfile onLogOut={handleLogOut} />
+              </Protected>
+            }
+          />
+
           {/* Ruta por defecto */}
           <Route path="*" element={<TextNotFound />} />
         </Routes>
@@ -55,6 +70,14 @@ function App() {
 
       <ToastContainer autoClose={1000} hideProgressBar={true} />
     </div>
+  );
+};
+
+function App() {
+  return (
+    <UserProvider>
+      <AppContent />
+    </UserProvider>
   );
 }
 

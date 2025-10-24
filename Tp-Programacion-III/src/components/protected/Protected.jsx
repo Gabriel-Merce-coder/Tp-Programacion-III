@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
+import { useUser } from '../../context/UserContext'
 
 const Protected = ({ children, allowedRoles = [] }) => {
     const [isValid, setIsValid] = useState(null);
-    const [user, setUser] = useState(null);
+    const { user, setUser } = useUser();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -18,7 +19,7 @@ const Protected = ({ children, allowedRoles = [] }) => {
         })
             .then(res => {
                 if (res.ok) {
-                    return res.json(); // Obtener la respuesta completa
+                    return res.json();
                 } else {
                     localStorage.removeItem("token");
                     setIsValid(false);
@@ -28,9 +29,6 @@ const Protected = ({ children, allowedRoles = [] }) => {
             .then(data => {
                 if (data) {
                     setUser(data.user);
-                    console.log("Datos del usuario:", data.user);
-
-                    // Verificar si el usuario tiene el rol permitido
                     if (allowedRoles.includes(data.user.role)) {
                         setIsValid(true);
                     } else {
@@ -42,7 +40,7 @@ const Protected = ({ children, allowedRoles = [] }) => {
                 localStorage.removeItem("token");
                 setIsValid(false);
             });
-    }, [allowedRoles]);
+    }, [allowedRoles, setUser]);
 
     if (isValid === null) return <div>Cargando...</div>;
     if (!isValid) {

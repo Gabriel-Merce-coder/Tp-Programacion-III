@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
 import PublicNavbar from '../navbar/PublicNavbar';
 import 'react-toastify/dist/ReactToastify.css';
-import { jwtDecode } from "jwt-decode";
+import { useUser } from '../../context/UserContext';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -16,6 +16,9 @@ const Login = () => {
     });
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
+
+    const { user } = useUser();
+    const role = user?.role;
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -81,9 +84,6 @@ const Login = () => {
                 const token = data.token;
                 localStorage.setItem("token", token);
 
-                const decode = jwtDecode(token) // decodifico el token en un objeto
-                const role = decode.role; // y me traigo el rol del objeto
-                localStorage.setItem("role", role);
 
                 if (role === 'user') {
                     navigate("/home")

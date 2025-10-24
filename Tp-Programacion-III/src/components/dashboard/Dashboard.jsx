@@ -18,6 +18,7 @@ import PeliculaSection from "../dashboard/sections/PeliculaSection";
 import FunctionSection from "../dashboard/sections/FunctionSection";
 import SalaSection from "../dashboard/sections/SalaSection";
 import ReservaSection from "../dashboard/sections/ReservaSection";
+import UserSection from "../dashboard/sections/UserSection";
 
 //hooks
 import usePeliculas from "../../hooks/usePeliculas"
@@ -106,6 +107,8 @@ const Dashboard = ({ onLogOut }) => {
                   onDeleteSala={handleDeleteSala}
                   onEditSala={handleNavigateToSalaEdit}
                 />
+
+                <UserSection />
               </>
             }
           />
@@ -162,11 +165,11 @@ const Dashboard = ({ onLogOut }) => {
             element={<NewSala onSalaAdd={handleAddSala} editSala={editSala} />}
           />
           {/*Perfil*/}
-          
-              <Route 
-                path='perfil'
-                element={<EditProfile />}
-              />
+
+          <Route
+            path='perfil'
+            element={<EditProfile />}
+          />
           {/* Pagina no encontrada */}
           <Route path="*" element={<PageNotFound />} />
 
