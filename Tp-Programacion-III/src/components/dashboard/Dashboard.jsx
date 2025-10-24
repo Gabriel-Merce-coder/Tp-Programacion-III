@@ -12,6 +12,7 @@ import NewReserva from "../reservas/NewReserva";
 import HistorialReservas from "../reservas/HistorialReservas"
 import EditProfile from "../profile/EditProfile";
 import PageNotFound from "../ui/PageNotFound";
+import MovieSearch from "../peliculas/MovieSearch";
 
 //secciones
 import PeliculaSection from "../dashboard/sections/PeliculaSection";
@@ -25,9 +26,13 @@ import usePeliculas from "../../hooks/usePeliculas"
 import useFuncion from "../../hooks/useFunciones";
 import useSala from "../../hooks/useSala";
 import useReservas from "../../hooks/useReservas";
+import useMovieSearch from "../../hooks/useMovieSearch";
+
+
 const Dashboard = ({ onLogOut }) => {
+
   const navigate = useNavigate();
-  // usamos los hooks personalizados
+
   const {
     peliculas, handleAddFilm, handleDeleteFilm, handleEditFilm, editFilm, // setEditFilm,
   } = usePeliculas();
@@ -48,14 +53,19 @@ const Dashboard = ({ onLogOut }) => {
     handleEditFilm(film);
     navigate(`edit-movie/${film.id}`);
   }
+
   const handleNavigateToFuncionEdit = (funcion) => {
     handleEditFunction(funcion);
     navigate(`edit-function/${funcion.id}`);
   }
+
   const handleNavigateToSalaEdit = (sala) => {
     handleEditSala(sala);
     navigate(`edit-sala/${sala.id}`);
   }
+
+  const { filteredPeliculas, handleSearchChange } = useMovieSearch(peliculas);
+
   return (
     <div className="min-vh-100 bg-dark text-white">
       <Navbar onLogOut={onLogOut} />
@@ -68,8 +78,12 @@ const Dashboard = ({ onLogOut }) => {
             index
             element={
               <>
+                <div className="d-flex justify-content-between align-items-center mb-4">
+                  <h2 className="text-white mb-0">🎬 Cartelera de Películas</h2>
+                  <MovieSearch onSearchChange={handleSearchChange} />
+                </div>
                 <PeliculaSection
-                  peliculas={peliculas}
+                  peliculas={filteredPeliculas}
                   onDeleteFilm={handleDeleteFilm}
                   onEditFilm={handleNavigateToFilmEdit}
                 />
