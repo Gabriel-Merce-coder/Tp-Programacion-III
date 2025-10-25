@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import { Routes, Route, useNavigate } from "react-router-dom";
 // import { toast } from "react-toastify";
@@ -20,6 +20,7 @@ import FunctionSection from "../dashboard/sections/FunctionSection";
 import SalaSection from "../dashboard/sections/SalaSection";
 import ReservaSection from "../dashboard/sections/ReservaSection";
 import UserSection from "../dashboard/sections/UserSection";
+import SalaAdminSection from "./sections/SalaAdminSection";
 
 //hooks
 import usePeliculas from "../../hooks/usePeliculas"
@@ -102,6 +103,7 @@ const Dashboard = ({ onLogOut }) => {
                 />
 
                 <UserSection />
+                <SalaAdminSection />
               </>
             }
           />

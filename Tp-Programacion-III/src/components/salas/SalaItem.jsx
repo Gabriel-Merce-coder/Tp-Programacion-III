@@ -13,15 +13,15 @@ const SalaItem = ({ sala, onDelete, onEdit }) => {
       <Card className="mb-3 bg-secondary text-white shadow-sm border-0 rounded-3">
         <Card.Body>
           <Card.Title className="mb-3">
-            🏛️ Sala {sala.numero || "No especificada"}
+            🏛️ Sala {sala.numeroSala|| "No especificada"}
           </Card.Title>
 
           <div className="ms-2">
             <p className="mb-1">
-              <strong>Número:</strong> {sala.numero || "No especificado"}
+              <strong>Número:</strong> {sala.numeroSala|| "No especificado"}
             </p>
             <p className="mb-1">
-              <strong>Tipo:</strong> {sala.tipo_sala || "No especificado"}
+              <strong>Tipo:</strong> {sala.tipoSala|| "No especificado"}
             </p>
             <p className="mb-1">
               <strong>Capacidad:</strong> {sala.capacidad || "No especificada"}
