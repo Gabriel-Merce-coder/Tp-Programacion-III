@@ -9,30 +9,30 @@ const NewSala = ({ onSalaAdd, editSala }) => {
   const navigate = useNavigate();
 
   const {
-    numero,
-    tipo_sala,
+    numeroSala,
+    tipoSala,
     capacidad,
     estado,
     errores,
-    numeroRef,
-    tipo_salaRef,
+    numeroSalaRef,
+    tipoSalaRef,
     capacidadRef,
-    handleChangeNumero,
-    handleChangeTipo_Sala,
+    handleChangeNumeroSala,
+    handleChangeTipoSala,
     handleChangeCapacidad,
     handleChangeEstado,
-    setNumero,
-    setTipo_Sala,
+    setNumeroSala,
+    setTipoSala,
     setCapacidad,
     setEstado,
     setErrores,
   } = useSalaForm();
 
-  // Precargar datos si se edita una sala
+  // 🟡 Precargar datos si se edita una sala
   useEffect(() => {
     if (editSala) {
-      setNumero(editSala.numero || "");
-      setTipo_Sala(editSala.tipo_sala || "");
+      setNumeroSala(editSala.numeroSala || "");
+      setTipoSala(editSala.tipoSala || "");
       setCapacidad(editSala.capacidad || "");
       setEstado(editSala.estado ?? true);
     }
@@ -41,39 +41,39 @@ const NewSala = ({ onSalaAdd, editSala }) => {
   const handleAddSala = (e) => {
     e.preventDefault();
 
-    let errorSala = { numero: "", tipo_sala: "", capacidad: "" };
+    const errorSala = { numeroSala: "", tipoSala: "", capacidad: "" };
 
-    if (!numero || numero <= 0) {
-      errorSala.numero = "El número de sala debe ser mayor a 0";
+    if (!numeroSala || numeroSala <= 0) {
+      errorSala.numeroSala = "El número de sala debe ser mayor a 0";
     }
-    if (!tipo_sala) {
-      errorSala.tipo_sala = "El tipo de sala no puede estar vacío";
+    if (!tipoSala) {
+      errorSala.tipoSala = "El tipo de sala no puede estar vacío";
     }
     if (!capacidad || capacidad <= 0) {
       errorSala.capacidad = "La capacidad debe ser mayor a 0";
     }
 
-    if (errorSala.numero || errorSala.tipo_sala || errorSala.capacidad) {
+    if (errorSala.numeroSala || errorSala.tipoSala || errorSala.capacidad) {
       setErrores(errorSala);
       toast.error("Por favor, revise los campos");
-      if (errorSala.numero) numeroRef.current.focus();
-      else if (errorSala.tipo_sala) tipo_salaRef.current.focus();
+      if (errorSala.numeroSala) numeroSalaRef.current.focus();
+      else if (errorSala.tipoSala) tipoSalaRef.current.focus();
       else if (errorSala.capacidad) capacidadRef.current.focus();
       return;
     }
 
     const nuevaSala = {
-      numero: parseInt(numero),
-      tipo_sala,
+      numeroSala: parseInt(numeroSala),
+      tipoSala,
       capacidad: parseInt(capacidad),
       estado,
     };
 
     onSalaAdd(nuevaSala);
 
-    // Reset de campos
-    setNumero("");
-    setTipo_Sala("");
+    // Resetear formulario
+    setNumeroSala("");
+    setTipoSala("");
     setCapacidad("");
     setEstado(true);
 
@@ -81,87 +81,86 @@ const NewSala = ({ onSalaAdd, editSala }) => {
   };
 
   return (
-    <div>
-      <Card className="m-4 w-50" bg="info">
-        <Card.Body>
-          <Form className="text-white" onSubmit={handleAddSala}>
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3" controlId="numero">
-                  <Form.Label>Número de Sala</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="Ingrese número"
-                    min="1"
-                    value={numero}
-                    onChange={handleChangeNumero}
-                    ref={numeroRef}
-                    isInvalid={!!errores.numero}
+    <Card className="m-4 w-50" bg="info">
+      <Card.Body>
+        <Form className="text-white" onSubmit={handleAddSala}>
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="numeroSala">
+                <Form.Label>Número de Sala</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Ingrese número"
+                  min="1"
+                  value={numeroSala}
+                  onChange={handleChangeNumeroSala}
+                  ref={numeroSalaRef}
+                  isInvalid={!!errores.numeroSala}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errores.numeroSala}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="tipoSala">
+                <Form.Label>Tipo de Sala</Form.Label>
+                <Form.Select
+                  ref={tipoSalaRef}
+                  value={tipoSala}
+                  onChange={handleChangeTipoSala}
+                  isInvalid={!!errores.tipoSala}
+                >
+                  <option value="">Seleccione tipo</option>
+                  <option value="2D">2D</option>
+                  <option value="3D">3D</option>
+                  <option value="4D">4D</option>
+                </Form.Select>
+                <Form.Control.Feedback type="invalid">
+                  {errores.tipoSala}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="capacidad">
+                <Form.Label>Capacidad</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Capacidad de la sala"
+                  min="1"
+                  value={capacidad}
+                  onChange={handleChangeCapacidad}
+                  ref={capacidadRef}
+                  isInvalid={!!errores.capacidad}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errores.capacidad}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="estado">
+                <Form.Label>Estado</Form.Label>
+                <div className="mt-2">
+                  <Form.Check
+                    type="switch"
+                    id="estado-switch"
+                    label={estado ? "Activa" : "Inactiva"}
+                    checked={estado}
+                    onChange={handleChangeEstado}
                   />
-                  <Form.Control.Feedback type="invalid">
-                    {errores.numero}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
+                </div>
+              </Form.Group>
+            </Col>
+          </Row>
 
-              <Col md={6}>
-                <Form.Group className="mb-3" controlId="tipo_sala">
-                  <Form.Label>Tipo de Sala</Form.Label>
-                  <Form.Select
-                    ref={tipo_salaRef}
-                    value={tipo_sala}
-                    onChange={handleChangeTipo_Sala}
-                    isInvalid={!!errores.tipo_sala}
-                  >
-                    <option value="">Seleccione tipo</option>
-                    <option value="2D">2D</option>
-                    <option value="3D">3D</option>
-                    <option value="4D">4D</option>
-                  </Form.Select>
-                  <Form.Control.Feedback type="invalid">
-                    {errores.tipo_sala}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3" controlId="capacidad">
-                  <Form.Label>Capacidad</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="Capacidad de la sala"
-                    min="1"
-                    value={capacidad}
-                    onChange={handleChangeCapacidad}
-                    ref={capacidadRef}
-                    isInvalid={!!errores.capacidad}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errores.capacidad}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-
-              <Col md={6}>
-                <Form.Group className="mb-3" controlId="estado">
-                  <Form.Label>Estado</Form.Label>
-                  <div className="mt-2">
-                    <Form.Check
-                      type="switch"
-                      id="estado-switch"
-                      label={estado ? "Activa" : "Inactiva"}
-                      checked={estado}
-                      onChange={handleChangeEstado}
-                    />
-                  </div>
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row className="justify-content-between">
-              <Col md={4}>
+          <Row className="justify-content-between">
+            <Col md={4}>
               <Button
                 variant="outline-light"
                 onClick={() => navigate("/dashboard")}
@@ -170,16 +169,15 @@ const NewSala = ({ onSalaAdd, editSala }) => {
                 Volver al inicio
               </Button>
             </Col>
-              <Col md={3} className="d-flex justify-content-end">
-                <Button variant="primary" type="submit">
-                  {editSala ? "Guardar Cambios" : "Agregar Sala"}
-                </Button>
-              </Col>
-            </Row>
-          </Form>
-        </Card.Body>
-      </Card>
-    </div>
+            <Col md={3} className="d-flex justify-content-end">
+              <Button variant="primary" type="submit">
+                {editSala ? "Guardar Cambios" : "Agregar Sala"}
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Card.Body>
+    </Card>
   );
 };
 
