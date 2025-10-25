@@ -5,20 +5,33 @@ import { useNavigate } from "react-router-dom";
 import DeleteModal from "../ui/Mymodal";
 import { useUser } from "../../context/UserContext";
 
-const MovieCard = ({ movie, onDelete, onEdit }) => {
-  const { titulo, genero, descripcion, reparto, calificacion, imageUrl, duracion } = movie;
+const MovieCard = ({ movie = {}, onDelete, onEdit }) => {
+  const {
+    id = null,
+    titulo = "Sin título",
+    genero = "",
+    descripcion = "Sin descripción",
+    reparto = "No especificado",
+    calificacion = 0,
+    imageUrl = "",
+    duracion = "N/A",
+  } = movie;
+
   const [showDetails, setShowDetails] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
-
   const { user } = useUser();
   const role = user?.role;
-  const toggleDetails = () => setShowDetails(!showDetails);
 
+  const toggleDetails = () => setShowDetails(!showDetails);
   const handleConfirmDelete = () => {
     setShowConfirm(false);
-    onDelete(movie.id);
+    if (onDelete && id !== null) onDelete(id);
   };
+
+  // Split seguro
+  const generoArray = typeof genero === "string" ? genero.split(",") : [];
+  const repartoArray = typeof reparto === "string" ? reparto.split(",") : [];
 
   return (
     <>
@@ -29,7 +42,7 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
         <div className="position-relative" style={{ overflow: "hidden" }}>
           <Card.Img
             variant="top"
-            src={imageUrl}
+            src={imageUrl || "https://dummyimage.com/300x450/000/fff&text=No+Image"}
             alt={titulo}
             style={{
               height: "300px",
@@ -52,23 +65,36 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
             {titulo}
           </Card.Title>
 
-          <Badge bg="secondary" className="mb-2 align-self-start">
-            {genero.split(",")[0].trim()}
-          </Badge>
+          {generoArray.length > 0 && (
+            <Badge bg="secondary" className="mb-2 align-self-start">
+              {generoArray[0].trim()}
+            </Badge>
+          )}
 
           <div className="d-flex flex-wrap gap-2 mt-2">
-            {(role === "user") && (
+            {role === "user" && (
               <>
-                <Button variant={showDetails ? "outline-info" : "outline-secondary"} size="sm" onClick={toggleDetails}> {showDetails ? " Ocultar Pelicula" : " Ver Pelicula"}</Button>
-                <Button variant="outline-success" size="sm" onClick={() => navigate("/home/add-reserva")}>Reservar Pelicula</Button>
+                <Button
+                  variant={showDetails ? "outline-info" : "outline-secondary"}
+                  size="sm"
+                  onClick={toggleDetails}
+                >
+                  {showDetails ? "Ocultar Película" : "Ver Película"}
+                </Button>
+                <Button variant="outline-success" size="sm" onClick={() => navigate("/home/add-reserva")}>
+                  Reservar Película
+                </Button>
               </>
             )}
             {(role === "admin" || role === "superadmin") && (
               <>
-                <Button variant="warning" size="sm" onClick={() => onEdit(movie)}>Editar</Button>
-                <Button variant="danger" size="sm" onClick={() => setShowConfirm(true)}>Eliminar</Button>
+                <Button variant="warning" size="sm" onClick={() => onEdit && onEdit(movie)}>
+                  Editar
+                </Button>
+                <Button variant="danger" size="sm" onClick={() => setShowConfirm(true)}>
+                  Eliminar
+                </Button>
               </>
-
             )}
           </div>
         </Card.Body>
@@ -93,7 +119,11 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
           }}
         >
           <div style={{ flex: "1 1 40%" }}>
-            <img src={imageUrl} alt={titulo} style={{ width: "100%", borderRadius: "5px" }} />
+            <img
+              src={imageUrl || "https://dummyimage.com/300x450/000/fff&text=No+Image"}
+              alt={titulo}
+              style={{ width: "100%", borderRadius: "5px" }}
+            />
           </div>
           <div
             style={{
@@ -105,13 +135,13 @@ const MovieCard = ({ movie, onDelete, onEdit }) => {
           >
             <div>
               <h2>{titulo}</h2>
-              <p><strong>Género:</strong> {genero}</p>
+              <p><strong>Género:</strong> {genero || "Sin género"}</p>
               <p><strong>Duración:</strong> {duracion} min</p>
-              <p><strong>Reparto:</strong> {reparto}</p>
+              <p><strong>Reparto:</strong> {reparto || "No especificado"}</p>
               <p><strong>Descripción:</strong> {descripcion}</p>
             </div>
             <div className="text-end mt-3">
-              <Button variant="outline-light" onClick={toggleDetails}> Cerrar </Button>
+              <Button variant="outline-light" onClick={toggleDetails}>Cerrar</Button>
             </div>
           </div>
         </div>
