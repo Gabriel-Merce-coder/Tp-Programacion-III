@@ -7,10 +7,30 @@ const useReservas = () => {
     const [reservas, setReservas] = useState([]);
 
 
-    const handleAddReserva = (nuevaReserva) => {
-        setReservas((prev) => [...prev, nuevaReserva]);
-        toast.success("Reserva agregada correctamente");
+    const handleAddReserva = async (nuevaReserva) => {
+        try {
+            const token = localStorage.getItem('token');
 
+            const response = await fetch('http://localhost:3000/api/reserva', {
+                method: 'POST',
+                headers: {
+                    'x-token': token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(nuevaReserva)
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al crear la reserva');
+            }
+
+            const data = await response.json();
+            setReservas((prev) => [...prev, data.reserva]);
+            toast.success("Reserva creada correctamente");
+        } catch (error) {
+            console.error('Error:', error);
+            toast.error("Error al crear la reserva: " + error.message);
+        }
     };
 
     const handleCancelReserva = (id) => {
@@ -18,7 +38,7 @@ const useReservas = () => {
         toast.success("Reserva cancelada correctamente");
     }
 
-    return{
+    return {
         reservas,
         handleAddReserva,
         handleCancelReserva,

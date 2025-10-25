@@ -10,7 +10,7 @@ import NewReserva from "../reservas/NewReserva"
 //importo los hooks de peliculas y reservas
 import usePeliculas from "../../hooks/usePeliculas"
 import useReservas from "../../hooks/useReservas"
-import useFunciones from "../../hooks/useFunciones"
+// import useFunciones from "../../hooks/useFunciones"
 import useMovieSearch from "../../hooks/useMovieSearch"
 
 const Home = ({onLogOut}) => {
@@ -22,9 +22,9 @@ const Home = ({onLogOut}) => {
         reservas, handleAddReserva, handleCancelReserva,
     } = useReservas();
 
-    const{
-        funciones, 
-    } = useFunciones();
+    // const{
+    //     funciones
+    // } = useFunciones();
 
     const { filteredPeliculas, handleSearchChange } = useMovieSearch(peliculas);
     
@@ -48,7 +48,7 @@ const Home = ({onLogOut}) => {
                     <Route path='perfil' element={<EditProfile />} />
                     {/*Historial de Reservas*/}
                     <Route path="historial-reservas" element={<HistorialReservas reservas={reservas} peliculas={peliculas} onCancelReserva={handleCancelReserva} />} />
-                    <Route path="add-reserva" element={<NewReserva peliculas={peliculas} funciones={funciones} onAddReserva={handleAddReserva} />} />
+                    <Route path="add-reserva" element={<NewReserva peliculas={peliculas} onAddReserva={handleAddReserva} />} />
                 </Routes>
             </Container>
         </div>
