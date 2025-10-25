@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Card, Button, Badge, Spinner } from "react-bootstrap";
 import { BsStarFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import DeleteModal from "../ui/Mymodal";
 import { useUser } from "../../context/UserContext";
 import useFuncionesByPelicula from "../../hooks/useFuncionesByPelicula";
 
@@ -20,7 +19,6 @@ const MovieCard = ({ movie = {}, onEdit, onStatusChange }) => {
   } = movie;
 
   const [showDetails, setShowDetails] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
   const { user } = useUser();
   const role = user?.role;
@@ -28,21 +26,6 @@ const MovieCard = ({ movie = {}, onEdit, onStatusChange }) => {
 
   // Hook para obtener funciones de la película
   const { funciones, loading, error } = useFuncionesByPelicula(showDetails ? id : null);
-
-  const handleStatusClick = () => {
-    setShowConfirm(true);
-  };
-
-  const confirmStatusChange = async () => {
-    if (!id) return;
-
-    // Llamar al callback que maneja la API
-    if (onStatusChange) {
-      await onStatusChange(id);
-    }
-
-    setShowConfirm(false);
-  };
 
   const generoArray = typeof genero === "string" ? genero.split(",") : [];
 
@@ -83,7 +66,7 @@ const MovieCard = ({ movie = {}, onEdit, onStatusChange }) => {
                 <Button
                   variant={estado ? "outline-danger" : "outline-success"}
                   size="sm"
-                  onClick={handleStatusClick}
+                  onClick={() => onStatusChange && onStatusChange()}
                 >
                   {estado ? "Desactivar" : "Activar"}
                 </Button>
@@ -169,16 +152,6 @@ const MovieCard = ({ movie = {}, onEdit, onStatusChange }) => {
           </div>
         </div>
       )}
-
-      <DeleteModal
-        show={showConfirm}
-        onHide={() => setShowConfirm(false)}
-        onConfirm={confirmStatusChange}
-        title="Confirmar cambio de estado"
-        message={`¿Estás seguro de ${estado ? 'desactivar' : 'activar'} la película "${titulo}"?`}
-        confirmText={estado ? "Sí, desactivar" : "Sí, activar"}
-        cancelText="No, cancelar"
-      />
 
       <style>{`
         .movie-card:hover { transform: scale(1.05); z-index: 100; }
