@@ -3,13 +3,30 @@ import { Row, Col } from "react-bootstrap";
 import MovieCard from "../../peliculas/Movie.Item";
 import Mymodal from "../../ui/Mymodal";
 
-const PeliculaSection = ({ peliculas, onEditFilm, onToggleStatus }) => {
+const PeliculaSection = ({ peliculas, onEditFilm, onStatusChange }) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedFilm, setSelectedFilm] = useState(null);
+  if (!peliculas) {
+    return <div className="text-white">Cargando películas...</div>;
+  }
 
-  if (!peliculas) return <div className="text-white">Cargando películas...</div>;
-  if (!Array.isArray(peliculas)) return <div className="text-white text-center py-5">Error al cargar películas</div>;
-  if (peliculas.length === 0) return <div className="text-white text-center py-5">No hay películas disponibles</div>;
+  if (!Array.isArray(peliculas)) {
+    return (
+      <div className="text-white text-center py-5">
+        <h3>Error al cargar películas</h3>
+        <p>Intenta recargar la página</p>
+      </div>
+    );
+  }
+
+  if (peliculas.length === 0) {
+    return (
+      <div className="text-white text-center py-5">
+        <h3>No hay películas disponibles</h3>
+        <p>Prueba más tarde</p>
+      </div>
+    );
+  }
 
   const handleToggleClick = (peli) => {
     setSelectedFilm(peli);
@@ -17,8 +34,8 @@ const PeliculaSection = ({ peliculas, onEditFilm, onToggleStatus }) => {
   };
 
   const confirmToggle = () => {
-    if (selectedFilm && onToggleStatus) {
-      onToggleStatus(selectedFilm.id);
+    if (selectedFilm && onStatusChange) {
+      onStatusChange(selectedFilm.id);
     }
     setShowConfirm(false);
     setSelectedFilm(null);
@@ -26,14 +43,21 @@ const PeliculaSection = ({ peliculas, onEditFilm, onToggleStatus }) => {
 
   return (
     <div>
-      <h2 className="text-white mb-4">🎬 Cartelera de Películas</h2>
       <Row>
         {peliculas.map((peli, index) => (
-          <Col key={peli.id ?? `temp-${index}`} xs={12} sm={6} md={4} lg={3} xl={2} className="mb-4">
+          <Col
+            key={peli.id ?? `temp-${index}`}
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+            xl={2}
+            className="mb-4"
+          >
             <MovieCard
               movie={peli}
               onEdit={() => onEditFilm && onEditFilm(peli)}
-              onToggleStatus={() => handleToggleClick(peli)}
+              onStatusChange={() => handleToggleClick(peli)}
             />
           </Col>
         ))}
@@ -53,7 +77,3 @@ const PeliculaSection = ({ peliculas, onEditFilm, onToggleStatus }) => {
 };
 
 export default PeliculaSection;
-
-
-
-

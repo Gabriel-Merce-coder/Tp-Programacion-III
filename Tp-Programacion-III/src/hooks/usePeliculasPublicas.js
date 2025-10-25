@@ -7,7 +7,7 @@ const usePeliculasPublicas = () => {
 
   useEffect(() => {
     // Fetch SIN token  para usuarios públicos
-    fetch("http://localhost:3000/api/pelicula")
+    fetch("http://localhost:3000/api/pelicula/public")
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -18,6 +18,7 @@ const usePeliculasPublicas = () => {
         }
       })
       .catch(error => {
+        console.error('Error:', error);
         toast.error("Error de conexión");
         setPeliculas([]);
       });

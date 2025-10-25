@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Card, Button, Badge } from "react-bootstrap";
+import { Card, Button, Badge, Spinner } from "react-bootstrap";
 import { BsStarFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import useFuncionesByPelicula from "../../hooks/useFuncionesByPelicula";
 
-const MovieCard = ({ movie = {}, onEdit, onToggleStatus }) => {
+const MovieCard = ({ movie = {}, onEdit, onStatusChange }) => {
   const {
     id = null,
     titulo = "Sin título",
@@ -14,15 +15,17 @@ const MovieCard = ({ movie = {}, onEdit, onToggleStatus }) => {
     calificacion = 0,
     imageUrl = "",
     duracion = "N/A",
-    estado = true, // activo o inactivo
+    estado = true,
   } = movie;
 
   const [showDetails, setShowDetails] = useState(false);
   const navigate = useNavigate();
   const { user } = useUser();
   const role = user?.role;
-
   const toggleDetails = () => setShowDetails(!showDetails);
+
+  // Hook para obtener funciones de la película
+  const { funciones, loading, error } = useFuncionesByPelicula(showDetails ? id : null);
 
   const generoArray = typeof genero === "string" ? genero.split(",") : [];
 
@@ -49,22 +52,21 @@ const MovieCard = ({ movie = {}, onEdit, onToggleStatus }) => {
           <div className="d-flex flex-wrap gap-2 mt-2">
             {role === "user" && (
               <>
-                <Button variant={showDetails ? "outline-info" : "outline-secondary"} size="sm" onClick={toggleDetails}>
+                <Button variant={showDetails ? "outline-info" : "outline-success"} size="sm" onClick={toggleDetails}>
                   {showDetails ? "Ocultar Película" : "Ver Película"}
-                </Button>
-                <Button variant="outline-success" size="sm" onClick={() => navigate("/home/add-reserva")}>
-                  Reservar Película
                 </Button>
               </>
             )}
 
             {(role === "admin" || role === "superadmin") && (
               <>
-                <Button variant="warning" size="sm" onClick={() => onEdit && onEdit(movie)}>Editar</Button>
+                <Button variant="warning" size="sm" onClick={() => onEdit && onEdit(movie)}>
+                  Editar
+                </Button>
                 <Button
-                  variant={estado ? "danger" : "success"}
+                  variant={estado ? "outline-danger" : "outline-success"}
                   size="sm"
-                  onClick={() => onToggleStatus && onToggleStatus(id)}
+                  onClick={() => onStatusChange && onStatusChange()}
                 >
                   {estado ? "Desactivar" : "Activar"}
                 </Button>
@@ -99,6 +101,50 @@ const MovieCard = ({ movie = {}, onEdit, onToggleStatus }) => {
               <p><strong>Duración:</strong> {duracion} min</p>
               <p><strong>Reparto:</strong> {reparto || "No especificado"}</p>
               <p><strong>Descripción:</strong> {descripcion}</p>
+
+              {/* Sección de Funciones */}
+              <div className="mt-4">
+                <h5>Funciones Disponibles:</h5>
+                {loading ? (
+                  <div className="d-flex align-items-center">
+                    <Spinner animation="border" size="sm" className="me-2" />
+                    <span>Cargando funciones...</span>
+                  </div>
+                ) : error ? (
+                  <p className="text-danger">{error}</p>
+                ) : funciones.length > 0 ? (
+                  <div>
+                    {Object.entries(
+                      funciones.reduce((acc, funcion) => {
+                        if (!acc[funcion.fecha]) {
+                          acc[funcion.fecha] = [];
+                        }
+                        acc[funcion.fecha].push(funcion);
+                        return acc;
+                      }, {})
+                    ).map(([fecha, funcionesFecha]) => (
+                      <div key={fecha} className="mb-3">
+                        <p className="text-white mb-2">{fecha}</p>
+                        <div className="d-flex flex-wrap gap-2">
+                          {funcionesFecha.map((funcion) => (
+                            <Badge
+                              key={funcion.id}
+                              bg="primary"
+                              className="px-3 py-2"
+                              style={{ fontSize: '0.9rem', cursor: 'pointer' }}
+                              onClick={() => navigate(`/home/add-reserva?funcionId=${funcion.id}`)}
+                            >
+                              {funcion.hora}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-white">No hay funciones disponibles</p>
+                )}
+              </div>
             </div>
             <div className="text-end mt-3">
               <Button variant="outline-light" onClick={toggleDetails}>Cerrar</Button>
