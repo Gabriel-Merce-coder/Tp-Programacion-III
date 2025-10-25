@@ -126,7 +126,7 @@ const NewFilm = ({ onFilmAdd, editFilm }) => {
     };
 
     
-
+    console.log("Datos que envía el formulario:", filmData);
     onFilmAdd(filmData);
     setTitulo("");
     setDuracion("");

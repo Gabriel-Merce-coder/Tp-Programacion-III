@@ -24,21 +24,31 @@ const PeliculaSection = ({ peliculas, onDeleteFilm, onEditFilm }) => {
       </div>
     );
   }
+
   return (
     <div>
       <Row>
-        {peliculas.map((peli) => (
-          <Col key={peli.id} xs={12} sm={6} md={4} lg={3} xl={2} className="mb-4">
+        {peliculas.map((peli, index) => (
+          <Col
+            key={peli.id ?? `temp-${index}`} // ✅ clave segura
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+            xl={2}
+            className="mb-4"
+          >
             <MovieCard
               movie={peli}
-              onDelete={onDeleteFilm ? () => onDeleteFilm(peli.id) : undefined}
-              onEdit={onEditFilm ? () => onEditFilm(peli) : undefined}
+              onDelete={() => onDeleteFilm && onDeleteFilm(peli.id)}
+              onEdit={() => onEditFilm && onEditFilm(peli)}
             />
           </Col>
         ))}
       </Row>
     </div>
-  )
-}
+  );
+};
 
 export default PeliculaSection;
+

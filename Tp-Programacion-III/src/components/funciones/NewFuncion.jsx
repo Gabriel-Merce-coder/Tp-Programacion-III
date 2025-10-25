@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import useFuncionForm from "../../hooks/useFuncionForm";
-
+import {useEffect} from "react";
 const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
   const navigate = useNavigate();
   // nos traemos todo de useFuncionForm
@@ -41,7 +41,8 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
   // /////////////////////////////////////////////////////////
   // CAMBIO JULIAN: precargar datos si se edita una función
   // /////////////////////////////////////////////////////////
-  if (editFuncion && precio === "" && fecha === "") {
+  useEffect(() => {
+  if (editFuncion) {
     setPrecio(editFuncion.precio);
     setFecha(editFuncion.fecha);
     setHora(editFuncion.hora);
@@ -49,6 +50,7 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
     setSalaId(editFuncion.salaId);
     setEstado(editFuncion.estado);
   }
+}, [editFuncion])
   // FIN CAMBIO JULIAN
 
   const handleAddFunction = (e) => {
@@ -115,7 +117,7 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
     };
 
    
-
+    console.log(funcionData)
     onFuncionAdd(funcionData);
 
     setPrecio("");

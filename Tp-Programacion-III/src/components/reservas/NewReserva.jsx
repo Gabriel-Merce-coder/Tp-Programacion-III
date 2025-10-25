@@ -134,6 +134,7 @@ const NewReserva = ({ peliculas, onAddReserva }) => {
               <h5>Película: {pelicula?.titulo}</h5>
               <p>Función: {funcion?.fecha} a las {funcion?.hora}</p>
               <p>Precio por entrada: ${funcion?.precio}</p>
+              <p className="text-info">¡Quedan {funcion?.asientosDisponibles} asientos disponibles!</p>
             </div>
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3">
