@@ -1,7 +1,7 @@
 import { Row, Col } from "react-bootstrap";
 import MovieCard from "../../peliculas/Movie.Item";
 
-const PeliculaSection = ({ peliculas, onDeleteFilm, onEditFilm }) => {
+const PeliculaSection = ({ peliculas, onEditFilm, onStatusChange }) => {
 
   if (!peliculas) {
     return <div className="text-white">Cargando películas...</div>;
@@ -40,8 +40,8 @@ const PeliculaSection = ({ peliculas, onDeleteFilm, onEditFilm }) => {
           >
             <MovieCard
               movie={peli}
-              onDelete={() => onDeleteFilm && onDeleteFilm(peli.id)}
               onEdit={() => onEditFilm && onEditFilm(peli)}
+              onStatusChange={onStatusChange}
             />
           </Col>
         ))}

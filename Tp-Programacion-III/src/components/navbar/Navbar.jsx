@@ -41,21 +41,17 @@ const Navbar = ({ onLogOut }) => {
                 <Button variant="outline-primary" size="sm" onClick={() => navigate("/dashboard/add-movie")}> Agregar Película</Button>
                 <Button variant="outline-primary" size="sm" onClick={() => navigate("/dashboard/add-function")}> Agregar Función</Button>
                 <Button variant="outline-primary" size="sm" onClick={() => navigate("/dashboard/add-sala")}> Agregar Sala</Button>
+                <Button variant="outline-info" size="sm" onClick={() => navigate("/dashboard/add-sala")}> Historial</Button>
               </>
             )}
-            <Button
-              variant="outline-info"
-              size="sm"
-              onClick={() => {
-                if (role === 'user') {
-                  navigate("/home/historial-reservas");
-                } else {
-                  navigate("/dashboard/historial-reservas");
-                }
-              }}
-            >
-              Historial
-            </Button>
+            {(role === "user") && (
+              <>
+                <Button variant="outline-info" size="sm" onClick={() => { navigate("/home/historial-reservas") }}>
+                  Mis Reservas
+                </Button>
+
+              </>
+            )}
             <ProfileMenu onLogOut={handleLogOut} />
           </div>
         </div>

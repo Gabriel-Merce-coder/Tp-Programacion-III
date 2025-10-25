@@ -6,7 +6,7 @@ import DeleteModal from "../ui/Mymodal";
 import { useUser } from "../../context/UserContext";
 import useFuncionesByPelicula from "../../hooks/useFuncionesByPelicula";
 
-const MovieCard = ({ movie = {}, onDelete, onEdit }) => {
+const MovieCard = ({ movie = {}, onEdit, onStatusChange }) => {
   const {
     id = null,
     titulo = "Sin título",
@@ -16,6 +16,7 @@ const MovieCard = ({ movie = {}, onDelete, onEdit }) => {
     calificacion = 0,
     imageUrl = "",
     duracion = "N/A",
+    estado = true,
   } = movie;
 
   const [showDetails, setShowDetails] = useState(false);
@@ -28,9 +29,19 @@ const MovieCard = ({ movie = {}, onDelete, onEdit }) => {
   // Hook para obtener funciones de la película
   const { funciones, loading, error } = useFuncionesByPelicula(showDetails ? id : null);
 
-  const handleConfirmDelete = () => {
+  const handleStatusClick = () => {
+    setShowConfirm(true);
+  };
+
+  const confirmStatusChange = async () => {
+    if (!id) return;
+
+    // Llamar al callback que maneja la API
+    if (onStatusChange) {
+      await onStatusChange(id);
+    }
+
     setShowConfirm(false);
-    if (onDelete && id !== null) onDelete(id);
   };
 
   // Split seguro
@@ -87,8 +98,12 @@ const MovieCard = ({ movie = {}, onDelete, onEdit }) => {
                 <Button variant="warning" size="sm" onClick={() => onEdit && onEdit(movie)}>
                   Editar
                 </Button>
-                <Button variant="danger" size="sm" onClick={() => setShowConfirm(true)}>
-                  Eliminar
+                <Button
+                  variant={estado ? "outline-danger" : "outline-success"}
+                  size="sm"
+                  onClick={handleStatusClick}
+                >
+                  {estado ? "Desactivar" : "Activar"}
                 </Button>
               </>
             )}
@@ -190,10 +205,10 @@ const MovieCard = ({ movie = {}, onDelete, onEdit }) => {
       <DeleteModal
         show={showConfirm}
         onHide={() => setShowConfirm(false)}
-        onConfirm={handleConfirmDelete}
-        title="Confirmar eliminación"
-        message={`¿Deseás eliminar la película "${titulo}"?`}
-        confirmText="Sí, eliminar"
+        onConfirm={confirmStatusChange}
+        title="Confirmar cambio de estado"
+        message={`¿Estás seguro de ${estado ? 'desactivar' : 'activar'} la película "${titulo}"?`}
+        confirmText={estado ? "Sí, desactivar" : "Sí, activar"}
         cancelText="No, cancelar"
       />
 

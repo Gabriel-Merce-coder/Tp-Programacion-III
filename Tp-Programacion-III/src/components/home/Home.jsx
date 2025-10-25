@@ -1,24 +1,24 @@
-import {Container, Row, Col}   from "react-bootstrap"
-import {Routes, Route} from "react-router-dom" 
+import { Container, Row, Col } from "react-bootstrap"
+import { Routes, Route } from "react-router-dom"
 
 import Navbar from "../navbar/Navbar"
 import PeliculaSection from "../dashboard/sections/PeliculaSection"
-import EditProfile  from "../profile/EditProfile"
+import EditProfile from "../profile/EditProfile"
 import MovieSearch from "../peliculas/MovieSearch"
 import HistorialReservas from "../reservas/HistorialReservas"
 import NewReserva from "../reservas/NewReserva"
 //importo los hooks de peliculas y reservas
-import usePeliculas from "../../hooks/usePeliculas"
 import useReservas from "../../hooks/useReservas"
 // import useFunciones from "../../hooks/useFunciones"
 import useMovieSearch from "../../hooks/useMovieSearch"
+import usePeliculasPublicas from "../../hooks/usePeliculasPublicas"
 
-const Home = ({onLogOut}) => {
+const Home = ({ onLogOut }) => {
     const {
-        peliculas, 
-    } = usePeliculas();
-    
-    const{
+        peliculas,
+    } = usePeliculasPublicas();
+
+    const {
         reservas, handleAddReserva, handleCancelReserva,
     } = useReservas();
 
@@ -27,7 +27,7 @@ const Home = ({onLogOut}) => {
     // } = useFunciones();
 
     const { filteredPeliculas, handleSearchChange } = useMovieSearch(peliculas);
-    
+
     return (
         <div className="min-vh-100 bg-dark text-white">
 

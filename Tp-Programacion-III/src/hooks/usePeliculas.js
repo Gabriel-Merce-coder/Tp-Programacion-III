@@ -107,6 +107,38 @@ const usePeliculas = () => {
     setEditFilm(film);
   };
 
+  const handleStatusChange = async (id) => {
+
+    try {
+      const token = localStorage.getItem('token');
+
+      const response = await fetch(`http://localhost:3000/api/pelicula/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'x-token': token
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const newStatus = data.newStatus;
+
+        // Actualizar el estado local
+        setPeliculas((prev) =>
+          prev.map((p) => (p.id === id ? { ...p, estado: newStatus } : p))
+        );
+
+        toast.success(data.message);
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.error || errorData.message || 'Error al actualizar el estado de la película');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Error de conexión');
+    }
+  };
+
   return {
     peliculas,
     handleAddFilm,
@@ -114,6 +146,7 @@ const usePeliculas = () => {
     handleEditFilm,
     editFilm,
     setEditFilm,
+    handleStatusChange,
   };
 };
 

@@ -34,7 +34,7 @@ const Dashboard = ({ onLogOut }) => {
   const navigate = useNavigate();
 
   const {
-    peliculas, handleAddFilm, handleDeleteFilm, handleEditFilm, editFilm, // setEditFilm,
+    peliculas, handleAddFilm, handleEditFilm, editFilm, handleStatusChange, // setEditFilm,
   } = usePeliculas();
 
   const {
@@ -84,8 +84,8 @@ const Dashboard = ({ onLogOut }) => {
                 </div>
                 <PeliculaSection
                   peliculas={filteredPeliculas}
-                  onDeleteFilm={handleDeleteFilm}
                   onEditFilm={handleNavigateToFilmEdit}
+                  onStatusChange={handleStatusChange}
                 />
 
                 <FunctionSection

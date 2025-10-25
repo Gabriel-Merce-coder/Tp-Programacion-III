@@ -1,11 +1,11 @@
 import PublicNavbar from '../navbar/PublicNavbar';
 import PeliculaSection from '../dashboard/sections/PeliculaSection';
 import MovieSearch from '../peliculas/MovieSearch';
-import usePeliculas from '../../hooks/usePeliculas';
 import useMovieSearch from '../../hooks/useMovieSearch';
+import usePeliculasPublicas from '../../hooks/usePeliculasPublicas';
 
 const LandingPage = () => {
-  const { peliculas } = usePeliculas();
+  const { peliculas } = usePeliculasPublicas();
   const { filteredPeliculas, handleSearchChange } = useMovieSearch(peliculas);
 
   return (
