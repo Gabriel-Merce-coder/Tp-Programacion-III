@@ -1,32 +1,32 @@
 import { useState, useRef } from "react";
 
 const useSalaForm = () => {
-  const [numero, setNumero] = useState("");
-  const [tipo_sala, setTipo_Sala] = useState("");
+  const [numeroSala, setNumeroSala] = useState("");
+  const [tipoSala, setTipoSala] = useState("");
   const [capacidad, setCapacidad] = useState("");
   const [estado, setEstado] = useState(true);
 
   const [errores, setErrores] = useState({
-    numero: "",
-    tipo_sala: "",
+    numeroSala: "",
+    tipoSala: "",
     capacidad: "",
   });
 
-  const numeroRef = useRef(null);
-  const tipo_salaRef = useRef(null);
+  const numeroSalaRef = useRef(null);
+  const tipoSalaRef = useRef(null);
   const capacidadRef = useRef(null);
 
-  const handleChangeNumero = (e) => {
-    setNumero(e.target.value);
-    if (errores.numero) {
-      setErrores({ ...errores, numero: "" });
+  const handleChangeNumeroSala = (e) => {
+    setNumeroSala(e.target.value);
+    if (errores.numeroSala) {
+      setErrores({ ...errores, numeroSala: "" });
     }
   };
 
-  const handleChangeTipo_Sala = (e) => {
-    setTipo_Sala(e.target.value);
-    if (errores.tipo_sala) {
-      setErrores({ ...errores, tipo_sala: "" });
+  const handleChangeTipoSala = (e) => {
+    setTipoSala(e.target.value);
+    if (errores.tipoSala) {
+      setErrores({ ...errores, tipoSala: "" });
     }
   };
 
@@ -42,24 +42,25 @@ const useSalaForm = () => {
   };
 
   return {
-    numero,
-    tipo_sala,
+    numeroSala,
+    tipoSala,
     capacidad,
     estado,
     errores,
-    setNumero,
-    setTipo_Sala,
+    setNumeroSala,
+    setTipoSala,
     setCapacidad,
     setEstado,
     setErrores,
-    numeroRef,
-    tipo_salaRef,
+    numeroSalaRef,
+    tipoSalaRef,
     capacidadRef,
-    handleChangeNumero,
-    handleChangeTipo_Sala,
+    handleChangeNumeroSala,
+    handleChangeTipoSala,
     handleChangeCapacidad,
     handleChangeEstado,
   };
 };
 
 export default useSalaForm;
+

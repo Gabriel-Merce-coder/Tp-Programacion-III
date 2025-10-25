@@ -14,10 +14,8 @@ const usePeliculas = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("🎬 Películas cargadas desde backend:", data);
-        console.log("🎬 IDs recibidos:", data.map((p) => p.id));
+        console.log("🎬 Películas cargadas:", data);
         setPeliculas(data);
-        console.log("✅ Películas guardadas en estado:", data.map((p) => p.id));
       })
       .catch((error) => {
         console.error("❌ Error al cargar películas:", error);
@@ -26,39 +24,32 @@ const usePeliculas = () => {
       });
   }, []);
 
+  
   const handleAddFilm = async (newFilm) => {
     const token = localStorage.getItem("token");
-    console.log("🎬 Película que voy a enviar al backend:", newFilm);
-    console.log("🔑 Token:", token);
 
-    // --- MODO EDICIÓN ---
     if (editFilm) {
       try {
         const res = await fetch(
           `http://localhost:3000/api/pelicula/${editFilm.id}`,
           {
             method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              "x-token": token,
-            },
+            headers: { "Content-Type": "application/json", "x-token": token },
             body: JSON.stringify(newFilm),
           }
         );
 
         if (res.ok) {
           const data = await res.json();
-          const updated = data.updatePelicula || data; // 👈 extrae correctamente del backend
-          console.log("✅ Película actualizada:", updated);
-
+          const updated = data.updatePelicula || data;
           setPeliculas((prev) =>
             prev.map((p) => (p.id === editFilm.id ? updated : p))
           );
-
           setEditFilm(null);
           toast.success("Película editada correctamente");
         } else {
-          toast.error("Error al editar la película");
+          const data = await res.json();
+          toast.error(data.message || "Error al editar la película");
         }
       } catch (error) {
         console.error("❌ Error al editar:", error);
@@ -67,28 +58,21 @@ const usePeliculas = () => {
       return;
     }
 
-    // --- MODO CREAR ---
     try {
       const res = await fetch("http://localhost:3000/api/pelicula", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-token": token,
-        },
+        headers: { "Content-Type": "application/json", "x-token": token },
         body: JSON.stringify(newFilm),
       });
 
       if (res.ok) {
         const data = await res.json();
-        const peliculaCreada = data.pelicula || data; // 👈 toma solo el objeto pelicula
-        console.log("✅ Película creada en backend:", peliculaCreada);
-
+        const peliculaCreada = data.pelicula || data;
         setPeliculas((prev) => [...prev, peliculaCreada]);
-        console.log("🎬 Estado actualizado con película:", peliculaCreada.id);
-
         toast.success("Película agregada correctamente");
       } else {
-        toast.error("No se pudo agregar la película");
+        const data = await res.json();
+        toast.error(data.message || "No se pudo agregar la película");
       }
     } catch (error) {
       console.error("❌ Error al agregar:", error);
@@ -96,26 +80,47 @@ const usePeliculas = () => {
     }
   };
 
-  const handleDeleteFilm = (id) => {
-    console.log(`🗑️ Eliminando película con id: ${id}`);
-    setPeliculas((prev) => prev.filter((p) => p.id !== id));
-    toast.success("Película eliminada");
+ 
+  const toggleStatus = async (id) => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const res = await fetch(`http://localhost:3000/api/pelicula/${id}/estado`, {
+        method: "PATCH",
+        headers: { "x-token": token ,
+          'Content-Type': 'application/json'
+        },
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setPeliculas((prev) =>
+          prev.map((p) => (p.id === id ? { ...p, estado: data.newStatus } : p))
+        );
+        toast.success(data.message);
+      } else {
+        toast.error(data.message || "No se pudo cambiar el estado");
+      }
+    } catch (error) {
+      console.error("❌ Error al cambiar estado:", error);
+      toast.error("Error de conexión con el servidor");
+    }
   };
 
-  const handleEditFilm = (film) => {
-    console.log("✏️ Editando película:", film);
-    setEditFilm(film);
-  };
+  const handleEditFilm = (film) => setEditFilm(film);
 
   return {
     peliculas,
     handleAddFilm,
-    handleDeleteFilm,
     handleEditFilm,
+    toggleStatus,
     editFilm,
     setEditFilm,
   };
 };
 
 export default usePeliculas;
+
+
 

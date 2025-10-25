@@ -2,10 +2,9 @@ import { useState } from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import { BsStarFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import DeleteModal from "../ui/Mymodal";
 import { useUser } from "../../context/UserContext";
 
-const MovieCard = ({ movie = {}, onDelete, onEdit }) => {
+const MovieCard = ({ movie = {}, onEdit, onToggleStatus }) => {
   const {
     id = null,
     titulo = "Sin título",
@@ -15,70 +14,42 @@ const MovieCard = ({ movie = {}, onDelete, onEdit }) => {
     calificacion = 0,
     imageUrl = "",
     duracion = "N/A",
+    estado = true, // activo o inactivo
   } = movie;
 
   const [showDetails, setShowDetails] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
   const { user } = useUser();
   const role = user?.role;
 
   const toggleDetails = () => setShowDetails(!showDetails);
-  const handleConfirmDelete = () => {
-    setShowConfirm(false);
-    if (onDelete && id !== null) onDelete(id);
-  };
 
-  // Split seguro
   const generoArray = typeof genero === "string" ? genero.split(",") : [];
-  const repartoArray = typeof reparto === "string" ? reparto.split(",") : [];
 
   return (
     <>
-      <Card
-        className="bg-dark text-white border-0 shadow-lg movie-card"
-        style={{ transition: "transform 0.2s ease-in-out", cursor: "pointer" }}
-      >
+      <Card className="bg-dark text-white border-0 shadow-lg movie-card" style={{ cursor: "pointer", transition: "transform 0.2s ease-in-out" }}>
         <div className="position-relative" style={{ overflow: "hidden" }}>
           <Card.Img
             variant="top"
             src={imageUrl || "https://dummyimage.com/300x450/000/fff&text=No+Image"}
             alt={titulo}
-            style={{
-              height: "300px",
-              objectFit: "cover",
-              transition: "transform 0.3s ease-in-out",
-            }}
+            style={{ height: "300px", objectFit: "cover", transition: "transform 0.3s ease-in-out" }}
           />
-          <Badge
-            bg="warning"
-            text="dark"
-            className="position-absolute top-0 end-0 m-2 d-flex align-items-center"
-          >
+          <Badge bg="warning" text="dark" className="position-absolute top-0 end-0 m-2 d-flex align-items-center">
             <BsStarFill className="me-1" />
             {calificacion}
           </Badge>
         </div>
 
         <Card.Body className="d-flex flex-column">
-          <Card.Title className="fs-6 fw-bold mb-2" style={{ minHeight: "3rem" }}>
-            {titulo}
-          </Card.Title>
-
-          {generoArray.length > 0 && (
-            <Badge bg="secondary" className="mb-2 align-self-start">
-              {generoArray[0].trim()}
-            </Badge>
-          )}
+          <Card.Title className="fs-6 fw-bold mb-2" style={{ minHeight: "3rem" }}>{titulo}</Card.Title>
+          {generoArray.length > 0 && <Badge bg="secondary" className="mb-2 align-self-start">{generoArray[0].trim()}</Badge>}
 
           <div className="d-flex flex-wrap gap-2 mt-2">
             {role === "user" && (
               <>
-                <Button
-                  variant={showDetails ? "outline-info" : "outline-secondary"}
-                  size="sm"
-                  onClick={toggleDetails}
-                >
+                <Button variant={showDetails ? "outline-info" : "outline-secondary"} size="sm" onClick={toggleDetails}>
                   {showDetails ? "Ocultar Película" : "Ver Película"}
                 </Button>
                 <Button variant="outline-success" size="sm" onClick={() => navigate("/home/add-reserva")}>
@@ -86,13 +57,16 @@ const MovieCard = ({ movie = {}, onDelete, onEdit }) => {
                 </Button>
               </>
             )}
+
             {(role === "admin" || role === "superadmin") && (
               <>
-                <Button variant="warning" size="sm" onClick={() => onEdit && onEdit(movie)}>
-                  Editar
-                </Button>
-                <Button variant="danger" size="sm" onClick={() => setShowConfirm(true)}>
-                  Eliminar
+                <Button variant="warning" size="sm" onClick={() => onEdit && onEdit(movie)}>Editar</Button>
+                <Button
+                  variant={estado ? "danger" : "success"}
+                  size="sm"
+                  onClick={() => onToggleStatus && onToggleStatus(id)}
+                >
+                  {estado ? "Desactivar" : "Activar"}
                 </Button>
               </>
             )}
@@ -101,38 +75,24 @@ const MovieCard = ({ movie = {}, onDelete, onEdit }) => {
       </Card>
 
       {showDetails && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "80%",
-            height: "100%",
-            backgroundColor: "#111",
-            color: "white",
-            padding: "20px",
-            overflowY: "auto",
-            zIndex: 2000,
-            display: "flex",
-            gap: "20px",
-            transition: "transform 0.3s ease",
-          }}
-        >
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "80%",
+          height: "100%",
+          backgroundColor: "#111",
+          color: "white",
+          padding: "20px",
+          overflowY: "auto",
+          zIndex: 2000,
+          display: "flex",
+          gap: "20px",
+        }}>
           <div style={{ flex: "1 1 40%" }}>
-            <img
-              src={imageUrl || "https://dummyimage.com/300x450/000/fff&text=No+Image"}
-              alt={titulo}
-              style={{ width: "100%", borderRadius: "5px" }}
-            />
+            <img src={imageUrl || "https://dummyimage.com/300x450/000/fff&text=No+Image"} alt={titulo} style={{ width: "100%", borderRadius: "5px" }} />
           </div>
-          <div
-            style={{
-              flex: "1 1 60%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
+          <div style={{ flex: "1 1 60%", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
             <div>
               <h2>{titulo}</h2>
               <p><strong>Género:</strong> {genero || "Sin género"}</p>
@@ -147,27 +107,13 @@ const MovieCard = ({ movie = {}, onDelete, onEdit }) => {
         </div>
       )}
 
-      <DeleteModal
-        show={showConfirm}
-        onHide={() => setShowConfirm(false)}
-        onConfirm={handleConfirmDelete}
-        title="Confirmar eliminación"
-        message={`¿Deseás eliminar la película "${titulo}"?`}
-        confirmText="Sí, eliminar"
-        cancelText="No, cancelar"
-      />
-
       <style>{`
-        .movie-card:hover {
-          transform: scale(1.05);
-          z-index: 100;
-        }
-        .movie-card:hover .card-img-top {
-          transform: scale(1.1);
-        }
+        .movie-card:hover { transform: scale(1.05); z-index: 100; }
+        .movie-card:hover .card-img-top { transform: scale(1.1); }
       `}</style>
     </>
   );
 };
 
 export default MovieCard;
+

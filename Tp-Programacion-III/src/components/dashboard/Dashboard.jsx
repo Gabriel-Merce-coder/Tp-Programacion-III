@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import { Routes, Route, useNavigate } from "react-router-dom";
 // import { toast } from "react-toastify";
@@ -19,6 +19,7 @@ import FunctionSection from "../dashboard/sections/FunctionSection";
 import SalaSection from "../dashboard/sections/SalaSection";
 import ReservaSection from "../dashboard/sections/ReservaSection";
 import UserSection from "../dashboard/sections/UserSection";
+import SalaAdminSection from "./sections/SalaAdminSection";
 
 //hooks
 import usePeliculas from "../../hooks/usePeliculas"
@@ -29,7 +30,7 @@ const Dashboard = ({ onLogOut }) => {
   const navigate = useNavigate();
   // usamos los hooks personalizados
   const {
-    peliculas, handleAddFilm, handleDeleteFilm, handleEditFilm, editFilm, // setEditFilm,
+    peliculas, handleAddFilm, toggleStatus, handleEditFilm, editFilm, // setEditFilm,
   } = usePeliculas();
 
   const {
@@ -70,8 +71,8 @@ const Dashboard = ({ onLogOut }) => {
               <>
                 <PeliculaSection
                   peliculas={peliculas}
-                  onDeleteFilm={handleDeleteFilm}
                   onEditFilm={handleNavigateToFilmEdit}
+                  onToggleStatus={toggleStatus}
                 />
 
                 <FunctionSection
@@ -88,6 +89,7 @@ const Dashboard = ({ onLogOut }) => {
                 />
 
                 <UserSection />
+                <SalaAdminSection />
               </>
             }
           />
