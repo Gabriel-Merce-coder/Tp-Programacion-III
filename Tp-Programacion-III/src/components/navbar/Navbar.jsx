@@ -46,7 +46,7 @@ const Navbar = ({ onLogOut }) => {
             )}
             {(role === "user") && (
               <>
-                <Button variant="outline-info" size="sm" onClick={() => { navigate("/home/historial-reservas") }}>
+                <Button variant="outline-info" size="sm" onClick={() => { navigate("/home/my-reservations") }}>
                   Mis Reservas
                 </Button>
 
