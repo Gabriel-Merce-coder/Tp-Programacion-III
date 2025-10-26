@@ -84,6 +84,7 @@ body::before {
   border-radius: 5px;
   font-size: 1rem;
   transition: background 0.3s ease;
+  
 }
 
 .btn-login:hover {
