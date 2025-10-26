@@ -4,6 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import useSalaForm from "../../hooks/useSalaForm";
 import { useEffect } from "react";
+import "./NewSala.css"; // 🎨 Nuevo estilo profesional tipo Netflix
 
 const NewSala = ({ onSalaAdd, editSala }) => {
   const navigate = useNavigate();
@@ -80,104 +81,118 @@ const NewSala = ({ onSalaAdd, editSala }) => {
     navigate("/dashboard");
   };
 
+  // ============================
+  // ESTRUCTURA VISUAL - NETFLIX STYLE
+  // ============================
   return (
-    <Card className="m-4 w-50" bg="info">
-      <Card.Body>
-        <Form className="text-white" onSubmit={handleAddSala}>
-          <Row>
-            <Col md={6}>
-              <Form.Group className="mb-3" controlId="numeroSala">
-                <Form.Label>Número de Sala</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Ingrese número"
-                  min="1"
-                  value={numeroSala}
-                  onChange={handleChangeNumeroSala}
-                  ref={numeroSalaRef}
-                  isInvalid={!!errores.numeroSala}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errores.numeroSala}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
+    <div className="new-sala-container">
+      <Card className="new-sala-card">
+        <Card.Body>
+          <h4 className="text-center mb-4">
+            {editSala ? "Editar Sala" : "Agregar Nueva Sala"}
+          </h4>
 
-            <Col md={6}>
-              <Form.Group className="mb-3" controlId="tipoSala">
-                <Form.Label>Tipo de Sala</Form.Label>
-                <Form.Select
-                  ref={tipoSalaRef}
-                  value={tipoSala}
-                  onChange={handleChangeTipoSala}
-                  isInvalid={!!errores.tipoSala}
-                >
-                  <option value="">Seleccione tipo</option>
-                  <option value="2D">2D</option>
-                  <option value="3D">3D</option>
-                  <option value="4D">4D</option>
-                </Form.Select>
-                <Form.Control.Feedback type="invalid">
-                  {errores.tipoSala}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col md={6}>
-              <Form.Group className="mb-3" controlId="capacidad">
-                <Form.Label>Capacidad</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Capacidad de la sala"
-                  min="1"
-                  value={capacidad}
-                  onChange={handleChangeCapacidad}
-                  ref={capacidadRef}
-                  isInvalid={!!errores.capacidad}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errores.capacidad}
-                </Form.Control.Feedback>
-              </Form.Group>
-            </Col>
-
-            <Col md={6}>
-              <Form.Group className="mb-3" controlId="estado">
-                <Form.Label>Estado</Form.Label>
-                <div className="mt-2">
-                  <Form.Check
-                    type="switch"
-                    id="estado-switch"
-                    label={estado ? "Activa" : "Inactiva"}
-                    checked={estado}
-                    onChange={handleChangeEstado}
+          <Form onSubmit={handleAddSala}>
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="numeroSala">
+                  <Form.Label>Número de Sala</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Ingrese número"
+                    min="1"
+                    value={numeroSala}
+                    onChange={handleChangeNumeroSala}
+                    ref={numeroSalaRef}
+                    isInvalid={!!errores.numeroSala}
                   />
-                </div>
-              </Form.Group>
-            </Col>
-          </Row>
+                  <Form.Control.Feedback type="invalid">
+                    {errores.numeroSala}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
 
-          <Row className="justify-content-between">
-            <Col md={4}>
-              <Button
-                variant="outline-light"
-                onClick={() => navigate("/dashboard")}
-                type="button"
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="tipoSala">
+                  <Form.Label>Tipo de Sala</Form.Label>
+                  <Form.Select
+                    ref={tipoSalaRef}
+                    value={tipoSala}
+                    onChange={handleChangeTipoSala}
+                    isInvalid={!!errores.tipoSala}
+                  >
+                    <option value="">Seleccione tipo</option>
+                    <option value="2D">2D</option>
+                    <option value="3D">3D</option>
+                    <option value="4D">4D</option>
+                  </Form.Select>
+                  <Form.Control.Feedback type="invalid">
+                    {errores.tipoSala}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="capacidad">
+                  <Form.Label>Capacidad</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Capacidad de la sala"
+                    min="1"
+                    value={capacidad}
+                    onChange={handleChangeCapacidad}
+                    ref={capacidadRef}
+                    isInvalid={!!errores.capacidad}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errores.capacidad}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="estado">
+                  <Form.Label>Estado</Form.Label>
+                  <div className="mt-2">
+                    <Form.Check
+                      type="switch"
+                      id="estado-switch"
+                      label={estado ? "Activa" : "Inactiva"}
+                      checked={estado}
+                      onChange={handleChangeEstado}
+                    />
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="justify-content-between mt-4">
+              <Col md={4}>
+                <Button
+                  variant="outline-light"
+                  onClick={() => navigate("/dashboard")}
+                  type="button"
+                >
+                  Volver al inicio
+                </Button>
+              </Col>
+              <Col
+                md={3}
+                className="d-flex flex-column justify-content-end align-items-end"
               >
-                Volver al inicio
-              </Button>
-            </Col>
-            <Col md={3} className="d-flex justify-content-end">
-              <Button variant="primary" type="submit">
-                {editSala ? "Guardar Cambios" : "Agregar Sala"}
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-      </Card.Body>
-    </Card>
+                <Button variant="primary" type="submit">
+                  {/* CAMBIO JULIAN: botón dinámico */}
+                  {editSala ? "Guardar Cambios" : "Agregar Sala"}
+                  {/* FIN CAMBIO JULIAN */}
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </Card.Body>
+      </Card>
+    </div>
   );
 };
 
