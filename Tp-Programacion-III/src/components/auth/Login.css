@@ -1,0 +1,123 @@
+/* --- Reset y altura completa --- */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+/* --- Fondo estilo Netflix --- */
+body {
+  background: url('https://assets.nflxext.com/ffe/siteui/vlv3/65b7cc32-7c8a-48da-9c82-57ef6b8b00b8/01d0b19a-3e79-4d33-b23c-047d0b2d994a/AR-es-20230925-popsignuptwoweeks-perspective_alpha_website_large.jpg') 
+    no-repeat center center/cover !important;
+  position: relative;
+}
+
+/* Overlay oscuro encima del fondo */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.65) !important;
+  z-index: 0;
+}
+
+/* --- Contenedor principal --- */
+.login-container {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* --- Card del login --- */
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background-color: rgba(0,0,0,0.85) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  padding: 2.5rem 2rem !important;
+  box-shadow: 0 0 25px rgba(0,0,0,0.5) !important;
+  z-index: 1;
+}
+
+/* --- Título --- */
+.login-card h5 {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  margin-bottom: 2rem !important;
+  color: #fff !important;
+}
+
+/* --- Inputs --- */
+.login-card .form-control {
+  background-color: #333 !important;
+  border: none !important;
+  color: #fff !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 5px !important;
+  font-size: 1rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.login-card .form-control::placeholder {
+  color: #aaa !important;
+}
+
+.login-card .form-control:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: 1px solid #e50914 !important;
+}
+
+/* --- Botones --- */
+.login-card .btn-login {
+  background-color: #e50914 !important;
+  border: none !important;
+  color: #fff !important;
+  width: 100%;
+  padding: 0.75rem 1rem !important;
+  border-radius: 5px !important;
+  font-size: 1rem !important;
+  transition: background 0.3s ease !important;
+}
+
+.login-card .btn-login:hover {
+  background-color: #f40612 !important;
+}
+
+/* Botón crear cuenta */
+.login-card .register-link {
+  color: #e50914 !important;
+  cursor: pointer;
+  font-weight: 500 !important;
+  transition: color 0.3s ease !important;
+}
+
+.login-card .register-link:hover {
+  color: #f40612 !important;
+}
+
+/* --- Texto de error --- */
+.login-card .text-danger {
+  font-size: 0.875rem !important;
+  margin-top: 0.25rem !important;
+}
+
+/* --- Responsive --- */
+@media (max-width: 576px) {
+  .login-card {
+    padding: 1.5rem !important;
+  }
+
+  .login-card h5 {
+    font-size: 1.6rem !important;
+  }
+}

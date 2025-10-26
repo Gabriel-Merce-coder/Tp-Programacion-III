@@ -8,7 +8,7 @@ const PublicNavbar = () => {
         <Navbar bg="dark" variant="dark" expand="lg" className="w-100">
             <Container className="justify-content-between">
                 <Navbar.Brand onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
-                    🎬 CineApp
+                    CineApp
                 </Navbar.Brand>
                 <div className="d-flex align-items-center gap-2">
                     <Button variant="outline-light" onClick={() => navigate("/login")}>
