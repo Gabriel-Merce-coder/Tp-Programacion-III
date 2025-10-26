@@ -11,7 +11,7 @@ import { UserProvider, useUser } from "./context/UserContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "./App.css";
 
 const AppContent = () => { // Componente interno que puede usar el contexto
   const { clearUser } = useUser();
