@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useFilmForm from "../../hooks/useFilmForm";
+import "./NewFilm.css"; // 🎨 Nuevo estilo profesional
 
 const NewFilm = ({ onFilmAdd, editFilm }) => {
   const navigate = useNavigate();
@@ -125,7 +126,6 @@ const NewFilm = ({ onFilmAdd, editFilm }) => {
       imageUrl,
     };
 
-    
     console.log("Datos que envía el formulario:", filmData);
     onFilmAdd(filmData);
     setTitulo("");
@@ -138,11 +138,18 @@ const NewFilm = ({ onFilmAdd, editFilm }) => {
     navigate("/dashboard");
   };
 
+  // ============================
+  // ESTRUCTURA VISUAL - NETFLIX STYLE
+  // ============================
   return (
-    <div>
-      <Card className="m-4 w-50" bg="success">
+    <div className="new-film-container">
+      <Card className="new-film-card">
         <Card.Body>
-          <Form className="text-white" onSubmit={handleAddFilm}>
+          <h4 className="text-center mb-4">
+            {editFilm ? "Editar Película" : "Agregar Nueva Película"}
+          </h4>
+
+          <Form onSubmit={handleAddFilm}>
             <Row>
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="title">
@@ -263,17 +270,17 @@ const NewFilm = ({ onFilmAdd, editFilm }) => {
                 </Form.Control.Feedback>
               </Form.Group>
             </Row>
-            
+
             <Row className="justify-content-between mt-4">
               <Col md={4}>
-              <Button
-                variant="outline-light"
-                onClick={() => navigate("/dashboard")}
-                type="button"
-              >
-                Volver al inicio
-              </Button>
-            </Col>
+                <Button
+                  variant="outline-light"
+                  onClick={() => navigate("/dashboard")}
+                  type="button"
+                >
+                  Volver al inicio
+                </Button>
+              </Col>
               <Col
                 md={3}
                 className="d-flex flex-column justify-content-end align-items-end"
@@ -293,3 +300,4 @@ const NewFilm = ({ onFilmAdd, editFilm }) => {
 };
 
 export default NewFilm;
+

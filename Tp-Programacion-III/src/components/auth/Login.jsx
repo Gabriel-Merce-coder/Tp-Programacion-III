@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useUser } from '../../context/UserContext';
 import PublicNavbar from '../navbar/PublicNavbar';
+import "./Login.css";
+
 
 const Login = () => {
     const navigate = useNavigate();
@@ -104,60 +106,46 @@ const Login = () => {
 
     return (
         <>
-            <PublicNavbar />
-            <Card className="mt-5 mx-3 p-3 px-5 shadow">
-                <Card.Body>
-                    <Row className="mb-2">
-                        <h5>Iniciar Sesion</h5>
-                    </Row>
-                    <Form onSubmit={handleSubmit}>
-                        <FormGroup className="mb-4">
-                            <Form.Control
-                                type="email"
-                                placeholder="Ingresar email"
-                                onChange={handleEmailChange}
-                                value={email}
-                                ref={emailRef}
-                            />
-                            {errores.email && <span className="text-danger">{errores.email}</span>}
-                        </FormGroup>
-                        <FormGroup className="mb-4">
-                            <Form.Control
-                                type="password"
-                                placeholder="Ingresar contraseña"
-                                onChange={handlePasswordChange}
-                                value={password}
-                                ref={passwordRef}
-                            />
-                            {errores.password && <span className="text-danger">{errores.password}</span>}
-                        </FormGroup>
-                        <Row>
-                            <Col />
-                            <Col md={6} className="d-flex justify-content-end">
-                                <Button variant="secondary" type="submit">
-                                    Iniciar sesión
-                                </Button>
-                            </Col>
-                        </Row>
-                    </Form>
+  <PublicNavbar />
+  <div className="login-container">
+  <div className="login-card">
+    <h5>Iniciar Sesión</h5>
+    <Form onSubmit={handleSubmit}>
+      <FormGroup>
+        <Form.Control
+          type="email"
+          placeholder="Ingresar email"
+          onChange={handleEmailChange}
+          value={email}
+          ref={emailRef}
+        />
+        {errores.email && <span className="text-danger">{errores.email}</span>}
+      </FormGroup>
 
-                    {/* Botón para ir al registro */}
-                    <Row className="mt-3">
-                        <Col className="text-center">
-                            <p className="text-muted mb-2">¿No tienes una cuenta?</p>
-                            <Button
-                                variant="outline-primary"
-                                size="sm"
-                                onClick={() => navigate("/registro")}
-                            >
-                                Crear cuenta
-                            </Button>
-                        </Col>
-                    </Row>
-                </Card.Body>
-            </Card>
-        </>
-    );
+      <FormGroup>
+        <Form.Control
+          type="password"
+          placeholder="Ingresar contraseña"
+          onChange={handlePasswordChange}
+          value={password}
+          ref={passwordRef}
+        />
+        {errores.password && <span className="text-danger">{errores.password}</span>}
+      </FormGroup>
+
+      <Button type="submit" className="btn-login">Iniciar sesión</Button>
+    </Form>
+
+    <p className="mt-3 text-center">
+      ¿No tienes una cuenta? 
+      <span className="register-link" onClick={() => navigate("/registro")}>
+        Crear cuenta
+      </span>
+    </p>
+  </div>
+</div>
+</>
+);
 };
 
 export default Login; 
