@@ -4,6 +4,7 @@ import ProfileMenu from "../profile/ProfileMenu";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "../../context/UserContext";
+import "./Navbar.css"; // Importamos los estilos
 
 const Navbar = ({ onLogOut }) => {
   const navigate = useNavigate();
@@ -41,7 +42,10 @@ const Navbar = ({ onLogOut }) => {
                 <Button variant="outline-primary" size="sm" onClick={() => navigate("/dashboard/add-movie")}> Agregar Película</Button>
                 <Button variant="outline-primary" size="sm" onClick={() => navigate("/dashboard/add-function")}> Agregar Función</Button>
                 <Button variant="outline-primary" size="sm" onClick={() => navigate("/dashboard/add-sala")}> Agregar Sala</Button>
-                <Button variant="outline-info" size="sm" onClick={() => navigate("/dashboard/add-sala")}> Historial</Button>
+                <Button variant="outline-info" size="sm" onClick={() => navigate("/dashboard/historial-reservas")}> Historial</Button>
+                <Button variant="outline-info" size="sm" onClick={() => navigate("/dashboard/view-users")}> Ver Usuarios</Button>
+                <Button variant="outline-info" size="sm" onClick={() => navigate("/dashboard/view-salas")}> Ver salas</Button>
+                <Button variant="outline-info" size="sm" onClick={() => navigate("/dashboard/view-functions")}> Ver Funciones</Button>
               </>
             )}
             {(role === "user") && (

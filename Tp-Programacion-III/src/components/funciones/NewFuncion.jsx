@@ -6,13 +6,13 @@ import useFuncionForm from "../../hooks/useFuncionForm";
 import usePeliculas from "../../hooks/usePeliculas";
 import useSala from "../../hooks/useSala";
 import { useEffect } from "react";
+
 const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
   const navigate = useNavigate();
 
   // Hooks para obtener películas y salas
   const { peliculas } = usePeliculas();
   const { salas } = useSala();
-
   // nos traemos todo de useFuncionForm
   const {
     precio,
@@ -22,20 +22,17 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
     salaId,
     estado,
     errores,
-
     precioRef,
     fechaRef,
     horaRef,
     peliculaIdRef,
     salaIdRef,
-
     handleChangePrecio,
     handleChangeFecha,
     handleChangeHora,
     handleChangePeliculaId,
     handleChangeSalaId,
     handleChangeEstado,
-
     setPrecio,
     setFecha,
     setHora,
@@ -57,7 +54,7 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
       setSalaId(editFuncion.salaId);
       setEstado(editFuncion.estado);
     }
-  }, [editFuncion])
+  }, [editFuncion, setPrecio, setFecha, setHora, setPeliculaId, setSalaId, setEstado])
   // FIN CAMBIO JULIAN
 
   const handleAddFunction = (e) => {
@@ -99,18 +96,11 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
       setErrores(errorFuncion);
       toast.error("Por favor, revise los campos");
       // Poner focus en el primer input con error
-      if (errorFuncion.precio) {
-        precioRef.current.focus();
-      } else if (errorFuncion.fecha) {
-        fechaRef.current.focus();
-      } else if (errorFuncion.hora) {
-        horaRef.current.focus();
-      } else if (errorFuncion.peliculaId) {
-        peliculaIdRef.current.focus();
-      } else if (errorFuncion.salaId) {
-        salaIdRef.current.focus();
-      }
-
+      if (errorFuncion.precio) precioRef.current.focus();
+      else if (errorFuncion.fecha) fechaRef.current.focus();
+      else if (errorFuncion.hora) horaRef.current.focus();
+      else if (errorFuncion.peliculaId) peliculaIdRef.current.focus();
+      else if (errorFuncion.salaId) salaIdRef.current.focus();
       return;
     }
 
@@ -118,13 +108,12 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
       peliculaId: parseInt(peliculaId),
       salaId: parseInt(salaId),
       precio: parseFloat(precio),
-      fecha: fecha,
-      hora: hora,
-      estado: estado,
+      fecha,
+      hora,
+      estado,
     };
 
-
-    console.log(funcionData)
+    console.log(funcionData);
     onFuncionAdd(funcionData);
 
     setPrecio("");
@@ -137,12 +126,15 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
     navigate("/dashboard");
   };
 
-
   return (
-    <div>
-      <Card className="m-4 w-50" bg="success">
+    <div className="new-funcion-container">
+      <Card className="new-funcion-card">
         <Card.Body>
-          <Form className="text-white" onSubmit={handleAddFunction}>
+          <h4 className="text-center mb-4">
+            {editFuncion ? "Editar Función" : "Agregar Nueva Función"}
+          </h4>
+
+          <Form onSubmit={handleAddFunction}>
             <Row>
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="peliculaId">
@@ -165,6 +157,7 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
+
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="salaId">
                   <Form.Label>Sala</Form.Label>
@@ -206,6 +199,7 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
                   </Form.Control.Feedback>
                 </Form.Group>
               </Col>
+
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="estado">
                   <Form.Label>Estado</Form.Label>
@@ -222,37 +216,41 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
               </Col>
             </Row>
 
-            <Row className="justify-content-between">
-              <Form.Group className="mb-3" controlId="fecha">
-                <Form.Label>Fecha</Form.Label>
-                <Form.Control
-                  type="date"
-                  value={fecha}
-                  onChange={handleChangeFecha}
-                  ref={fechaRef}
-                  isInvalid={!!errores.fecha}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errores.fecha}
-                </Form.Control.Feedback>
-              </Form.Group>
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="fecha">
+                  <Form.Label>Fecha</Form.Label>
+                  <Form.Control
+                    type="date"
+                    value={fecha}
+                    onChange={handleChangeFecha}
+                    ref={fechaRef}
+                    isInvalid={!!errores.fecha}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errores.fecha}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
 
-              <Form.Group className="mb-3" controlId="hora">
-                <Form.Label>Hora</Form.Label>
-                <Form.Control
-                  type="time"
-                  value={hora}
-                  onChange={handleChangeHora}
-                  ref={horaRef}
-                  isInvalid={!!errores.hora}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errores.hora}
-                </Form.Control.Feedback>
-              </Form.Group>
+              <Col md={6}>
+                <Form.Group className="mb-3" controlId="hora">
+                  <Form.Label>Hora</Form.Label>
+                  <Form.Control
+                    type="time"
+                    value={hora}
+                    onChange={handleChangeHora}
+                    ref={horaRef}
+                    isInvalid={!!errores.hora}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errores.hora}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
             </Row>
 
-            <Row className="justify-content-between">
+            <Row className="justify-content-between mt-4">
               <Col md={4}>
                 <Button
                   variant="outline-light"
@@ -281,3 +279,4 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
 };
 
 export default NewFuncion;
+
