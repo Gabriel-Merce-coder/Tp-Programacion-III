@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import "./NotFound.css"; // 🎨 estilos unificados CineFlix
+import "./NotFound.css";
 
 const PageNotFound = () => {
   const navigate = useNavigate();

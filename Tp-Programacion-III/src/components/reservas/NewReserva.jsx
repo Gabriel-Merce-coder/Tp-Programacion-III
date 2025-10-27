@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Card, Form, Button, Col, Row, Spinner, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./NewReserva.css"; // 🎨 Nuevo estilo profesional
+import "./NewReserva.css";
 
 import PageNotFound from "../ui/PageNotFound";
 import useFunciones from "../../hooks/useFunciones";

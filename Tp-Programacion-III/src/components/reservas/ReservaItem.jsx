@@ -1,6 +1,3 @@
-// /////////////////////////////////////////////////////////
-// CAMBIO JULIAN: mostrar la información formateada y legible
-// /////////////////////////////////////////////////////////
 import { useState } from "react";
 import { Card, Button } from "react-bootstrap";
 import DeleteModal from "../ui/Mymodal";
@@ -75,4 +72,3 @@ const ReservaItem = ({ reserva, pelicula, funcion, onCancel }) => {
 
 export default ReservaItem;
 
-// FIN CAMBIO JULIAN

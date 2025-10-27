@@ -1,7 +1,3 @@
-// /////////////////////////////////////////////////////////
-// CAMBIO JULIAN: Historial de reservas usando callback para cancelar
-// /////////////////////////////////////////////////////////
-
 import { Row, Col, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import ReservaItem from "./ReservaItem";
@@ -46,4 +42,3 @@ const HistorialReservas = ({ reservas, peliculas, funciones, onCancelReserva }) 
 
 export default HistorialReservas;
 
-// FIN CAMBIO JULIAN
