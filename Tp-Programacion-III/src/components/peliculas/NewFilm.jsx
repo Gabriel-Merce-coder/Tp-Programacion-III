@@ -116,14 +116,15 @@ const NewFilm = ({ onFilmAdd, editFilm }) => {
       return;
     }
 
+    // CONVERSIÓN EXPLÍCITA DE TIPOS - Los formularios HTML siempre envían strings
     const filmData = {
-      titulo,
-      duracion,
-      genero,
-      reparto,
-      descripcion,
-      calificacion,
-      imageUrl,
+      titulo: titulo.trim(),
+      duracion: parseInt(duracion, 10), // Convertir string a número entero
+      genero: genero.trim(),
+      reparto: reparto.trim(),
+      descripcion: descripcion.trim(),
+      calificacion: parseFloat(calificacion), // Convertir string a número flotante
+      imageUrl: imageUrl.trim(),
     };
 
     console.log("Datos que envía el formulario:", filmData);

@@ -17,7 +17,6 @@ import MovieSearch from "../peliculas/MovieSearch";
 //secciones
 import FuncionAdminSection from "../dashboard/sections/FunctionAdminSection";
 import PeliculaSection from "../dashboard/sections/PeliculaSection";
-
 import ReservaSection from "../dashboard/sections/ReservaSection";
 import UserSection from "../dashboard/sections/UserSection";
 import SalaAdminSection from "./sections/SalaAdminSection";
@@ -35,19 +34,19 @@ const Dashboard = ({ onLogOut }) => {
   const navigate = useNavigate();
 
   const {
-    peliculas, handleAddFilm, handleEditFilm, editFilm, handleStatusChange, 
+    peliculas, handleAddFilm, handleEditFilm, editFilm, handleStatusChange,
   } = usePeliculas();
 
   const {
-    funciones, handleAddFunction,  handleEditFunction, editFuncion, 
+    funciones, handleAddFunction, handleEditFunction, editFuncion,
   } = useFuncion();
 
   const {
-    salas, handleAddSala, editSala, 
+    handleAddSala, editSala,
   } = useSala();
 
   const {
-    reservas, handleCancelReserva, 
+    reservas, handleCancelReserva,
   } = useReservas();
 
   const handleNavigateToFilmEdit = (film) => {
@@ -95,7 +94,7 @@ const Dashboard = ({ onLogOut }) => {
           {/* Secciones de Administracion */}
           <Route path="view-users" element={<UserSection />} />
           <Route path="view-salas" element={<SalaAdminSection />} />
-          <Route path="view-functions" element={<FuncionAdminSection  setEditFuncion={handleEditFunction}/>} />
+          <Route path="view-functions" element={<FuncionAdminSection setEditFuncion={handleEditFunction} />} />
           {/*Perfil*/}
           {/* Pagina no encontrada */}
           <Route path="*" element={<PageNotFound />} />

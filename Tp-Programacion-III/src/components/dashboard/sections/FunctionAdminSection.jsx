@@ -32,8 +32,8 @@ const FuncionAdminSection = ({ setEditFuncion }) => {
   };
 
   const handleEditClick = (funcion) => {
-    setEditFuncion(funcion); 
-    navigate(`/dashboard/edit-function/${funcion.id}`); 
+    setEditFuncion(funcion);
+    navigate(`/dashboard/edit-function/${funcion.id}`);
   };
 
   return (
@@ -69,8 +69,8 @@ const FuncionAdminSection = ({ setEditFuncion }) => {
                         {funciones.map((funcion, index) => (
                           <tr key={funcion.id || index}>
                             <td>{index + 1}</td>
-                            <td>{funcion.Pelicula?.titulo || "—"}</td>
-                            <td>{funcion.Sala?.numeroSala || "—"}</td>
+                            <td>{funcion.pelicula?.titulo || "—"}</td>
+                            <td>{funcion.sala?.numeroSala || "—"}</td>
                             <td>{funcion.fecha}</td>
                             <td>{funcion.hora}</td>
                             <td>${funcion.precio}</td>
@@ -112,11 +112,9 @@ const FuncionAdminSection = ({ setEditFuncion }) => {
         }}
         onConfirm={confirmStatusChange}
         title="Confirmar cambio de estado"
-        message={`¿Estás seguro de ${
-          selectedFuncion?.estado ? "desactivar" : "activar"
-        } la función de la película ${
-          selectedFuncion?.Pelicula?.titulo || ""
-        } en la sala ${selectedFuncion?.Sala?.numeroSala || ""}?`}
+        message={`¿Estás seguro de ${selectedFuncion?.estado ? "desactivar" : "activar"
+          } la función de la película ${selectedFuncion?.pelicula?.titulo || ""
+          } en la sala ${selectedFuncion?.sala?.numeroSala || ""}?`}
         confirmText={selectedFuncion?.estado ? "Sí, desactivar" : "Sí, activar"}
         cancelText="No, cancelar"
       />

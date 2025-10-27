@@ -1,0 +1,152 @@
+/* =====================================
+   FORMULARIO DE NUEVA RESERVA - ESTILO NETFLIX ADMIN
+   ===================================== */
+
+/* Fondo oscuro degradado similar al login */
+.new-reserva-container {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #141414 0%, #000 100%);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+/* Card principal */
+.new-reserva-card {
+    width: 100%;
+    max-width: 700px;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    border-radius: 8px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    z-index: 1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.new-reserva-card:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 25px rgba(229, 9, 20, 0.3);
+}
+
+/* Título del formulario */
+.new-reserva-card h4 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Información de la película */
+.movie-info {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid #e50914;
+}
+
+.movie-info h5 {
+    color: #e50914;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.movie-info p {
+    margin-bottom: 0.5rem;
+    color: #ccc;
+}
+
+.movie-info .text-info {
+    color: #17a2b8 !important;
+    font-weight: 600;
+}
+
+/* Campos del formulario */
+.new-reserva-card .form-control {
+    background-color: #333;
+    border: none;
+    color: #fff;
+    padding: 0.75rem 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.new-reserva-card .form-control::placeholder {
+    color: #aaa;
+}
+
+.new-reserva-card .form-control:focus {
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #e50914;
+}
+
+/* Etiquetas */
+.new-reserva-card label {
+    font-weight: 500;
+    color: #fff;
+}
+
+/* Botón principal */
+.new-reserva-card .btn-primary {
+    background-color: #e50914;
+    border: none;
+    color: #fff;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.new-reserva-card .btn-primary:hover {
+    background-color: #f40612;
+    transform: scale(1.05);
+}
+
+/* Botón de volver */
+.new-reserva-card .btn-outline-light {
+    border-color: #fff;
+    color: #fff;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.new-reserva-card .btn-outline-light:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+/* Estados de botones :active y :focus */
+.new-reserva-card .btn-primary:active,
+.new-reserva-card .btn-primary:focus {
+    background-color: #e50914 !important;
+    border-color: #e50914 !important;
+    box-shadow: 0 0 0 0.2rem rgba(229, 9, 20, 0.25) !important;
+}
+
+.new-reserva-card .btn-outline-light:active,
+.new-reserva-card .btn-outline-light:focus {
+    background-color: transparent !important;
+    border-color: #fff !important;
+    color: #fff !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .new-reserva-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .new-reserva-card h4 {
+        font-size: 1.5rem;
+    }
+}
