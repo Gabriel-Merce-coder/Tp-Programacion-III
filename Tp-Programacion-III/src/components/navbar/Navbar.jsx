@@ -4,7 +4,7 @@ import ProfileMenu from "../profile/ProfileMenu";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUser } from "../../context/UserContext";
-import "./Navbar.css"; // Importamos los estilos
+import "./Navbar.css";
 
 const Navbar = ({ onLogOut }) => {
   const navigate = useNavigate();

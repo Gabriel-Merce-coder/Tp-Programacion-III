@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import useSalaForm from "../../hooks/useSalaForm";
 import { useEffect } from "react";
-import "./NewSala.css"; // 🎨 Nuevo estilo profesional tipo Netflix
+import "./NewSala.css";
 
 const NewSala = ({ onSalaAdd, editSala }) => {
   const navigate = useNavigate();
@@ -81,9 +81,7 @@ const NewSala = ({ onSalaAdd, editSala }) => {
     navigate("/dashboard");
   };
 
-  // ============================
-  // ESTRUCTURA VISUAL - NETFLIX STYLE
-  // ============================
+
   return (
     <div className="new-sala-container">
       <Card className="new-sala-card">

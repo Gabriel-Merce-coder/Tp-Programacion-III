@@ -42,9 +42,7 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
     setErrores,
   } = useFuncionForm();
 
-  // /////////////////////////////////////////////////////////
-  // CAMBIO JULIAN: precargar datos si se edita una función
-  // /////////////////////////////////////////////////////////
+  
   useEffect(() => {
     if (editFuncion) {
       setPrecio(editFuncion.precio);
@@ -55,7 +53,7 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
       setEstado(editFuncion.estado);
     }
   }, [editFuncion, setPrecio, setFecha, setHora, setPeliculaId, setSalaId, setEstado])
-  // FIN CAMBIO JULIAN
+  
 
   const handleAddFunction = (e) => {
     e.preventDefault();

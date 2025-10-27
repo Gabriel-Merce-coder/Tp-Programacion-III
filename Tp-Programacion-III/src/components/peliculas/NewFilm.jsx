@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useFilmForm from "../../hooks/useFilmForm";
-import "./NewFilm.css"; // 🎨 Nuevo estilo profesional
+import "./NewFilm.css";
 
 const NewFilm = ({ onFilmAdd, editFilm }) => {
   const navigate = useNavigate();
@@ -42,9 +42,7 @@ const NewFilm = ({ onFilmAdd, editFilm }) => {
     setErrores,
   } = useFilmForm();
 
-  // /////////////////////////////////////////////////////////
-  // CAMBIO JULIAN: precargar datos si se edita una película
-  // /////////////////////////////////////////////////////////
+
   if (editFilm && titulo === "" && duracion === "") {
     setTitulo(editFilm.titulo);
     setDuracion(editFilm.duracion);
@@ -54,7 +52,7 @@ const NewFilm = ({ onFilmAdd, editFilm }) => {
     setCalificacion(editFilm.calificacion);
     setImageUrl(editFilm.imageUrl);
   }
-  // FIN CAMBIO JULIAN
+  
 
   const handleAddFilm = (e) => {
     e.preventDefault();
@@ -139,9 +137,7 @@ const NewFilm = ({ onFilmAdd, editFilm }) => {
     navigate("/dashboard");
   };
 
-  // ============================
-  // ESTRUCTURA VISUAL - NETFLIX STYLE
-  // ============================
+
   return (
     <div className="new-film-container">
       <Card className="new-film-card">

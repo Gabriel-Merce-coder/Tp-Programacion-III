@@ -1,6 +1,6 @@
 import { Button, Container, Navbar } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import "./Navbar.css"; // Importamos los estilos
+import "./Navbar.css";
 
 const PublicNavbar = () => {
   const navigate = useNavigate();
