@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import PageNotFound from "../ui/PageNotFound";
+import useFunciones from "../../hooks/useFunciones";
 
 const NewReserva = ({ peliculas, onAddReserva }) => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const NewReserva = ({ peliculas, onAddReserva }) => {
   const funcionIdFromUrl = searchParams.get('funcionId');
 
   // Hook para cargar funciones desde la API
-  const { funciones, loading, error } = useFuncionesFromAPI();
+  const { funciones, loading, error } = useFunciones();
 
   const [reserva, setReserva] = useState({
     funcionId: funcionIdFromUrl,
