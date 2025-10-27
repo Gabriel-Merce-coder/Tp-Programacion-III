@@ -17,7 +17,6 @@ import MovieSearch from "../peliculas/MovieSearch";
 //secciones
 import PeliculaSection from "../dashboard/sections/PeliculaSection";
 import FunctionSection from "../dashboard/sections/FunctionSection";
-import SalaSection from "../dashboard/sections/SalaSection";
 import ReservaSection from "../dashboard/sections/ReservaSection";
 import UserSection from "../dashboard/sections/UserSection";
 import SalaAdminSection from "./sections/SalaAdminSection";
@@ -43,7 +42,7 @@ const Dashboard = ({ onLogOut }) => {
   } = useFuncion();
 
   const {
-    salas, handleAddSala, handleDeleteSala, handleEditSala, editSala, // setEditSala,
+    handleAddSala, editSala, // setEditSala,
   } = useSala();
 
   const {
@@ -60,10 +59,6 @@ const Dashboard = ({ onLogOut }) => {
     navigate(`edit-function/${funcion.id}`);
   }
 
-  const handleNavigateToSalaEdit = (sala) => {
-    handleEditSala(sala);
-    navigate(`edit-sala/${sala.id}`);
-  }
 
   const { filteredPeliculas, handleSearchChange } = useMovieSearch(peliculas);
 
@@ -96,11 +91,6 @@ const Dashboard = ({ onLogOut }) => {
                   onEditFunction={handleNavigateToFuncionEdit}
                 />
 
-                <SalaSection
-                  salas={salas}
-                  onDeleteSala={handleDeleteSala}
-                  onEditSala={handleNavigateToSalaEdit}
-                />
 
                 <UserSection />
                 <SalaAdminSection />

@@ -7,7 +7,7 @@ const useFuncionForm = () => {
     const [peliculaId, setPeliculaId] = useState("");
     const [salaId, setSalaId] = useState("");
     const [estado, setEstado] = useState(true);
-    
+
     const [errores, setErrores] = useState({
         precio: "",
         fecha: "",
@@ -61,8 +61,8 @@ const useFuncionForm = () => {
         setEstado(e.target.checked);
     };
 
-    return{
-    
+    return {
+
         precio,
         fecha,
         hora,
@@ -77,7 +77,7 @@ const useFuncionForm = () => {
         peliculaIdRef,
         salaIdRef,
 
-        
+
         handleChangePrecio,
         handleChangeFecha,
         handleChangeHora,

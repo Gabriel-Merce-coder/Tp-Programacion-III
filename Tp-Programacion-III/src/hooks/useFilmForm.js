@@ -17,7 +17,7 @@ const useFilmForm = () => {
     calificacion: "",
     imageUrl: ""
   });
-  
+
   const tituloRef = useRef(null);
   const duracionRef = useRef(null);
   const generoRef = useRef(null);
@@ -26,52 +26,52 @@ const useFilmForm = () => {
   const calificacionRef = useRef(null);
   const imageUrlRef = useRef(null);
 
-  const handleChangeTitulo = (e) =>{
+  const handleChangeTitulo = (e) => {
     setTitulo(e.target.value)
     if (errores.titulo) {
-      setErrores({...errores, titulo: ""});
+      setErrores({ ...errores, titulo: "" });
     }
   }
 
-  const handleChangeDuracion = (e) =>{
+  const handleChangeDuracion = (e) => {
     setDuracion(e.target.value)
     if (errores.duracion) {
-      setErrores({...errores, duracion: ""});
+      setErrores({ ...errores, duracion: "" });
     }
   }
 
-  const handleChangeGenero = (e) =>{
+  const handleChangeGenero = (e) => {
     setGenero(e.target.value)
     if (errores.genero) {
-      setErrores({...errores, genero: ""});
+      setErrores({ ...errores, genero: "" });
     }
   }
 
   const handleChangeReparto = (e) => {
     setReparto(e.target.value)
     if (errores.reparto) {
-      setErrores({...errores, reparto: ""});
+      setErrores({ ...errores, reparto: "" });
     }
   }
 
   const handleChangeDescripcion = (e) => {
     setDescripcion(e.target.value)
     if (errores.descripcion) {
-      setErrores({...errores, descripcion: ""});
+      setErrores({ ...errores, descripcion: "" });
     }
   }
 
-  const handleChangeCalificacion = (e) =>{
+  const handleChangeCalificacion = (e) => {
     setCalificacion(e.target.value)
     if (errores.calificacion) {
-      setErrores({...errores, calificacion: ""});
+      setErrores({ ...errores, calificacion: "" });
     }
   }
 
-  const handleChangeImageUrl = (e) =>{
+  const handleChangeImageUrl = (e) => {
     setImageUrl(e.target.value)
     if (errores.imageUrl) {
-      setErrores({...errores, imageUrl: ""});
+      setErrores({ ...errores, imageUrl: "" });
     }
   }
 
@@ -100,7 +100,7 @@ const useFilmForm = () => {
     handleChangeDescripcion,
     handleChangeCalificacion,
     handleChangeImageUrl,
-    
+
     setTitulo,
     setDuracion,
     setGenero,
@@ -109,7 +109,7 @@ const useFilmForm = () => {
     setCalificacion,
     setImageUrl,
     setErrores
-};
+  };
 };
 
 export default useFilmForm;

@@ -3,9 +3,16 @@ import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
 import useFuncionForm from "../../hooks/useFuncionForm";
-import {useEffect} from "react";
+import usePeliculas from "../../hooks/usePeliculas";
+import useSala from "../../hooks/useSala";
+import { useEffect } from "react";
 const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
   const navigate = useNavigate();
+
+  // Hooks para obtener películas y salas
+  const { peliculas } = usePeliculas();
+  const { salas } = useSala();
+
   // nos traemos todo de useFuncionForm
   const {
     precio,
@@ -42,15 +49,15 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
   // CAMBIO JULIAN: precargar datos si se edita una función
   // /////////////////////////////////////////////////////////
   useEffect(() => {
-  if (editFuncion) {
-    setPrecio(editFuncion.precio);
-    setFecha(editFuncion.fecha);
-    setHora(editFuncion.hora);
-    setPeliculaId(editFuncion.peliculaId);
-    setSalaId(editFuncion.salaId);
-    setEstado(editFuncion.estado);
-  }
-}, [editFuncion])
+    if (editFuncion) {
+      setPrecio(editFuncion.precio);
+      setFecha(editFuncion.fecha);
+      setHora(editFuncion.hora);
+      setPeliculaId(editFuncion.peliculaId);
+      setSalaId(editFuncion.salaId);
+      setEstado(editFuncion.estado);
+    }
+  }, [editFuncion])
   // FIN CAMBIO JULIAN
 
   const handleAddFunction = (e) => {
@@ -73,13 +80,13 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
     if (hora === "") {
       errorFuncion.hora = "La hora no puede estar vacía";
     }
-    if (peliculaId === "" || peliculaId <= 0) {
+    if (peliculaId === "" || peliculaId === "0") {
       errorFuncion.peliculaId =
-        "El ID de la película no puede estar vacío y debe ser mayor a 0";
+        "Debe seleccionar una película";
     }
-    if (salaId === "" || salaId <= 0) {
+    if (salaId === "" || salaId === "0") {
       errorFuncion.salaId =
-        "El ID de la sala no puede estar vacío y debe ser mayor a 0";
+        "Debe seleccionar una sala";
     }
 
     if (
@@ -116,7 +123,7 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
       estado: estado,
     };
 
-   
+
     console.log(funcionData)
     onFuncionAdd(funcionData);
 
@@ -130,6 +137,7 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
     navigate("/dashboard");
   };
 
+
   return (
     <div>
       <Card className="m-4 w-50" bg="success">
@@ -138,16 +146,20 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
             <Row>
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="peliculaId">
-                  <Form.Label>ID Película</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="ID de la película"
-                    min="1"
+                  <Form.Label>Película</Form.Label>
+                  <Form.Select
                     value={peliculaId}
                     onChange={handleChangePeliculaId}
                     ref={peliculaIdRef}
                     isInvalid={!!errores.peliculaId}
-                  />
+                  >
+                    <option value="">Seleccione una película</option>
+                    {peliculas.map((pelicula) => (
+                      <option key={pelicula.id} value={pelicula.id}>
+                        {pelicula.titulo}
+                      </option>
+                    ))}
+                  </Form.Select>
                   <Form.Control.Feedback type="invalid">
                     {errores.peliculaId}
                   </Form.Control.Feedback>
@@ -155,16 +167,20 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
               </Col>
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="salaId">
-                  <Form.Label>ID Sala</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="ID de la sala"
-                    min="1"
+                  <Form.Label>Sala</Form.Label>
+                  <Form.Select
                     value={salaId}
                     onChange={handleChangeSalaId}
                     ref={salaIdRef}
                     isInvalid={!!errores.salaId}
-                  />
+                  >
+                    <option value="">Seleccione una sala</option>
+                    {salas.map((sala) => (
+                      <option key={sala.id} value={sala.id}>
+                        Sala {sala.numeroSala} - {sala.tipoSala} (Cap: {sala.capacidad})
+                      </option>
+                    ))}
+                  </Form.Select>
                   <Form.Control.Feedback type="invalid">
                     {errores.salaId}
                   </Form.Control.Feedback>
@@ -238,14 +254,14 @@ const NewFuncion = ({ onFuncionAdd, editFuncion }) => {
 
             <Row className="justify-content-between">
               <Col md={4}>
-              <Button
-                variant="outline-light"
-                onClick={() => navigate("/dashboard")}
-                type="button"
-              >
-                Volver al inicio
-              </Button>
-            </Col>
+                <Button
+                  variant="outline-light"
+                  onClick={() => navigate("/dashboard")}
+                  type="button"
+                >
+                  Volver al inicio
+                </Button>
+              </Col>
               <Col
                 md={3}
                 className="d-flex flex-column justify-content-end align-items-end"
