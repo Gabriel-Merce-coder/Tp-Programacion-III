@@ -1,6 +1,8 @@
 import { Dropdown } from "react-bootstrap";
 import { PersonCircle } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
+import './ProfileMenu.css';
+
 
 const ProfileMenu = ({ onLogOut }) => {
   const navigate = useNavigate();

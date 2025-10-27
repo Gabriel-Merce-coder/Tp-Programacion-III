@@ -1,0 +1,27 @@
+/* ProfileMenu.css */
+#dropdown-profile {
+  border: none;
+  background-color: transparent;
+  color: #fff;
+}
+
+#dropdown-profile:hover, 
+#dropdown-profile:focus {
+  background-color: rgba(255,255,255,0.1);
+}
+
+.dropdown-menu-dark {
+  background-color: rgba(0,0,0,0.9);
+  min-width: 150px;
+
+}
+
+.dropdown-item {
+  color: #fff;
+  
+}
+
+.dropdown-item:hover {
+  background-color: #e50914;
+  color: #fff;
+}
