@@ -27,14 +27,10 @@ const Navbar = ({ onLogOut }) => {
   };
   return (
     <>
-      <nav className="navbar bg-black py-3 px-4">
+      <nav className="navbar navbar-app px-4">
         <div className="container-fluid d-flex justify-content-between align-items-center">
-          <h1
-            className="text-danger fw-bold mb-0"
-            style={{ cursor: "pointer" }}
-            onClick={handleLogoClick}
-          >
-            Cine App
+          <h1 className="navbar-logo mb-0" onClick={handleLogoClick}>
+            CineFlix
           </h1>
           <div className="d-flex align-items-center gap-2">
             {(role === "admin" || role === "superadmin") && (
