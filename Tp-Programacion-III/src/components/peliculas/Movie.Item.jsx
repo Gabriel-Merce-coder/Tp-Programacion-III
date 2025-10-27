@@ -39,7 +39,7 @@ const MovieCard = ({ movie = {}, onEdit, onStatusChange }) => {
             alt={titulo}
             style={{ height: "300px", objectFit: "cover", transition: "transform 0.3s ease-in-out" }}
           />
-          <Badge bg="warning" text="dark" className="position-absolute top-0 end-0 m-2 d-flex align-items-center">
+          <Badge bg="danger" text="dark" className="position-absolute top-0 end-0 m-2 d-flex align-items-center">
             <BsStarFill className="me-1" />
             {calificacion}
           </Badge>
