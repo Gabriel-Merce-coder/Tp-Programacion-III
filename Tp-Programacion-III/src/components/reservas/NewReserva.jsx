@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Card, Form, Button, Col, Row, Spinner, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./NewReserva.css"; // 🎨 Nuevo estilo profesional
 
 import PageNotFound from "../ui/PageNotFound";
 import useFunciones from "../../hooks/useFunciones";
@@ -96,29 +97,33 @@ const NewReserva = ({ peliculas, onAddReserva }) => {
   if (funcionIdFromUrl) {
     if (loading) {
       return (
-        <Card className="m-4 w-50" bg="secondary" text="white">
-          <Card.Body>
-            <div className="d-flex align-items-center justify-content-center py-5">
-              <Spinner animation="border" size="sm" className="me-2" />
-              <span>Cargando información de la función...</span>
-            </div>
-          </Card.Body>
-        </Card>
+        <div className="new-reserva-container">
+          <Card className="new-reserva-card">
+            <Card.Body>
+              <div className="d-flex align-items-center justify-content-center py-5">
+                <Spinner animation="border" size="sm" className="me-2" />
+                <span>Cargando información de la función...</span>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
       );
     }
 
     if (error) {
       return (
-        <Card className="m-4 w-50" bg="secondary" text="white">
-          <Card.Body>
-            <div className="text-center py-5">
-              <p className="text-danger">Error al cargar las funciones: {error}</p>
-              <Button variant="outline-light" onClick={() => navigate("/home")}>
-                Volver al inicio
-              </Button>
-            </div>
-          </Card.Body>
-        </Card>
+        <div className="new-reserva-container">
+          <Card className="new-reserva-card">
+            <Card.Body>
+              <div className="text-center py-5">
+                <p className="text-danger">Error al cargar las funciones: {error}</p>
+                <Button variant="outline-light" onClick={() => navigate("/home")}>
+                  Volver al inicio
+                </Button>
+              </div>
+            </Card.Body>
+          </Card>
+        </div>
       );
     }
 
@@ -128,52 +133,63 @@ const NewReserva = ({ peliculas, onAddReserva }) => {
 
     return (
       <>
-        <Card className="m-4 w-50" bg="secondary" text="white">
-          <Card.Body>
-            <h4 className="mb-4">🎟️ Nueva Reserva</h4>
-            <div className="mb-4">
-              <h5>Película: {pelicula?.titulo}</h5>
-              <p>Función: {funcion?.fecha} a las {funcion?.hora}</p>
-              <p>Precio por entrada: ${funcion?.precio}</p>
-              <p className="text-info">¡Quedan {funcion?.asientosDisponibles} asientos disponibles!</p>
-            </div>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3">
-                <Form.Label>Cantidad de Entradas</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="cantidad"
-                  min="1"
-                  max="5"
-                  value={reserva.cantidad}
-                  onChange={handleChange}
-                  isInvalid={!!errores.cantidad}
-                  placeholder="Máximo 5 entradas"
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errores.cantidad}
-                </Form.Control.Feedback>
-              </Form.Group>
+        <div className="new-reserva-container">
+          <Card className="new-reserva-card">
+            <Card.Body>
+              <h4 className="text-center mb-4">Nueva Reserva</h4>
 
-              <Row className="justify-content-between mt-4">
-                <Col md={4}>
-                  <Button
-                    variant="outline-light"
-                    onClick={() => navigate("/home")}
-                    type="button"
+              <div className="movie-info">
+                <h5>Película: {pelicula?.titulo}</h5>
+                <p>Función: {funcion?.fecha} a las {funcion?.hora}</p>
+                <p>Precio por entrada: ${funcion?.precio}</p>
+                <p className="text-info">¡Quedan {funcion?.asientosDisponibles} asientos disponibles!</p>
+              </div>
+
+              <Form onSubmit={handleSubmit}>
+                <Row>
+                  <Col md={12}>
+                    <Form.Group className="mb-3" controlId="cantidad">
+                      <Form.Label>Cantidad de Entradas</Form.Label>
+                      <Form.Control
+                        type="number"
+                        name="cantidad"
+                        min="1"
+                        max="5"
+                        value={reserva.cantidad}
+                        onChange={handleChange}
+                        isInvalid={!!errores.cantidad}
+                        placeholder="Máximo 5 entradas"
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {errores.cantidad}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                  </Col>
+                </Row>
+
+                <Row className="justify-content-between mt-4">
+                  <Col md={4}>
+                    <Button
+                      variant="outline-light"
+                      onClick={() => navigate("/home")}
+                      type="button"
+                    >
+                      Volver al inicio
+                    </Button>
+                  </Col>
+                  <Col
+                    md={3}
+                    className="d-flex flex-column justify-content-end align-items-end"
                   >
-                    Volver al inicio
-                  </Button>
-                </Col>
-                <Col md={4} className="text-end">
-                  <Button variant="light" type="submit">
-                    Confirmar Reserva
-                  </Button>
-                </Col>
-              </Row>
-            </Form>
-          </Card.Body>
-        </Card>
+                    <Button variant="primary" type="submit">
+                      Confirmar Reserva
+                    </Button>
+                  </Col>
+                </Row>
+              </Form>
+            </Card.Body>
+          </Card>
+        </div>
 
         {/* Modal de confirmación */}
         <Modal show={showModal} onHide={() => setShowModal(false)} centered>

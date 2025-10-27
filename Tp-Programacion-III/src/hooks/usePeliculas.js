@@ -24,7 +24,7 @@ const usePeliculas = () => {
       });
   }, []);
 
-  
+
   const handleAddFilm = async (newFilm) => {
     const token = localStorage.getItem("token");
 
@@ -80,14 +80,15 @@ const usePeliculas = () => {
     }
   };
 
- 
+
   const toggleStatus = async (id) => {
     const token = localStorage.getItem("token");
 
     try {
       const res = await fetch(`http://localhost:3000/api/pelicula/${id}/estado`, {
         method: "PATCH",
-        headers: { "x-token": token ,
+        headers: {
+          "x-token": token,
           'Content-Type': 'application/json'
         },
       });
