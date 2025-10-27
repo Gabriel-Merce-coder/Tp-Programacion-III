@@ -7,6 +7,7 @@ import TextNotFound from "./components/ui/TextNotFound";
 import LandingPage from "./components/landing/LandingPage";
 import Home from "./components/home/Home";
 import EditProfile from "./components/profile/EditProfile";
+import MyReservas from "./components/reservas/MyReservas";
 import { UserProvider, useUser } from "./context/UserContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -47,6 +48,15 @@ const AppContent = () => { // Componente interno que puede usar el contexto
             element={
               <Protected allowedRoles={['user', 'admin', 'superadmin']}>
                 <EditProfile onLogOut={handleLogOut} />
+              </Protected>
+            }
+          />
+          {/* Mis Reservas - Solo para usuarios normales */}
+          <Route
+            path="/home/my-reservations"
+            element={
+              <Protected allowedRoles={['user']}>
+                <MyReservas onLogOut={handleLogOut} />
               </Protected>
             }
           />

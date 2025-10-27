@@ -117,6 +117,7 @@ const useFunction = () => {
       setFunciones((prev) => prev.filter((f) => f.id !== id));
       toast.success("Función eliminada correctamente");
     } catch (error) {
+      console.error("Error en handleDeleteFunction:", error);
       toast.error("Error al eliminar la función");
     }
   };
