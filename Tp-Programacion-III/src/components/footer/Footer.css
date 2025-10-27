@@ -1,0 +1,21 @@
+/* ------------------------------
+   FOOTER - CINEFLIX STYLE
+------------------------------ */
+
+.cineflix-footer {
+  background-color: #000;
+  color: #b3b3b3;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+.cineflix-footer .footer-logo {
+  color: #e50914;
+  font-weight: 600;
+  transition: text-shadow 0.3s ease;
+}
+
+.cineflix-footer .footer-logo:hover {
+  text-shadow: 0 0 8px rgba(229, 9, 20, 0.6);
+}

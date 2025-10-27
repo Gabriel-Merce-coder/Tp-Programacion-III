@@ -8,6 +8,7 @@ import LandingPage from "./components/landing/LandingPage";
 import Home from "./components/home/Home";
 import EditProfile from "./components/profile/EditProfile";
 import MyReservas from "./components/reservas/MyReservas";
+import Footer from "./components/footer/Footer";
 import { UserProvider, useUser } from "./context/UserContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,7 +24,7 @@ const AppContent = () => { // Componente interno que puede usar el contexto
     window.location.href = "/login";
   };
   return (
-    <div className="min-vh-100 bg-dark">
+    <div className="d-flex flex-column min-vh-100 bg-dark">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
@@ -64,6 +65,7 @@ const AppContent = () => { // Componente interno que puede usar el contexto
           <Route path="*" element={<TextNotFound />} />
         </Routes>
       </BrowserRouter>
+      <Footer />
       <ToastContainer autoClose={1000} hideProgressBar={true} />
     </div>
   );
