@@ -1,0 +1,114 @@
+/* -------------------------------------
+   ESTILO CINEFLIX - PÁGINAS 404
+------------------------------------- */
+
+.notfound-container {
+  height: 100vh;
+  width: 100%;
+  background: url("https://assets.nflxext.com/ffe/siteui/vlv3/65b7cc32-7c8a-48da-9c82-57ef6b8b00b8/01d0b19a-3e79-4d33-b23c-047d0b2d994a/AR-es-20230925-popsignuptwoweeks-perspective_alpha_website_large.jpg")
+    no-repeat center center/cover;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Overlay oscuro */
+.notfound-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 0;
+}
+
+/* Caja central */
+.notfound-content {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  text-align: center;
+  padding: 2rem;
+  backdrop-filter: blur(6px);
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+  animation: fadeInUp 0.8s ease-in-out;
+}
+
+/* Título principal */
+.notfound-title {
+  font-size: 6rem;
+  font-weight: 800;
+  color: #e50914;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
+}
+
+/* Subtítulo */
+.notfound-subtitle {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+/* Texto informativo */
+.notfound-text {
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 2rem;
+}
+
+/* Botón rojo estilo CineFlix */
+.notfound-btn {
+  background-color: #e50914;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.notfound-btn:hover {
+  background-color: #f40612;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(229, 9, 20, 0.4);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsivo */
+@media (max-width: 576px) {
+  .notfound-title {
+    font-size: 4rem;
+  }
+
+  .notfound-subtitle {
+    font-size: 1.4rem;
+  }
+
+  .notfound-content {
+    padding: 1.5rem;
+  }
+}
