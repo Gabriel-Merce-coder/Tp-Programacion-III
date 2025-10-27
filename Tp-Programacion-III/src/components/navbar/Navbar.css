@@ -1,5 +1,5 @@
 /* ------------------------------
-   NAVBARS UNIFICADAS - CINEFLIX STYLE
+   NAVBAR UNIFICADA - CINEFLIX STYLE
 ------------------------------ */
 
 .navbar-app,
@@ -14,7 +14,6 @@
   height: 52px;
 }
 
-/* Hover más sutil */
 .navbar-app:hover,
 .public-navbar:hover {
   background: rgba(0, 0, 0, 0.95);
@@ -26,75 +25,91 @@
 .navbar-logo {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #e50914 !important; /* 🔥 fuerza el rojo Netflix */
+  color: #e50914 !important;
   letter-spacing: 1px;
   cursor: pointer;
   transition: transform 0.25s ease, text-shadow 0.3s ease, color 0.3s ease;
   user-select: none;
 }
 
-/* Hover: mantiene el rojo, agrega halo blanco brillante */
 .navbar.navbar-dark .navbar-brand:hover,
 .navbar-logo:hover {
-  color: #e50914 !important; /* mantiene el rojo */
+  color: #e50914 !important;
   transform: scale(1.05);
   text-shadow:
-    0 0 4px #fff,
-    0 0 8px #fff,
-    0 0 12px #e50914;
+    0 0 6px #ffffff,
+    0 0 12px #e50914,
+    0 0 18px #e50914;
 }
 
-/* BOTONES */
-.navbar-btn,
-.navbar-btn-red,
+/* BOTONES GENERALES */
 .navbar-app button {
   border-radius: 4px;
   font-weight: 500;
   transition: all 0.3s ease;
   padding: 0.4rem 0.9rem;
   font-size: 0.9rem;
+  margin-left: 0.3rem;
+}
+
+/* Botones outline rojos estilo CineFlix */
+.navbar-app .btn-outline-primary {
+  border: 1px solid #e50914;
+  color: #e50914;
+  background-color: transparent;
+}
+
+.navbar-app .btn-outline-primary:hover {
+  background-color: #e50914;
+  color: #fff;
+  border-color: #fff;
+  box-shadow: 0 0 10px rgba(229, 9, 20, 0.4);
+  transform: scale(1.05);
+}
+
+/* Botón “Historial” (relleno por defecto) */
+.navbar-app .btn-outline-info {
+  background-color: #e50914;
+  color: #fff;
+  border: 1px solid #e50914;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.navbar-app .btn-outline-info:hover {
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(229, 9, 20, 0.4);
+  transform: scale(1.05);
 }
 
 /* Botón blanco */
-.navbar-btn,
 .navbar-app .btn-outline-light {
   border: 1px solid #fff;
   color: #fff;
   background: transparent;
 }
 
-.navbar-btn:hover,
 .navbar-app .btn-outline-light:hover {
   background-color: #fff;
   color: #000;
+  transform: scale(1.05);
 }
 
-/* Botón rojo */
-.navbar-btn-red,
+/* Botón rojo sólido */
 .navbar-app .btn-primary {
   background-color: #e50914;
   border: none;
   color: #fff;
 }
 
-.navbar-btn-red:hover,
 .navbar-app .btn-primary:hover {
   background-color: #f40612;
   transform: scale(1.05);
 }
 
-/* Botón info */
-.navbar-app .btn-outline-info {
-  border: 1px solid #0dcaf0;
-  color: #0dcaf0;
-}
-
-.navbar-app .btn-outline-info:hover {
-  background-color: #0dcaf0;
-  color: #000;
-}
-
-/* PROFILE MENU */
+/* MENÚ DE PERFIL */
 .profile-menu {
   color: #fff;
   cursor: pointer;
@@ -104,6 +119,7 @@
 .profile-menu:hover {
   color: #e50914;
 }
+
 
 
 
