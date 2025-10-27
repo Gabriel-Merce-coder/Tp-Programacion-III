@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import { Routes, Route, useNavigate } from "react-router-dom";
-// import { toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 //componentes
 import NewFilm from "../peliculas/NewFilm";
@@ -15,9 +15,9 @@ import PageNotFound from "../ui/PageNotFound";
 import MovieSearch from "../peliculas/MovieSearch";
 
 //secciones
+import FuncionAdminSection from "../dashboard/sections/FunctionAdminSection";
 import PeliculaSection from "../dashboard/sections/PeliculaSection";
-import FunctionSection from "../dashboard/sections/FunctionSection";
-import SalaSection from "../dashboard/sections/SalaSection";
+
 import ReservaSection from "../dashboard/sections/ReservaSection";
 import UserSection from "../dashboard/sections/UserSection";
 import SalaAdminSection from "./sections/SalaAdminSection";
@@ -35,19 +35,19 @@ const Dashboard = ({ onLogOut }) => {
   const navigate = useNavigate();
 
   const {
-    peliculas, handleAddFilm, handleEditFilm, editFilm, handleStatusChange, // setEditFilm,
+    peliculas, handleAddFilm, handleEditFilm, editFilm, handleStatusChange, 
   } = usePeliculas();
 
   const {
-    funciones, handleAddFunction, handleDeleteFunction, handleEditFunction, editFuncion, // setEditFuncion,
+    funciones, handleAddFunction,  handleEditFunction, editFuncion, 
   } = useFuncion();
 
   const {
-    salas, handleAddSala, handleDeleteSala, handleEditSala, editSala, // setEditSala,
+    salas, handleAddSala, editSala, 
   } = useSala();
 
   const {
-    reservas, handleCancelReserva, // handleAddReserva,
+    reservas, handleCancelReserva, 
   } = useReservas();
 
   const handleNavigateToFilmEdit = (film) => {
@@ -55,15 +55,6 @@ const Dashboard = ({ onLogOut }) => {
     navigate(`edit-movie/${film.id}`);
   }
 
-  const handleNavigateToFuncionEdit = (funcion) => {
-    handleEditFunction(funcion);
-    navigate(`edit-function/${funcion.id}`);
-  }
-
-  const handleNavigateToSalaEdit = (sala) => {
-    handleEditSala(sala);
-    navigate(`edit-sala/${sala.id}`);
-  }
 
   const { filteredPeliculas, handleSearchChange } = useMovieSearch(peliculas);
 
@@ -88,22 +79,6 @@ const Dashboard = ({ onLogOut }) => {
                   onEditFilm={handleNavigateToFilmEdit}
                   onStatusChange={handleStatusChange}
                 />
-
-                <FunctionSection
-                  funciones={funciones}
-                  peliculas={peliculas}
-                  onDeleteFunction={handleDeleteFunction}
-                  onEditFunction={handleNavigateToFuncionEdit}
-                />
-
-                <SalaSection
-                  salas={salas}
-                  onDeleteSala={handleDeleteSala}
-                  onEditSala={handleNavigateToSalaEdit}
-                />
-
-                <UserSection />
-                <SalaAdminSection />
               </>
             }
           />
@@ -117,6 +92,10 @@ const Dashboard = ({ onLogOut }) => {
           <Route path="edit-movie/:id" element={<NewFilm onFilmAdd={handleAddFilm} editFilm={editFilm} />} />
           <Route path="edit-function/:id" element={<NewFuncion onFuncionAdd={handleAddFunction} editFuncion={editFuncion} />} />
           <Route path="edit-sala/:id" element={<NewSala onSalaAdd={handleAddSala} editSala={editSala} />} />
+          {/* Secciones de Administracion */}
+          <Route path="view-users" element={<UserSection />} />
+          <Route path="view-salas" element={<SalaAdminSection />} />
+          <Route path="view-functions" element={<FuncionAdminSection  setEditFuncion={handleEditFunction}/>} />
           {/*Perfil*/}
           {/* Pagina no encontrada */}
           <Route path="*" element={<PageNotFound />} />
